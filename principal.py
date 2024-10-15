@@ -285,4 +285,4 @@ imprimir_tablero(calles)
     
 #Luego funciones que decidan que acción toma el jugador en su turno
     #una funcion que se llame def turnoAccion()
-        #Hacer una lista de str con las opciones que puede hacer y realizarlas ABC
+        #Hacer una lista de str con las opciones que puede hacer y realizarlas 
