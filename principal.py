@@ -1,4 +1,35 @@
 import random
+def tirarDados():
+    dado1 = random.randint(1,6)
+    dado2 = random.randint(1,6) 
+    resultadoDados = dado1 + dado2
+    return dado1, dado2, resultadoDados
+
+def moverJugador (jugador,posicionActual):
+
+    dado1, dado2, totalDado = tirarDados()
+    print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
+
+    nuevaPosicion = (posicionActual + totalDado) % len(calles)
+
+    if nuevaPosicion < posicionActual:
+        print(f"El jugador {jugador}, ha pasado por la casilla y recibe 200€")
+        jugadores[jugador]["Diners"] += 200
+    
+    print(f"El jugador {jugador} se mueve a {calles[nuevaPosicion]['Nombre']}")
+    #Aqui se podría añadir si el jugador cae en una casilla de suerte (if jugador in calles[casilla de la suerte])
+    #Que salga una carta al azar de las de suerte
+    #También si la casilla en la que recae no esta comprada por otro propietario ofrecer comprarlas
+    #Si es de otro jugador cuanto de alquiler tiene que pagar
+    return nuevaPosicion
+
+def mostrarInformacion (jugador):
+    for jugador, info in jugadores.items():
+        print(f"Jugador {jugador.capitalize()}:")
+        print(f"Carrers: {info['Carrers']}")
+        print(f"Diners: {info['Diners']}")
+        print(f"Carta Especial: {info['Carta Especial']}")
+        print("")
 
 def inicioPartida():
     global jugadores
@@ -21,7 +52,7 @@ def inicioPartida():
             inicialesJugadores.append("T")
 
     calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
-    
+    #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
     return None
 
 
@@ -172,27 +203,38 @@ calles = [
     {"Nombre": "Caixa2", "Ocupacion": []},          #21
     {"Nombre": "S.Joan", "Ocupacion": ["A"]},          #22
     {"Nombre": "Aragó", "Ocupacion": []}            #23
-]
+]#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
 
 jugadores = {
     "blau":{
-        "Carrers":None,
+        "Torn":False,
+        "Posicio":0,
+        "Carrers":[],
         "Diners":2000,
         "Carta Especial":None
         
     },
     "groc":{
-        "Carrers":None,
+        "Torn":False,
+        "Posicio":0,#Para indicar en que posición esta
+        #"Propietats":[]
+        "Carrers":[],
         "Diners":2000,
         "Carta Especial":None
     },
     "taronja":{
-        "Carrers":None,
+        "Torn":False,
+        "Posicio":0,
+        #"Propietats":[]
+        "Carrers":[],
         "Diners":2000,
         "Carta Especial":None
     },
     "vermell":{
-        "Carrers":None,
+        "Torn":False,
+        "Posicio":0,
+        #"Propietats":[]
+        "Carrers":[],
         "Diners":2000,
         "Carta Especial":None
     }
@@ -202,6 +244,7 @@ jugadores = {
 
 # Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
 # al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
+#Se podria inicializar en historial en historial = "" e ir actualizandolo ?
 
 historial = [
     "1.  Ejemplo alguien hace algo",
@@ -223,7 +266,23 @@ historial = [
 inicioPartida()
 imprimir_tablero(calles)
 
-
 #Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
 #El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
 #El tercer problema es que es un código muy complicado y ni yo sé del todo por qué funciona bien, así que cualquier modificación por mínima que sea será muy difícil de hacer.
+
+
+#def compraPropiedad(jugador,propiedad)
+    #Esta función tiene que permitir a un jugador comprar una propiedad
+    #Tiene que verificar que el jugador tenga suficiente dinero y que la propiedad no esté ocupada por otro jugador
+#def pagarAlquiler(jugador,propiedad)
+    #Calcular lo que tiene que pagar un jugador si caen e una propiedad
+    #Actualiza la key "diners"
+    #Esta tiene que ir dentro de compraPropiedad, y meter un if si casilla es de otro jugador then pagaPropiedad
+
+#Las cartas especiales se me ha ocurrido hacerlas de tal forma
+#def usarCartaEspecial(jugador)
+    #Aqui el jugador debe poder permitir usar una carta especial. Antes crear una funcion random que te de el valor de la carta especial
+    
+#Luego funciones que decidan que acción toma el jugador en su turno
+    #una funcion que se llame def turnoAccion()
+        #Hacer una lista de str con las opciones que puede hacer y realizarlas
