@@ -26,33 +26,35 @@ def moverJugador (jugador,posicionActual):
 def mostrarInformacion (jugador):
     for jugador, info in jugadores.items():
         print(f"Jugador {jugador.capitalize()}:")
-        print(f"Carrers: {info['Carrers']}")
+        print(f"Propiedades: {info['Propiedades']}")
         print(f"Diners: {info['Diners']}")
         print(f"Carta Especial: {info['Carta Especial']}")
         print("")
 
-def inicioPartida():
-    global jugadores
+def inicioPartida(players):
+    
+    #print(jugadores)
     listaJugadores = []
 
-    for key in jugadores:
+    for key in players:
         listaJugadores.append(key)
     random.shuffle(listaJugadores)
 
     inicialesJugadores = []
 
-    for jugadores in listaJugadores:
-        if jugadores == "groc":
+    for players in listaJugadores:
+        if players == "groc":
             inicialesJugadores.append("G")
-        elif jugadores == "vermell":
+        elif players == "vermell":
             inicialesJugadores.append("V")
-        elif jugadores == "blau":
+        elif players == "blau":
             inicialesJugadores.append("B")
-        elif jugadores == "taronja":
+        elif players == "taronja":
             inicialesJugadores.append("T")
 
     calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
     #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
+    #print(jugadores)
     return None
 
 
@@ -209,7 +211,17 @@ jugadores = {
     "blau":{
         "Torn":False,
         "Posicio":0,
-        "Carrers":[],
+        "Propiedades": {
+            calles[0]["Nombre"]: {
+                "Casas": 0,
+                "Hoteles": 0
+            },
+            calles[2]["Nombre"]: {
+                "Casas": 0,
+                "Hoteles": 0
+            }
+        },
+
         "Diners":2000,
         "Carta Especial":None
         
@@ -217,24 +229,24 @@ jugadores = {
     "groc":{
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
-        #"Propietats":[]
-        "Carrers":[],
+        "Propiedades":[],
+        "Construcciones": [],
         "Diners":2000,
         "Carta Especial":None
     },
     "taronja":{
         "Torn":False,
         "Posicio":0,
-        #"Propietats":[]
-        "Carrers":[],
+        "Propiedades":[],
+        "Construcciones": [],
         "Diners":2000,
         "Carta Especial":None
     },
     "vermell":{
         "Torn":False,
         "Posicio":0,
-        #"Propietats":[]
-        "Carrers":[],
+        "Propiedades":[],
+        "Construcciones": [],
         "Diners":2000,
         "Carta Especial":None
     }
@@ -263,8 +275,9 @@ historial = [
     "14. Taronja hace algo no se me ocurren más ejemplos"
 ]
 
-inicioPartida()
-imprimir_tablero(calles)
+inicioPartida(jugadores)
+#print(jugadores)
+#imprimir_tablero(calles)
 
 #Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
 #El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
@@ -286,3 +299,11 @@ imprimir_tablero(calles)
 #Luego funciones que decidan que acción toma el jugador en su turno
     #una funcion que se llame def turnoAccion()
         #Hacer una lista de str con las opciones que puede hacer y realizarlas
+    
+def propiedadDiccionario(jugador, calle):
+    key = jugador
+    jugadores[key]["Propiedades"][calle["Nombre"]]["Casas"] += 1
+
+propiedadDiccionario("blau", calles[2])
+#print(jugadores)
+print(jugadores["blau"]["Propiedades"])
