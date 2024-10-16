@@ -31,6 +31,33 @@ def mostrarInformacion (jugador):
         print(f"Carta Especial: {info['Carta Especial']}")
         print("")
 
+def imprimirCasasHoteles(posicionCasilla):
+    if posicionCasilla == 40: #Obviamente no hay ninguna casilla 40, esto es para las lineas que no necesitan pasar por todo ese código
+        return "+------------" * 5
+    if len(calles[posicionCasilla]["Ocupacion"]) != 0:
+        listJugadores = []
+        for jugador in calles[posicionCasilla]["Ocupacion"]:
+            if jugador == "G":
+                listJugadores.append("groc")
+            if jugador == "B":
+                listJugadores.append("blau")
+            if jugador == "V":
+                listJugadores.append("vermell")
+            if jugador == "T":
+                listJugadores.append("taronja")
+        for jugador in listJugadores:
+            if jugadores[jugador]["Torn"] == True:
+                if calles[posicionCasilla]["Nombre"] in jugadores[jugador]["Propiedades"]:
+                    txt = "+--------" + str(jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Casas"]) + "C" + str(jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Hoteles"]) + "H"
+                    return txt
+                else:
+                    txt = "+--------" + "0" + "C" + "0" + "H"
+                    return txt            
+    else:
+        return "+------------"
+    
+    return "+------------"
+
 def inicioPartida(players):
     
     #print(jugadores)
@@ -76,6 +103,7 @@ def imprimir_tablero(calles):
     alto_casilla = 2 #No funciona bien si este valor no es 1 o 2.
     
     # Función auxiliar para crear bordes horizontales
+    """
     def crear_borde_horizontal(cantidad, fila): #Esta función se usa dentro del bucle for para crear las líneas horizontales
         if fila[0] != "" and fila[1] == "": #Si el primer valor del array de la iteración del bucle no es "" y el segundo valor es "", quiere decir que es uno de los arrays
                                             #que tiene que dejar huecos en medio
@@ -92,6 +120,7 @@ def imprimir_tablero(calles):
         #if tablero.index(fila) == len(tablero) - 7:
         #    pass
         return "+" + ("-" * ancho_casilla + "+") * cantidad
+    """
     
 
     # Función auxiliar para crear contenido de una fila
@@ -137,12 +166,29 @@ def imprimir_tablero(calles):
         return resultado
     
     # Imprimir la parte superior del tablero
-    print(crear_borde_horizontal(len(tablero[0]), ["a", "a", "a"])) #Aquí el ["a", "a", "a"] es porque la funcion requiere un array como parámetro, pero no hace nada con el en esta ocasión
+
+    #print(crear_borde_horizontal(len(tablero[0]), ["a", "a", "a"])) #Aquí el ["a", "a", "a"] es porque la funcion requiere un array como parámetro, pero no hace nada con el en esta ocasión
     
     # Imprimir las filas con contenido
     iteracion = 0
     histIt = 13
     for fila in tablero:
+                            #Esta serie de ifs crea las barras horizontales del tablero, poniendo el numero de casas y hoteles que tiene el jugador en la casilla en la que está
+        if iteracion == 0:
+            print(imprimirCasasHoteles(0) + imprimirCasasHoteles(1) + imprimirCasasHoteles(2) + imprimirCasasHoteles(3) + imprimirCasasHoteles(4) + imprimirCasasHoteles(5) + imprimirCasasHoteles(6) + "+")
+        if iteracion == 1:
+            print(imprimirCasasHoteles(23) + imprimirCasasHoteles(40) + imprimirCasasHoteles(7) + "+")
+        if iteracion == 2:
+            print(imprimirCasasHoteles(22) + "+ " + historial[11].ljust(63) + imprimirCasasHoteles(8) + "+")
+        if iteracion == 3:
+            print(imprimirCasasHoteles(21) + "+ " + historial[8].ljust(63) + imprimirCasasHoteles(9) + "+")
+        if iteracion == 4:
+            print(imprimirCasasHoteles(20) + "+ " + historial[5].ljust(63) + imprimirCasasHoteles(10) + "+")
+        if iteracion == 5:
+            print(imprimirCasasHoteles(19) + "+ " + historial[2].ljust(63) + imprimirCasasHoteles(11) + "+")
+        if iteracion == 6:
+            print(imprimirCasasHoteles(18) + imprimirCasasHoteles(17) + imprimirCasasHoteles(16) + imprimirCasasHoteles(15) + imprimirCasasHoteles(14) + imprimirCasasHoteles(13) + "+------------" + "+")
+        
         
         for _ in range(alto_casilla):  # Altura de cada casilla (varias líneas por fila)
             if _ == 0:  # Contenido en la línea de arriba de la casilla
@@ -178,7 +224,9 @@ def imprimir_tablero(calles):
                     
                     print(txt)
                 iteracion += 1
+    print(imprimirCasasHoteles(40) + "+------------+------------+") #Esto crea el ultimo borde horizontal del tablero
         #print(crear_borde_horizontal(len(fila), fila))  # Bordes inferiores de cada fila
+                
 
 
 calles = [
@@ -186,20 +234,20 @@ calles = [
     {"Nombre": "Urquinoa", "Ocupacion": []},        #1
     {"Nombre": "Fontan", "Ocupacion": []},          #2
     {"Nombre": "Sort", "Ocupacion": []},            #3
-    {"Nombre": "Rambles", "Ocupacion": []},         #4
+    {"Nombre": "Rambles", "Ocupacion": ["B"]},         #4
     {"Nombre": "Pl.Cat", "Ocupacion": []},          #5
     {"Nombre": "Anr pró", "Ocupacion": []},         #6
     {"Nombre": "Angel", "Ocupacion": []},           #7
     {"Nombre": "Augusta", "Ocupacion": []},         #8
     {"Nombre": "Caixa", "Ocupacion": []},           #9
-    {"Nombre": "Balmes", "Ocupacion": []},          #10
+    {"Nombre": "Balmes", "Ocupacion": ["B"]},          #10
     {"Nombre": "Gracia", "Ocupacion": []},          #11
     {"Nombre": "Sortida", "Ocupacion": []},         #12
     {"Nombre": "Lauria", "Ocupacion": []},          #13
     {"Nombre": "Rosell", "Ocupacion": ["B"]},          #14
     {"Nombre": "Sort2", "Ocupacion": []},           #15
-    {"Nombre": "Marina", "Ocupacion": []},          #16
-    {"Nombre": "Consell", "Ocupacion": []},         #17
+    {"Nombre": "Marina", "Ocupacion": ["V", "B"]},          #16
+    {"Nombre": "Consell", "Ocupacion": ["B"]},         #17
     {"Nombre": "Presó", "Ocupacion": []},           #18
     {"Nombre": "Muntan", "Ocupacion": []},          #19
     {"Nombre": "Aribau", "Ocupacion": []},          #20
@@ -210,7 +258,7 @@ calles = [
 
 jugadores = {
     "blau":{
-        "Torn":False,
+        "Torn":True,
         "Posicio":0,
         "Propiedades": {
             calles[0]["Nombre"]: {
@@ -222,6 +270,14 @@ jugadores = {
                 "Hoteles": 0
             },
             calles[14]["Nombre"]: {
+                "Casas": 2,
+                "Hoteles": 1
+            },
+            calles[4]["Nombre"]: {
+                "Casas": 2,
+                "Hoteles": 3
+            },
+            calles[16]["Nombre"]: {
                 "Casas": 2,
                 "Hoteles": 1
             }
@@ -250,8 +306,13 @@ jugadores = {
     "vermell":{
         "Torn":False,
         "Posicio":0,
-        "Propiedades":[],
-        "Construcciones": [],
+        "Propiedades":{
+
+            calles[16]["Nombre"]: {
+                "Casas": 1,
+                "Hoteles": 3
+            },
+        },
         "Diners":2000,
         "Carta Especial":None
     }
@@ -309,25 +370,7 @@ def propiedadDiccionario(jugador, calle):
     key = jugador
     jugadores[key]["Propiedades"][calle["Nombre"]]["Casas"] += 1
 
-def imprimirCasasHoteles(posicionCasilla):
-    if len(calles[posicionCasilla]["Ocupacion"]) != 0:
-        listJugadores = []
-        for jugador in calles[posicionCasilla]["Ocupacion"]:
-            if jugador == "G":
-                listJugadores.append("Groc")
-            if jugador == "B":
-                listJugadores.append("Blau")
-            if jugador == "V":
-                listJugadores.append("Vermell")
-            if jugador == "T":
-                listJugadores.append("Taronja")
-        for jugador in listJugadores:
-            if calles[posicionCasilla]["Nombre"] in jugadores[jugador]["Propiedades"]:
-                txt = "+--------" + jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Casas"] + "C" + jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Hoteles"] + "H" + "+"
-                return txt
-    else:
-        return "+-----------+"
-        
+
 
 
 #propiedadDiccionario("blau", calles[2])
