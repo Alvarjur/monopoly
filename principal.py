@@ -89,7 +89,8 @@ def imprimir_tablero(calles):
                     return "+" + ("-" * ancho_casilla + "+ ") + historial[8].ljust(63) + "+" + ("-" * ancho_casilla + "+")
                 elif tablero.index(fila) == len(tablero) - 6:
                     return "+" + ("-" * ancho_casilla + "+ ") + historial[11].ljust(63) + "+" + ("-" * ancho_casilla + "+")
-                
+        #if tablero.index(fila) == len(tablero) - 7:
+        #    pass
         return "+" + ("-" * ancho_casilla + "+") * cantidad
     
 
@@ -177,33 +178,33 @@ def imprimir_tablero(calles):
                     
                     print(txt)
                 iteracion += 1
-        print(crear_borde_horizontal(len(fila), fila))  # Bordes inferiores de cada fila
+        #print(crear_borde_horizontal(len(fila), fila))  # Bordes inferiores de cada fila
 
 
 calles = [
-    {"Nombre": "Parking", "Ocupacion": ["G"]},         #0
-    {"Nombre": "Urquinoa", "Ocupacion": ["V"]},        #1
-    {"Nombre": "Fontan", "Ocupacion": ["B"]},          #2
-    {"Nombre": "Sort", "Ocupacion": ["G"]},            #3
-    {"Nombre": "Rambles", "Ocupacion": ["B"]},         #4
-    {"Nombre": "Pl.Cat", "Ocupacion": ["G", "V"]},          #5
-    {"Nombre": "Anr pró", "Ocupacion": ["R"]},         #6
-    {"Nombre": "Angel", "Ocupacion": ["G"]},           #7
-    {"Nombre": "Augusta", "Ocupacion": ["V"]},         #8
-    {"Nombre": "Caixa", "Ocupacion": ["R"]},           #9
-    {"Nombre": "Balmes", "Ocupacion": ["RV"]},          #10
-    {"Nombre": "Gracia", "Ocupacion": ["G"]},          #11
+    {"Nombre": "Parking", "Ocupacion": []},         #0
+    {"Nombre": "Urquinoa", "Ocupacion": []},        #1
+    {"Nombre": "Fontan", "Ocupacion": []},          #2
+    {"Nombre": "Sort", "Ocupacion": []},            #3
+    {"Nombre": "Rambles", "Ocupacion": []},         #4
+    {"Nombre": "Pl.Cat", "Ocupacion": []},          #5
+    {"Nombre": "Anr pró", "Ocupacion": []},         #6
+    {"Nombre": "Angel", "Ocupacion": []},           #7
+    {"Nombre": "Augusta", "Ocupacion": []},         #8
+    {"Nombre": "Caixa", "Ocupacion": []},           #9
+    {"Nombre": "Balmes", "Ocupacion": []},          #10
+    {"Nombre": "Gracia", "Ocupacion": []},          #11
     {"Nombre": "Sortida", "Ocupacion": []},         #12
-    {"Nombre": "Lauria", "Ocupacion": ["R"]},          #13
-    {"Nombre": "Rosell", "Ocupacion": []},          #14
+    {"Nombre": "Lauria", "Ocupacion": []},          #13
+    {"Nombre": "Rosell", "Ocupacion": ["B"]},          #14
     {"Nombre": "Sort2", "Ocupacion": []},           #15
     {"Nombre": "Marina", "Ocupacion": []},          #16
     {"Nombre": "Consell", "Ocupacion": []},         #17
     {"Nombre": "Presó", "Ocupacion": []},           #18
     {"Nombre": "Muntan", "Ocupacion": []},          #19
-    {"Nombre": "Aribau", "Ocupacion": ["G"]},          #20
+    {"Nombre": "Aribau", "Ocupacion": []},          #20
     {"Nombre": "Caixa2", "Ocupacion": []},          #21
-    {"Nombre": "S.Joan", "Ocupacion": ["A"]},          #22
+    {"Nombre": "S.Joan", "Ocupacion": []},          #22
     {"Nombre": "Aragó", "Ocupacion": []}            #23
 ]#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
 
@@ -219,6 +220,10 @@ jugadores = {
             calles[2]["Nombre"]: {
                 "Casas": 0,
                 "Hoteles": 0
+            },
+            calles[14]["Nombre"]: {
+                "Casas": 2,
+                "Hoteles": 1
             }
         },
 
@@ -277,7 +282,7 @@ historial = [
 
 inicioPartida(jugadores)
 #print(jugadores)
-#imprimir_tablero(calles)
+imprimir_tablero(calles)
 
 #Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
 #El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
@@ -304,6 +309,27 @@ def propiedadDiccionario(jugador, calle):
     key = jugador
     jugadores[key]["Propiedades"][calle["Nombre"]]["Casas"] += 1
 
-propiedadDiccionario("blau", calles[2])
+def imprimirCasasHoteles(posicionCasilla):
+    if len(calles[posicionCasilla]["Ocupacion"]) != 0:
+        listJugadores = []
+        for jugador in calles[posicionCasilla]["Ocupacion"]:
+            if jugador == "G":
+                listJugadores.append("Groc")
+            if jugador == "B":
+                listJugadores.append("Blau")
+            if jugador == "V":
+                listJugadores.append("Vermell")
+            if jugador == "T":
+                listJugadores.append("Taronja")
+        for jugador in listJugadores:
+            if calles[posicionCasilla]["Nombre"] in jugadores[jugador]["Propiedades"]:
+                txt = "+--------" + jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Casas"] + "C" + jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Hoteles"] + "H" + "+"
+                return txt
+    else:
+        return "+-----------+"
+        
+
+
+#propiedadDiccionario("blau", calles[2])
 #print(jugadores)
-print(jugadores["blau"]["Propiedades"])
+#print(jugadores["blau"]["Propiedades"])
