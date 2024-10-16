@@ -310,6 +310,27 @@ def tirarDados():
     resultadoDados = dado1 + dado2
     return dado1, dado2, resultadoDados
 
+def directoPrision(jugador):
+    #Primero te envian directo a prisión y se actualizan tus valores 
+    print(f"El jugador{jugador} va directo a la prisión")
+    jugadores[jugador]["Posicio"] = 18
+    jugadores[jugador]["Esta en prisión"] = True
+    jugadores[jugador]["Turnos en prisión"] = 0
+    #Aqui entra en juego si tiene o no la carta
+    #Si la tienes puedes seguir jugando y se actualizan los valores del diccionario
+    if jugadores[jugador]["Carta salir de la prisión"] == True:
+        print(f"El jugador {jugador} ha usado la carta 'Sortir de la presó'")
+        jugadores[jugador]["Carta salir de la prisión"] = False
+        jugadores[jugador]["Esta en prisión"] = False
+    else:#Si no la tienes vas a la carcel, y si es tu turno se suma 1 a la variable turnos en prision
+        print(f"El jugador {jugador} está en la prisión")
+        jugadores[jugador]["Esta en prisión"] = True
+
+    if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
+        jugadores[jugador]["Turnos en prisión"] += 1 #Aquí se actualizan
+        return f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"
+    return f"El jugador {jugador} continua en prisión"
+
 def moverJugador (jugador,posicionActual):
 
     dado1, dado2, totalDado = tirarDados()
@@ -358,27 +379,6 @@ def inicioPartida():
 
     calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
     #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
-    return None
-
-def directoPrision(jugador):  #Esta funcion en teoria funciona, y maneja el que un jugador vaya a prisión
-    print(f"El jugador{jugador} va directo a la prisión")
-    jugadores[jugador]["Posicio"] = 18 #Aquí se actualiza con el numero, que tambien se podira usar con el nombre de la calle (?)
-    jugadores[jugador]["Esta en prisión"] = True
-    jugadores[jugador]["Turnos en prisión"] = 0
-
-    if jugadores[jugador]["Carta salir de la prisión"] == True: #El primer If es por si tienen la carta
-        print(f"El jugador {jugador} ha usado la carta 'Sortir de la presó'")
-        jugadores[jugador]["Carta salir de la prisión"] = False #Se actualizan valores 
-        jugadores[jugador]["Esta en prisión"] = False #Se sale de la prisión
-        return f"El jugador {jugador} ha salido de prisión"
-    else:
-        print(f"El jugador {jugador} está en la prisión")
-        jugadores[jugador]["Esta en prisión"] = True
-
-    if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
-        jugadores[jugador]["Turnos en prisión"] += 1 #Aquí se actualizan
-        return f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"
-    return f"El jugador {jugador} continua en prisión"
 
 def cartaSort(jugador):
     cartasSuerte = [
@@ -450,6 +450,7 @@ def cartaCaixa(jugador):
         jugadores[jugador]["Diners"] += 10
     elif carta == "Anar a la presó":
         directoPrision(jugador)
+        
 
 #Esta tengo que revisarla
 """def buscaPosicion(nombreCasilla):
