@@ -293,7 +293,11 @@ imprimir_tablero(calles)
     #una funcion que se llame def turnoAccion()
         #Hacer una lista de str con las opciones que puede hacer y realizarlas DDD
 
-def teSalvasDePrisionAlomejor(jugador):#No tenia ni idea de que nombre ponerle perdon
+def directoPrision(jugador):  # La hago función para no tener que ir copiando 
+    print(f"El jugador{jugador} va directo a la prisión")
+    jugadores[jugador]["Posicio"] = 18
+    jugadores[jugador]["Esta en prisión"] = True
+    jugadores[jugador]["Turnos en prisión"] = 0
 
     if jugadores[jugador]["Carta salir de la prisión"] == True:
         print(f"El jugador {jugador} ha usado la carta 'Sortir de la presó'")
@@ -302,7 +306,7 @@ def teSalvasDePrisionAlomejor(jugador):#No tenia ni idea de que nombre ponerle p
     else:
         print(f"El jugador {jugador} está en la prisión")
         jugadores[jugador]["Esta en prisión"] = True
-        if jugadores[jugador]["Torn"] == True: #Si el jugador esta en prisión va sumando turnos 
+        if jugadores[jugador]["Torn"] == True:  # Si el jugador esta en prisión va sumando turnos 
             jugadores[jugador]["Turnos en prisión"] += 1
 
 def casillaCaixa(jugador):
