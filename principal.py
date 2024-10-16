@@ -211,37 +211,46 @@ jugadores = {
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":[],
         "Construcciones": [],
+        "Cartas especials": [],
         "Diners":2000,
-        "Carta Especial":None
-        
+        "Carta salir de la prisión":False,
+        "Esta en prisión":False,
+        "Turnos en prisión":0
     },
     "groc":{
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":[],
         "Construcciones": [],
+        "Cartas especials": [],
         "Diners":2000,
-        "Carta Especial":None
+        "Carta salir de la prisión":False,
+        "Esta en prisión":False,
+        "Turnos en prisión":0
     },
     "taronja":{
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":[],
         "Construcciones": [],
+        "Cartas especials": [],
         "Diners":2000,
-        "Carta Especial":None
+        "Carta salir de la prisión":False,
+        "Esta en prisión":False,
+        "Turnos en prisión":0
     },
     "vermell":{
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":[],
         "Construcciones": [],
+        "Cartas especials": [],
         "Diners":2000,
-        "Carta Especial":None
+        "Carta salir de la prisión":False,#Nos dice si tiene la carta de salir prisión o no para despues poder usarla
+        "Esta en prisión":False,#Estos nos dice si esta en prisión o no
+        "Turnos en prisión":0 #Como dice el nombre cuantos turnos lleva en prisión
     }
 }
-
-
 
 # Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
 # al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
@@ -280,10 +289,57 @@ imprimir_tablero(calles)
     #Actualiza la key "diners"
     #Esta tiene que ir dentro de compraPropiedad, y meter un if si casilla es de otro jugador then pagaPropiedad
 
-#Las cartas especiales se me ha ocurrido hacerlas de tal forma
-#def usarCartaEspecial(jugador)
-    #Aqui el jugador debe poder permitir usar una carta especial. Antes crear una funcion random que te de el valor de la carta especial
-    
 #Luego funciones que decidan que acción toma el jugador en su turno
     #una funcion que se llame def turnoAccion()
         #Hacer una lista de str con las opciones que puede hacer y realizarlas DDD
+
+def teSalvasDePrisionAlomejor(jugador):#No tenia ni idea de que nombre ponerle perdon
+
+    if jugadores[jugador]["Carta salir de la prisión"] == True:
+        print(f"El jugador {jugador} ha usado la carta 'Sortir de la presó'")
+        jugadores[jugador]["Carta salir de la prisión"] = False
+        jugadores[jugador]["Esta en prisión"] = False
+    else:
+        print(f"El jugador {jugador} está en la prisión")
+        jugadores[jugador]["Esta en prisión"] = True
+        if jugadores[jugador]["Torn"] == True: #Si el jugador esta en prisión va sumando turnos 
+            jugadores[jugador]["Turnos en prisión"] += 1
+
+def casillaCaixa(jugador):
+    cartasCaixa = [
+        "Sortir de la presó",
+        "Anar a la presó",
+        "Error de la banca, guanyes 150€",
+        "Despeses mèdiques, pagues 50€",
+        "Despeses escolars, pagues 50€",
+        "Reparacions al carrer, pagues 40€",
+        "Concurs de bellesa, guanyes 10€"
+    ]
+
+    carta = random.choice(cartasCaixa)
+    print(f"El jugador {jugador} ha recibido la carta: {carta}")
+
+    if carta == "Sortir de la presó":
+        jugadores[jugador]["Carta salir de la prisión"] = True
+        jugadores[jugador]["Cartas especials"].append("Sortir de la presó")
+    elif carta == "Error de la banca, guanyes 150€":
+        jugadores[jugador]["Diners"] += 150
+    elif carta == "Despeses mèdiques, pagues 50€":
+        jugadores[jugador]["Diners"] -= 50
+    elif carta == "Despeses escolars, pagues 50€":
+        jugadores[jugador]["Diners"] -= 50
+    elif carta == "Reparacions al carrer, pagues 40€":
+        jugadores[jugador]["Diners"] -= 40
+    elif carta == "Concurs de bellesa, guanyes 10€":
+        jugadores[jugador]["Diners"] += 10
+    elif carta == "Anar a la presó":
+        #if jugadores[jugador]["Carta salir de la prisión"] == True 
+        # #Este If es para manejar si van a la carcel, si tienen la carta de salir de la prision se salvan. Pero donde se quedan (?)
+
+
+def buscaPosicion(nombreCasilla):
+    for i, casilla, in enumerate(calles):
+        if calles["Nombre"] == nombreCasilla:
+            return i
+        return "No se ha encontrado la posición"
+       
