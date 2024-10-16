@@ -230,8 +230,8 @@ jugadores = {
         },
         "Cartas especials": [],
         "Diners":2000,
-        "Carta salir de la prisión":False,
-        "Esta en prisión":False,
+        "Carta salir de la prisión":False, #Aquí esto puede que sea mejor ponerlo como un if "CartaSalirDePrision" in jugadores[jugador]["Cartas especials"] #como idea solo.
+        "Esta en prisión":False, #También como estándar seguramente sería mejor poner los nombres de las keys sin espacios ni acentos, por si acaso da errores.
         "Turnos en prisión":0
     },
     "taronja":{
@@ -266,7 +266,7 @@ jugadores = {
 
 # Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
 # al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
-#Se podria inicializar en historial en historial = "" e ir actualizandolo ?
+#Se podria inicializar en historial en historial = "" e ir actualizandolo ? #No porque solo tendría un valor, en todo caso sería historial = ["","",""...hasta 14] 
 
 historial = [
     "1.  Ejemplo alguien hace algo",
@@ -329,7 +329,8 @@ def directoPrision(jugador):
     if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
         jugadores[jugador]["Turnos en prisión"] += 1 #Aquí se actualizan
         return f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"
-    return f"El jugador {jugador} continua en prisión"
+    return f"El jugador {jugador} continua en prisión"  #En un futuro lo suyo sería que las funciones devolvieran none pero que añadan una línea al historial,
+                                                        #haría falta una función que mantenga la cantidad de valores del historial en 10, que elimine las antiguas y meta nuevas lineas.
 
 def moverJugador (jugador,posicionActual):
 
@@ -347,6 +348,9 @@ def moverJugador (jugador,posicionActual):
     #Que salga una carta al azar de las de suerte
     #También si la casilla en la que recae no esta comprada por otro propietario ofrecer comprarlas
     #Si es de otro jugador cuanto de alquiler tiene que pagar
+    # ^
+    # Para esto es mejor hacerlo en esta función o crear otra?
+
     return nuevaPosicion
 
 def mostrarInformacion (jugador):
@@ -356,6 +360,7 @@ def mostrarInformacion (jugador):
         print(f"Diners: {info['Diners']}")
         print(f"Carta Especial: {info['Carta Especial']}")
         print("")
+        #Esta funcion como hablamos lo suyo sería que devuelva un array y que cada print de estos sea un string dentro del array.
 
 def inicioPartida():
     global jugadores
@@ -459,3 +464,5 @@ def cartaCaixa(jugador):
             return i
         return "No se ha encontrado la posición"""
        
+
+#Las funciones sería lo suyo que en vez de mostrar la información de la función con un print, se añadan al historial, no digo que lo hagas ahora es solo para tenerlo en mente
