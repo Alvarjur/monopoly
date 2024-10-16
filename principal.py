@@ -179,37 +179,38 @@ def imprimir_tablero(calles):
 
 
 calles = [
-    {"Nombre": "Parking", "Ocupacion": ["G"]},         #0
-    {"Nombre": "Urquinoa", "Ocupacion": ["V"]},        #1
-    {"Nombre": "Fontan", "Ocupacion": ["B"]},          #2
-    {"Nombre": "Sort", "Ocupacion": ["G"]},            #3
-    {"Nombre": "Rambles", "Ocupacion": ["B"]},         #4
-    {"Nombre": "Pl.Cat", "Ocupacion": ["G", "V"]},          #5
-    {"Nombre": "Anr pró", "Ocupacion": ["R"]},         #6
-    {"Nombre": "Angel", "Ocupacion": ["G"]},           #7
-    {"Nombre": "Augusta", "Ocupacion": ["V"]},         #8
-    {"Nombre": "Caixa", "Ocupacion": ["R"]},           #9
-    {"Nombre": "Balmes", "Ocupacion": ["RV"]},          #10
-    {"Nombre": "Gracia", "Ocupacion": ["G"]},          #11
-    {"Nombre": "Sortida", "Ocupacion": []},         #12
-    {"Nombre": "Lauria", "Ocupacion": ["R"]},          #13
-    {"Nombre": "Rosell", "Ocupacion": []},          #14
-    {"Nombre": "Sort2", "Ocupacion": []},           #15
-    {"Nombre": "Marina", "Ocupacion": []},          #16
-    {"Nombre": "Consell", "Ocupacion": []},         #17
-    {"Nombre": "Presó", "Ocupacion": []},           #18
-    {"Nombre": "Muntan", "Ocupacion": []},          #19
-    {"Nombre": "Aribau", "Ocupacion": ["G"]},          #20
-    {"Nombre": "Caixa2", "Ocupacion": []},          #21
-    {"Nombre": "S.Joan", "Ocupacion": ["A"]},          #22
-    {"Nombre": "Aragó", "Ocupacion": []}            #23
+    {"Nombre": "Parking", "Casilla":0, "Ocupacion": [],},         
+    {"Nombre": "Urquinoa", "Casilla":1, "Ocupacion": []},        
+    {"Nombre": "Fontan", "Casilla":2,"Ocupacion": []},         
+    {"Nombre": "Sort", "Casilla":3,"Ocupacion": []},            
+    {"Nombre": "Rambles", "Casilla":4, "Ocupacion": []},         
+    {"Nombre": "Pl.Cat", "Casilla":5,"Ocupacion": []},          
+    {"Nombre": "Anr pró", "Casilla":6,"Ocupacion": []},         
+    {"Nombre": "Angel", "Casilla":7,"Ocupacion": []},           
+    {"Nombre": "Augusta", "Casilla":8, "Ocupacion": []},         
+    {"Nombre": "Caixa", "Casilla":9,"Ocupacion": []},          
+    {"Nombre": "Balmes", "Casilla":10, "Ocupacion": []},          
+    {"Nombre": "Gracia", "Casilla":11,"Ocupacion": []},          
+    {"Nombre": "Sortida", "Casilla":12,"Ocupacion": []},         
+    {"Nombre": "Lauria", "Casilla":13,"Ocupacion": []},          
+    {"Nombre": "Rosell", "Casilla":14, "Ocupacion": []},          
+    {"Nombre": "Sort2", "Casilla":15,"Ocupacion": []},           
+    {"Nombre": "Marina", "Casilla":16,"Ocupacion": []},          
+    {"Nombre": "Consell", "Casilla":17,"Ocupacion": []},         
+    {"Nombre": "Presó", "Casilla":18,"Ocupacion": []},           
+    {"Nombre": "Muntan", "Casilla":19, "Ocupacion": []},          
+    {"Nombre": "Aribau", "Casilla":20,"Ocupacion": []},          
+    {"Nombre": "Caixa2", "Casilla":21,"Ocupacion": []},          
+    {"Nombre": "S.Joan", "Casilla":22,"Ocupacion": []},          
+    {"Nombre": "Aragó", "Casilla":23, "Ocupacion": []}            
 ]#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
 
 jugadores = {
     "blau":{
         "Torn":False,
-        "Posicio":0,
-        "Carrers":[],
+        "Posicio":0,#Para indicar en que posición esta
+        "Propiedades":[],
+        "Construcciones": [],
         "Diners":2000,
         "Carta Especial":None
         
@@ -217,24 +218,24 @@ jugadores = {
     "groc":{
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
-        #"Propietats":[]
-        "Carrers":[],
+        "Propiedades":[],
+        "Construcciones": [],
         "Diners":2000,
         "Carta Especial":None
     },
     "taronja":{
         "Torn":False,
-        "Posicio":0,
-        #"Propietats":[]
-        "Carrers":[],
+        "Posicio":0,#Para indicar en que posición esta
+        "Propiedades":[],
+        "Construcciones": [],
         "Diners":2000,
         "Carta Especial":None
     },
     "vermell":{
         "Torn":False,
-        "Posicio":0,
-        #"Propietats":[]
-        "Carrers":[],
+        "Posicio":0,#Para indicar en que posición esta
+        "Propiedades":[],
+        "Construcciones": [],
         "Diners":2000,
         "Carta Especial":None
     }
