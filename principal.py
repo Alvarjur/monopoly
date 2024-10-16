@@ -210,7 +210,10 @@ jugadores = {
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":[],
-        "Construcciones": [],
+        "Construcciones":{
+            "Casa":0,
+            "Hotel":0
+        },
         "Cartas especials": [],
         "Diners":2000,
         "Carta salir de la prisión":False,
@@ -221,7 +224,10 @@ jugadores = {
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":[],
-        "Construcciones": [],
+        "Construcciones":{
+            "Casa":0,
+            "Hotel":0
+        },
         "Cartas especials": [],
         "Diners":2000,
         "Carta salir de la prisión":False,
@@ -232,7 +238,10 @@ jugadores = {
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":[],
-        "Construcciones": [],
+        "Construcciones":{
+            "Casa":0,
+            "Hotel":0
+        },
         "Cartas especials": [],
         "Diners":2000,
         "Carta salir de la prisión":False,
@@ -243,7 +252,10 @@ jugadores = {
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":[],
-        "Construcciones": [],
+        "Construcciones":{
+            "Casa":0,
+            "Hotel":0
+        },
         "Cartas especials": [],
         "Diners":2000,
         "Carta salir de la prisión":False,#Nos dice si tiene la carta de salir prisión o no para despues poder usarla
@@ -292,6 +304,61 @@ imprimir_tablero(calles)
 #Luego funciones que decidan que acción toma el jugador en su turno
     #una funcion que se llame def turnoAccion()
         #Hacer una lista de str con las opciones que puede hacer y realizarlas DDD
+def tirarDados():
+    dado1 = random.randint(1,6)
+    dado2 = random.randint(1,6) 
+    resultadoDados = dado1 + dado2
+    return dado1, dado2, resultadoDados
+
+def moverJugador (jugador,posicionActual):
+
+    dado1, dado2, totalDado = tirarDados()
+    print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
+
+    nuevaPosicion = (posicionActual + totalDado) % len(calles)
+
+    if nuevaPosicion < posicionActual:
+        print(f"El jugador {jugador}, ha pasado por la casilla y recibe 200€")
+        jugadores[jugador]["Diners"] += 200
+    
+    print(f"El jugador {jugador} se mueve a {calles[nuevaPosicion]['Nombre']}")
+    #Aqui se podría añadir si el jugador cae en una casilla de suerte (if jugador in calles[casilla de la suerte])
+    #Que salga una carta al azar de las de suerte
+    #También si la casilla en la que recae no esta comprada por otro propietario ofrecer comprarlas
+    #Si es de otro jugador cuanto de alquiler tiene que pagar
+    return nuevaPosicion
+
+def mostrarInformacion (jugador):
+    for jugador, info in jugadores.items():
+        print(f"Jugador {jugador.capitalize()}:")
+        print(f"Carrers: {info['Carrers']}")
+        print(f"Diners: {info['Diners']}")
+        print(f"Carta Especial: {info['Carta Especial']}")
+        print("")
+
+def inicioPartida():
+    global jugadores
+    listaJugadores = []
+
+    for key in jugadores:
+        listaJugadores.append(key)
+    random.shuffle(listaJugadores)
+
+    inicialesJugadores = []
+
+    for jugadores in listaJugadores:
+        if jugadores == "groc":
+            inicialesJugadores.append("G")
+        elif jugadores == "vermell":
+            inicialesJugadores.append("V")
+        elif jugadores == "blau":
+            inicialesJugadores.append("B")
+        elif jugadores == "taronja":
+            inicialesJugadores.append("T")
+
+    calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
+    #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
+    return None
 
 def directoPrision(jugador):  # La hago función para no tener que ir copiando 
     print(f"El jugador{jugador} va directo a la prisión")
@@ -303,13 +370,57 @@ def directoPrision(jugador):  # La hago función para no tener que ir copiando
         print(f"El jugador {jugador} ha usado la carta 'Sortir de la presó'")
         jugadores[jugador]["Carta salir de la prisión"] = False
         jugadores[jugador]["Esta en prisión"] = False
+        return f"El jugador {jugador} ha salido de prisión"
     else:
         print(f"El jugador {jugador} está en la prisión")
         jugadores[jugador]["Esta en prisión"] = True
-        if jugadores[jugador]["Torn"] == True:  # Si el jugador esta en prisión va sumando turnos 
-            jugadores[jugador]["Turnos en prisión"] += 1
+    if jugadores[jugador]["Torn"] == True:  # Si el jugador esta en prisión va sumando turnos 
+        jugadores[jugador]["Turnos en prisión"] += 1
+        return f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"
+    return f"El jugador {jugador} continua en prisión"
 
-def casillaCaixa(jugador):
+def cartaSort(jugador):
+    cartasSuerte = [
+        "Sortir de la presó",
+        "Anar a la presó",
+        "Anar a la sortida",
+        "Anar tres espais enrere",
+        "Fer reparacions a les propietats",
+        "Ets escollit alcalde"
+    ]
+
+    carta = random.choice(cartasSuerte)
+
+    if carta == "Sortir de la presó": #Basicamente est es actualizar los valores del diccionario
+        jugadores[jugador]["Carta salir de la prisión"] = True
+        jugadores[jugador]["Cartas especials"].append(carta)
+    elif carta == "Anar a la presó": #Aqui se usa la funcion ir a la prision
+        directoPrision(jugador)
+    elif carta == "Anar a la sortida": #Vuelves a la casilla de salida que es la numero 12 (tambien se podria usar con el nomnbre (?))
+        jugadores[jugador]["Casilla"] = 12
+        jugadores[jugador]["Diners"] += 200
+        print(f"El jugador {jugador} esta de vuelta en la casilla de salida")
+    elif carta == "Anar tres espais enrere":
+        jugadores[jugador]["Posicion"] -= 3 #usar funcion buscaCasilla (?)
+        #Esto en teoria no se si es correcto, porque me da a mi que entonces si estas en la salda no puedes retroceder (?)
+        if jugadores[jugador]["Posicion"] < 0:
+            jugadores[jugador]["Posicion"] = 0
+        print(f"El jugador retrocede 3 casillas")
+    elif carta == "Fer reparacions a les propietats":
+        property = jugadores[jugador]["Propiedades"] #Esto lo uso para el len
+        pagar = len(property)*25 + ((jugadores[jugador]["Construcciones"]["Casa"]*100)+(jugadores[jugador]["Construcciones"]["Hotel"]*100))#Aqui accedemos a cada uno de los valores de casa y hoteles y se suman
+        jugadores[jugador]["Diners"] -= pagar #Te restan el dinero por tener propiedades
+        print(f"Al jugador le toca pagar {pagar} por sus propiedades")
+    elif carta == "Ets escollit alcalde":
+        totalPago = 0
+        for jugadorDiferente in jugadores: #Recorremos la lista de jugadores
+            if jugadorDiferente != jugador: #Si el jugador que mira, es diferente al que tiene la carta
+                jugadores[jugadorDiferente]["Diners"] -= 50 #Se le restan 50 euros
+                totalPago += 50 #Que se suman a esta variable
+        jugadores[jugador]["Diners"] += totalPago #I luego se actualiza con el valor de totalPago
+        print(f"El jugador {jugador} ha recibido {totalPago}€, enhorabuena por ser alcalde")
+
+def cartaCaixa(jugador):
     cartasCaixa = [
         "Sortir de la presó",
         "Anar a la presó",
@@ -337,12 +448,11 @@ def casillaCaixa(jugador):
     elif carta == "Concurs de bellesa, guanyes 10€":
         jugadores[jugador]["Diners"] += 10
     elif carta == "Anar a la presó":
-        #if jugadores[jugador]["Carta salir de la prisión"] == True 
-        # #Este If es para manejar si van a la carcel, si tienen la carta de salir de la prision se salvan. Pero donde se quedan (?)
+        directoPrision(jugador)
 
 
 def buscaPosicion(nombreCasilla):
-    for i, casilla, in enumerate(calles):
+    for i, "Nombre", in enumerate(calles):
         if calles["Nombre"] == nombreCasilla:
             return i
         return "No se ha encontrado la posición"
