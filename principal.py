@@ -187,9 +187,6 @@ def actualizarHistorial(info): #Esta función es la que usaremos para recoger to
 
     if len(historialJuego) > 10: #Esto elimina el elemento mas antiguo del historial
         historialJuego.pop(0)
-
-    for mensaje in historialJuego:
-        print(mensaje)
     
 
 def tirarDados():
@@ -201,7 +198,7 @@ def tirarDados():
 def directoPrision(jugador):
 
     #Primero te envian directo a prisión y se actualizan tus valores 
-    mensajePrision = [f"El jugador {jugador} va directo a la prisión"]
+    mensajePrision = f"El jugador {jugador} va directo a la prisión"
     jugadores[jugador]["Posicio"] = 18
     jugadores[jugador]["Esta en prisión"] = True
     jugadores[jugador]["Turnos en prisión"] = 0
@@ -211,24 +208,24 @@ def directoPrision(jugador):
     if jugadores[jugador]["Carta salir de la prisión"] == True:
         jugadores[jugador]["Carta salir de la prisión"] = False
         jugadores[jugador]["Esta en prisión"] = False
-        mensajeSiCarta = [f"El jugador {jugador} ha usado la carta 'Sortir de la presó'"]
+        mensajeSiCarta = f"El jugador {jugador} ha usado la carta 'Sortir de la presó'"
         actualizarHistorial(mensajeSiCarta)
     else:#Si no la tienes vas a la carcel, y si es tu turno se suma 1 a la variable turnos en prision
         jugadores[jugador]["Esta en prisión"] = True
-        mensajeNoCarta = [f"El jugador {jugador} no tiene la carta especial para salvarse, está en la prisión !"]
+        mensajeNoCarta = f"El jugador {jugador} no tiene la carta especial para salvarse, está en la prisión !"
         actualizarHistorial(mensajeNoCarta)
 
-    if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
-        jugadores[jugador]["Turnos en prisión"] += 1 #Aquí se actualizan
-        mensajeTurnosPrision = [f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"]
-        actualizarHistorial(mensajeTurnosPrision)
+        if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
+            jugadores[jugador]["Turnos en prisión"] += 1 #Aquí se actualizan
+            mensajeTurnosPrision = f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"
+            actualizarHistorial(mensajeTurnosPrision)
 
     return None  #En un futuro lo suyo sería que las funciones devolvieran none pero que añadan una línea al historial,
                               #haría falta una función que mantenga la cantidad de valores del historial en 10, que elimine las antiguas y meta nuevas lineas.
                               # ^
                               #En teoria de esta forma ya estaría solucionado
 
-def moverJugador (jugador,posicionActual):
+def moverJugador (jugador,posicionActual): #Me falta por completarla
 
     dado1, dado2, totalDado = tirarDados()
     print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
@@ -245,7 +242,7 @@ def moverJugador (jugador,posicionActual):
     #También si la casilla en la que recae no esta comprada por otro propietario ofrecer comprarlas
     #Si es de otro jugador cuanto de alquiler tiene que pagar
     # ^
-    # Para esto es mejor hacerlo en esta función o crear otra?
+    # Para esto es mejor hacerlo en esta función o crear otra? #Seguramente crear otra sea lo mejor
 
     return nuevaPosicion
 
@@ -292,34 +289,34 @@ def cartaSort(jugador):
     ]
 
     carta = random.choice(cartasSuerte)
-    mensajeSuerte = [f"El jugador {jugador} ha recibido la carta: {carta}"]
+    mensajeSuerte = f"El jugador {jugador} ha recibido la carta: {carta}"
     actualizarHistorial(mensajeSuerte)
 
     if carta == "Sortir de la presó": #Basicamente est es actualizar los valores del diccionario
         jugadores[jugador]["Carta salir de la prisión"] = True
         jugadores[jugador]["Cartas especials"].append(carta)
-        mensajeSalirPrision = [f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"]
+        mensajeSalirPrision = f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"
         actualizarHistorial(mensajeSalirPrision)
     elif carta == "Anar a la presó": #Aqui se usa la funcion ir a la prision
          return directoPrision(jugador)
     elif carta == "Anar a la sortida": #Vuelves a la casilla de salida que es la numero 12 (tambien se podria usar con el nomnbre (?))
         jugadores[jugador]["Posicio"] = 12
         jugadores[jugador]["Diners"] += 200
-        mensajeSalida = [f"El jugador {jugador} esta de vuelta en la casilla de salida !"]
-        actualizarHistorial(mensajeSalida)
+        mensajeSalida = f"El jugador {jugador} esta de vuelta en la casilla de salida !"
+        #actualizarHistorial(mensajeSalida)
     elif carta == "Anar tres espais enrere":
         jugadores[jugador]["Posicio"] -= 3 #usar funcion buscaCasilla (?)
         #Esto en teoria no se si es correcto, porque me da a mi que entonces si estas en la salida no puedes retroceder (?)
         if jugadores[jugador]["Posicio"] < 0:
             jugadores[jugador]["Posicio"] = 0
-        mensajeTresEspacios = [f"El jugador retrocede 3 casillas"]
-        actualizarHistorial(mensajeTresEspacios)
+        mensajeTresEspacios = f"El jugador retrocede 3 casillas"
+        #actualizarHistorial(mensajeTresEspacios)
     elif carta == "Fer reparacions a les propietats":
         property = jugadores[jugador]["Propiedades"] #Esto lo uso para el len
         pagar = len(property)*25 + ((jugadores[jugador]["Construcciones"]["Casa"]*100)+(jugadores[jugador]["Construcciones"]["Hotel"]*100))#Aqui accedemos a cada uno de los valores de casa y hoteles y se suman
         jugadores[jugador]["Diners"] -= pagar #Te restan el dinero por tener propiedades
-        mensajePropietats = [f"Al jugador le toca pagar {pagar} por sus propiedades"]
-        actualizarHistorial(mensajePropietats)
+        mensajePropietats = f"Al jugador le toca pagar {pagar} por sus propiedades"
+        #actualizarHistorial(mensajePropietats)
     elif carta == "Ets escollit alcalde":
         totalPago = 0
         for jugadorDiferente in jugadores: #Recorremos la lista de jugadores
@@ -327,8 +324,8 @@ def cartaSort(jugador):
                 jugadores[jugadorDiferente]["Diners"] -= 50 #Se le restan 50 euros
                 totalPago += 50 #Que se suman a esta variable
         jugadores[jugador]["Diners"] += totalPago #I luego se actualiza con el valor de totalPago
-        mensajeAlcalde = [f"El jugador {jugador} ha recibido {totalPago}€, enhorabuena por ser alcalde"]
-        actualizarHistorial(mensajeAlcalde)
+        mensajeAlcalde = f"El jugador {jugador} ha recibido {totalPago}€, enhorabuena por ser alcalde"
+        #actualizarHistorial(mensajeAlcalde)
     
 
 def cartaCaixa(jugador):
@@ -343,39 +340,41 @@ def cartaCaixa(jugador):
     ]
 
     carta = random.choice(cartasCaixa)
-    mensajeCaja = [f"El jugador {jugador} ha recibido la carta: {carta}"]
+    mensajeCaja = f"El jugador {jugador} ha recibido la carta: {carta}"
     actualizarHistorial(mensajeCaja)
 
     if carta == "Sortir de la presó":
         jugadores[jugador]["Carta salir de la prisión"] = True
         jugadores[jugador]["Cartas especials"].append("Sortir de la presó")
-        mensajeSlavarPrision = [f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"]
-        actualizarHistorial(mensajeSlavarPrision)
+        mensajeSlavarPrision = f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"
+        #actualizarHistorial(mensajeSlavarPrision)
     elif carta == "Error de la banca, guanyes 150€":
         jugadores[jugador]["Diners"] += 150
-        mensajeErrorBanca = [f"El jugador {jugador} ha obtenido 150€ gracias a un error de la banca !"]
-        actualizarHistorial(mensajeErrorBanca)
+        mensajeErrorBanca = f"El jugador {jugador} ha obtenido 150€ gracias a un error de la banca !"
+        #actualizarHistorial(mensajeErrorBanca)
     elif carta == "Despeses mèdiques, pagues 50€":
         jugadores[jugador]["Diners"] -= 50
-        mensajeMedico = [f"El jugador {jugador} le ha tocado pagar 50€ a sanidad !"]
-        actualizarHistorial(mensajeMedico)
+        mensajeMedico = f"El jugador {jugador} le ha tocado pagar 50€ a sanidad !"
+        #actualizarHistorial(mensajeMedico)
     elif carta == "Despeses escolars, pagues 50€":
         jugadores[jugador]["Diners"] -= 50
-        mensajeEscuela = [f"El jugador {jugador} le ha tocado pagar 50€ a educación"]
-        actualizarHistorial(mensajeEscuela)
+        mensajeEscuela = f"El jugador {jugador} le ha tocado pagar 50€ a educación"
+        #actualizarHistorial(mensajeEscuela)
     elif carta == "Reparacions al carrer, pagues 40€":
         jugadores[jugador]["Diners"] -= 40
-        mensajeComunidad = [f"El jugador {jugador} tiene que aportar 40€ a la comunidad"]
-        actualizarHistorial(mensajeComunidad)
+        mensajeComunidad = f"El jugador {jugador} tiene que aportar 40€ a la comunidad"
+        #actualizarHistorial(mensajeComunidad)
     elif carta == "Concurs de bellesa, guanyes 10€":
         jugadores[jugador]["Diners"] += 10
-        mensajeBelleza = [f"El jugador {jugador} le han dado un premio por su belleza, recibe 10€"]
-        actualizarHistorial(mensajeBelleza)
+        mensajeBelleza = f"El jugador {jugador} le han dado un premio por su belleza, recibe 10€"
+        #actualizarHistorial(mensajeBelleza)
     elif carta == "Anar a la presó":
         return directoPrision(jugador)
     
 cartaCaixa("blau")
 cartaSort("groc")
+print(historialJuego)
+#cartaSort("groc")
 #He tenido que cambiarlo todo para que se pudiera ver de forma automatica, en teoria así todos los mensajes son variables que se llevan a actualizarHistorial que es la función que lo maneja
 #En teoria se van acumulando hasta que haya un total de 10, i luego se elimina el primero que sería el más antiguo. Es un poco tedioso de ver el código pero es la única forma que he tenido de solucionarlo
 
