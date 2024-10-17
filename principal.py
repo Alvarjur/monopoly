@@ -7,7 +7,7 @@ def tirarDados():
 
     
 def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una casa o para el momento de comprar la casilla.
-    
+
     if calle != "Parking" and calle != "Sort" and calle != "Anr pró" and calle != "Caixa" and calle != "Caixa2" and calle != "Sort2" and calle != "Presó":
         dic = {
             "Casas" : 0,
@@ -26,8 +26,8 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
             jugadores[key]["Propiedades"][calle]["Casas"] += 1
             actualizarHistorial(f"'{jugador.capitalize()}' compra una casa en '{calle}'")
 
-            if jugadores[key]["Propiedades"][calle]["Casas"] >= 4: #Si tiene 4 casas las elimina y añade un hotel
-                jugadores[key]["Propiedades"][calle]["Casas"] -= 4
+            if jugadores[key]["Propiedades"][calle]["Casas"] >= 2: #Si tiene 4 casas las elimina y añade un hotel
+                jugadores[key]["Propiedades"][calle]["Casas"] -= 2
                 jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
                 actualizarHistorial(f"'{jugador.capitalize()}' ha conseguido 4 casas, se le suma un hotel")
         else:
@@ -260,10 +260,10 @@ def imprimir_tablero(calles):
 
 calles = [
     {"Nombre": "Parking", "Ocupacion": []},         #0
-    {"Nombre": "Urquinoa", "Ocupacion": []},        #1
-    {"Nombre": "Fontan", "Ocupacion": []},          #2
+    {"Nombre": "Urquinoa", "Ocupacion": [], "LlCasa": 30, "LlHotel": 25, "CmpTrrny": 70, "CmpCasa": 400, "CmpHotel": 290},        #1
+    {"Nombre": "Fontan", "Ocupacion": [], "LlCasa": 30, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 425, "CmpHotel": 300},          #2
     {"Nombre": "Sort", "Ocupacion": []},            #3
-    {"Nombre": "Rambles", "Ocupacion": ["B","V"]},         #4
+    {"Nombre": "Rambles", "Ocupacion": ["B","V"], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 450, "CmpHotel": 310},         #4
     {"Nombre": "Pl.Cat", "Ocupacion": []},          #5
     {"Nombre": "Anr pró", "Ocupacion": []},         #6
     {"Nombre": "Angel", "Ocupacion": []},           #7
@@ -272,17 +272,17 @@ calles = [
     {"Nombre": "Balmes", "Ocupacion": ["B"]},          #10
     {"Nombre": "Gracia", "Ocupacion": []},          #11
     {"Nombre": "Sortida", "Ocupacion": []},         #12
-    {"Nombre": "Lauria", "Ocupacion": []},          #13
-    {"Nombre": "Rosell", "Ocupacion": ["B"]},          #14
+    {"Nombre": "Lauria", "Ocupacion": [], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 200, "CmpHotel": 250},          #13
+    {"Nombre": "Rosell", "Ocupacion": ["B"], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 225, "CmpHotel": 255},          #14
     {"Nombre": "Sort2", "Ocupacion": []},           #15
-    {"Nombre": "Marina", "Ocupacion": ["V", "B"]},          #16
-    {"Nombre": "Consell", "Ocupacion": ["B"]},         #17
+    {"Nombre": "Marina", "Ocupacion": ["V", "B"], "LlCasa": 15, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 250, "CmpHotel": 260},          #16
+    {"Nombre": "Consell", "Ocupacion": ["B"], "LlCasa": 15, "LlHotel": 20, "CmpTrrny": 50, "CmpCasa": 275, "CmpHotel": 265},         #17
     {"Nombre": "Presó", "Ocupacion": []},           #18
-    {"Nombre": "Muntan", "Ocupacion": []},          #19
-    {"Nombre": "Aribau", "Ocupacion": []},          #20
+    {"Nombre": "Muntan", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 300, "CmpHotel": 270},          #19
+    {"Nombre": "Aribau", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 325, "CmpHotel": 275},          #20
     {"Nombre": "Caixa2", "Ocupacion": []},          #21
-    {"Nombre": "S.Joan", "Ocupacion": []},          #22
-    {"Nombre": "Aragó", "Ocupacion": []}            #23
+    {"Nombre": "S.Joan", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 350, "CmpHotel": 280},          #22
+    {"Nombre": "Aragó", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 375, "CmpHotel": 285}            #23
 ]#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
 
 jugadores = {
@@ -295,11 +295,11 @@ jugadores = {
                 "Hoteles": 0
             },
             calles[14]["Nombre"]: {
-                "Casas": 2,
+                "Casas": 1,
                 "Hoteles": 1
             },
             calles[16]["Nombre"]: {
-                "Casas": 2,
+                "Casas": 1,
                 "Hoteles": 1
             }
         },
@@ -388,6 +388,7 @@ anadirCasa("vermell",calles[4]["Nombre"])
 anadirCasa("vermell",calles[4]["Nombre"])
 
 anadirCasa("blau",calles[4]["Nombre"])
+anadirCasa("blau",calles[14]["Nombre"])
 
 anadirCasa("groc",calles[5]["Nombre"])
 
