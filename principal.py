@@ -1,4 +1,5 @@
 import random
+import json
 def tirarDados():
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6) 
@@ -23,13 +24,14 @@ def moverJugador (jugador,posicionActual):
     #Si es de otro jugador cuanto de alquiler tiene que pagar
     return nuevaPosicion
 
-def mostrarInformacion (jugador):
+"""def mostrarInformacion (jugador):
     for jugador, info in jugadores.items():
         print(f"Jugador {jugador.capitalize()}:")
         print(f"Carrers: {info['Carrers']}")
         print(f"Diners: {info['Diners']}")
         print(f"Carta Especial: {info['Carta Especial']}")
-        print("")
+        print("")"""
+
 
 def inicioPartida():
     global jugadores
@@ -93,9 +95,9 @@ jugadores = {
         },
         "Cartas especials": [],
         "Diners":2000,
-        "Carta salir de la prisión":False,
-        "Esta en prisión":False,
-        "Turnos en prisión":0
+        "Carta salir de la prision":False,
+        "Esta en prision":False,
+        "Turnos en prision":0
     },
     "groc":{
         "Torn":False,
@@ -107,9 +109,9 @@ jugadores = {
         },
         "Cartas especials": [],
         "Diners":2000,
-        "Carta salir de la prisión":False, #Aquí esto puede que sea mejor ponerlo como un if "CartaSalirDePrision" in jugadores[jugador]["Cartas especials"] #como idea solo.
-        "Esta en prisión":False, #También como estándar seguramente sería mejor poner los nombres de las keys sin espacios ni acentos, por si acaso da errores.
-        "Turnos en prisión":0
+        "Carta salir de la prision":False, #Aquí esto puede que sea mejor ponerlo como un if "CartaSalirDePrision" in jugadores[jugador]["Cartas especials"] #como idea solo.
+        "Esta en prision":False, #También como estándar seguramente sería mejor poner los nombres de las keys sin espacios ni acentos, por si acaso da errores.
+        "Turnos en prision":0
     },
     "taronja":{
         "Torn":False,
@@ -121,9 +123,9 @@ jugadores = {
         },
         "Cartas especials": [],
         "Diners":2000,
-        "Carta salir de la prisión":False,
-        "Esta en prisión":False,
-        "Turnos en prisión":0
+        "Carta salir de la prision":False,
+        "Esta en prision":False,
+        "Turnos en prision":0
     },
     "vermell":{
         "Torn":False,
@@ -135,9 +137,9 @@ jugadores = {
         },
         "Cartas especials": [],
         "Diners":2000,
-        "Carta salir de la prisión":False,#Nos dice si tiene la carta de salir prisión o no para despues poder usarla
-        "Esta en prisión":False,#Estos nos dice si esta en prisión o no
-        "Turnos en prisión":0 #Como dice el nombre cuantos turnos lleva en prisión
+        "Carta salir de la prision":False,#Nos dice si tiene la carta de salir prisión o no para despues poder usarla
+        "Esta en prision":False,#Estos nos dice si esta en prisión o no
+        "Turnos en prision":0 #Como dice el nombre cuantos turnos lleva en prisión
     }
 }
 
@@ -182,13 +184,12 @@ historial = [
 historialJuego = [] #Esta variable almacena el array completo del historial que sera <= 10
 
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
-                              #I hacer .append en todas las funciones de evento
-
-    historialJuego.append(info)
-
-    if len(historialJuego) > 10: #Esto elimina el elemento mas antiguo del historial
-        historialJuego.pop(0)
-    
+                               #I hacer .append en todas las funciones de evento
+    historial.insert(0, info)
+    while len(historial) <= 13:
+        historial.append("")
+    while len(historial) > 14:
+        historial.pop(-1)
 
 def tirarDados():
     dado1 = random.randint(1,6)
@@ -248,14 +249,26 @@ def moverJugador (jugador,posicionActual): #Me falta por completarla
 
     return nuevaPosicion
 
-def mostrarInformacion (jugador):
-    for jugador, info in jugadores.items():
-        print(f"Jugador {jugador.capitalize()}:")
-        print(f"Carrers: {info['Carrers']}")
-        print(f"Diners: {info['Diners']}")
-        print(f"Carta Especial: {info['Carta Especial']}")
-        print("")
-        #Esta funcion como hablamos lo suyo sería que devuelva un array y que cada print de estos sea un string dentro del array.
+def mostrar_lista_bonita(lista):
+    lista_bonita = json.dumps(lista, indent=4)
+    print(lista_bonita)
+
+def mostrarInformacion(jugador):
+
+    mostrarInformacionJugador = []
+
+    for jugador in jugadores:
+        mostrarInformacionJugador.append(f"Jugador {jugador}")
+        mostrarInformacionJugador.append(f"Carrers: {jugadores[jugador]["Propiedades"]}")
+        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]["Diners"]}")
+        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Cartas especials"]}")
+        mostrarInformacionJugador.append("")
+    
+    for mensaje in mostrarInformacionJugador:
+        print(mensaje)
+
+
+print(mostrarInformacion("groc"))  #Esta funcion como hablamos lo suyo sería que devuelva un array y que cada print de estos sea un string dentro del array.
 
 def inicioPartida():
     global jugadores
@@ -349,7 +362,7 @@ def cartaCaixa(jugador):
         jugadores[jugador]["Carta salir de la prisión"] = True
         jugadores[jugador]["Cartas especials"].append("Sortir de la presó")
         mensajeSlavarPrision = f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"
-        #actualizarHistorial(mensajeSlavarPrision)
+        actualizarHistorial(mensajeSlavarPrision)
     elif carta == "Error de la banca, guanyes 150€":
         jugadores[jugador]["Diners"] += 150
         mensajeErrorBanca = f"El jugador {jugador} ha obtenido 150€ gracias a un error de la banca !"
@@ -374,10 +387,6 @@ def cartaCaixa(jugador):
         if jugadores[jugador]["Esta en prisión"] == False:
             return directoPrision(jugador)
     
-cartaCaixa("blau")
-cartaSort("groc")
-cartaSort("vermell")
-print(historialJuego)
 #cartaSort("groc")
 #He tenido que cambiarlo todo para que se pudiera ver de forma automatica, en teoria así todos los mensajes son variables que se llevan a actualizarHistorial que es la función que lo maneja
 #En teoria se van acumulando hasta que haya un total de 10, i luego se elimina el primero que sería el más antiguo. Es un poco tedioso de ver el código pero es la única forma que he tenido de solucionarlo
