@@ -11,10 +11,10 @@ def mostrarInformacion():
     mostrarInformacionJugador = []
 
     for jugador in jugadores:
-        mostrarInformacionJugador.append(f"Jugador {jugador}")
-        mostrarInformacionJugador.append(f"Carrers: {list(jugadores[jugador]["Propiedades"].keys())}")
-        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]["Diners"]}")
-        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Carta Especial"]}")
+        mostrarInformacionJugador.append(f"Jugador {jugador.capitalize()}")
+        mostrarInformacionJugador.append(f"Carrers: {', '.join(list(jugadores[jugador]['Propiedades'].keys()))}")
+        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]['Diners']}")
+        mostrarInformacionJugador.append(f"Especial: {', '.join(jugadores[jugador]['Carta Especial'])}")
         mostrarInformacionJugador.append("")
     
     #for mensaje in mostrarInformacionJugador:
@@ -58,7 +58,7 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
                 #    jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
                 #    actualizarHistorial(f"'{jugador.capitalize()}' ha conseguido 4 casas, se le suma un hotel")
             else:
-                actualizarHistorial(f"Error: Una casa cuesta {dicCalle["CmpCasa"]} y tienes {jugadores[key]["Diners"]}")
+                actualizarHistorial(f"Error: Una casa cuesta {dicCalle['CmpCasa']} y tienes {jugadores[key]['Diners']}")
                 return None
         else:
             if jugadores[key]["Diners"] >= dicCalle["CmpCasa"]:
@@ -67,7 +67,7 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
                 jugadores[key]["Diners"] -= dicCalle["CmpCasa"] #Resta el dinero de la casilla al dinero del jugador
                 return None
             else:
-                actualizarHistorial(f"Error: La casilla cuesta {dicCalle["CmpCasa"]} y tienes {jugadores[key]["Diners"]}")
+                actualizarHistorial(f"Error: La casilla cuesta {dicCalle['CmpCasa']} y tienes {jugadores[key]['Diners']}")
                 return None
     else:
         actualizarHistorial(f"Error: '{calle}' no se puede comprar.")
@@ -101,7 +101,7 @@ def anadirHotel(jugador, calle):
                         jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
                         actualizarHistorial(f"'{jugador}' compra un hotel en {calle}")
                     else:
-                        actualizarHistorial(f"Error: Un hotel cuesta {dicCalle["CmpHotel"]} y tienes {jugadores[key]["Diners"]}")
+                        actualizarHistorial(f"Error: Un hotel cuesta {dicCalle['CmpHotel']} y tienes {jugadores[key]['Diners']}")
                         return None
                 else:
                     actualizarHistorial(f"Error: Ya tienes 2 hoteles en {calle}.")
@@ -228,6 +228,7 @@ def imprimir_tablero(calles):
         iteracion = 0
 
         for elemento in fila:
+
             if elemento == "":
                 elemento = " " * ancho_casilla  # Espacio vacío si no hay casilla
             else:
@@ -252,12 +253,22 @@ def imprimir_tablero(calles):
 
                 barra = ""
             else:
-                resultado += " " + elemento
-                
+                if elemento == "Anr pró    |":
+                    resultado += " " + elemento + f" {banca}"
+
+                elif elemento == "Sortida    |":
+                    resultado += " " + elemento + f" {mostrarInformacion()[16]}"
+                else:
+                    resultado += " " + elemento
+                   
+
             iteracion += 1
-                     
+        
         nuevoEl = "|" + resultado[1:] #Esto lo que hace es una vez este el texto completo, reemplaza el primer valor del string con "|", para cerrar la caja.
         resultado = nuevoEl  
+        #print(resultado)
+        #print(iteracion)
+        #input()
 
 
         
@@ -273,29 +284,31 @@ def imprimir_tablero(calles):
     for fila in tablero:
                             #Esta serie de ifs crea las barras horizontales del tablero, poniendo el numero de casas y hoteles que tiene el jugador en la casilla en la que está
         if iteracion == 0:
-            print(imprimirCasasHoteles(0) + imprimirCasasHoteles(1) + imprimirCasasHoteles(2) + imprimirCasasHoteles(3) + imprimirCasasHoteles(4) + imprimirCasasHoteles(5) + imprimirCasasHoteles(6) + "+")
+            print(imprimirCasasHoteles(0) + imprimirCasasHoteles(1) + imprimirCasasHoteles(2) + imprimirCasasHoteles(3) + imprimirCasasHoteles(4) + imprimirCasasHoteles(5) + imprimirCasasHoteles(6) + "+ " + "Banca:")
         if iteracion == 1:
-            print(imprimirCasasHoteles(23) + imprimirCasasHoteles(40) + imprimirCasasHoteles(7) + "+")
+            print(imprimirCasasHoteles(23) + imprimirCasasHoteles(40) + imprimirCasasHoteles(7) + "+ " + mostrarInformacion()[0])
         if iteracion == 2:
-            print(imprimirCasasHoteles(22) + "+ " + historial[11].ljust(63) + imprimirCasasHoteles(8) + "+")
+            print(imprimirCasasHoteles(22) + "+ " + historial[11].ljust(63) + imprimirCasasHoteles(8) + "+ " + mostrarInformacion()[3])
         if iteracion == 3:
-            print(imprimirCasasHoteles(21) + "+ " + historial[8].ljust(63) + imprimirCasasHoteles(9) + "+")
+            print(imprimirCasasHoteles(21) + "+ " + historial[8].ljust(63) + imprimirCasasHoteles(9) + "+ " + mostrarInformacion()[6])
         if iteracion == 4:
-            print(imprimirCasasHoteles(20) + "+ " + historial[5].ljust(63) + imprimirCasasHoteles(10) + "+")
+            print(imprimirCasasHoteles(20) + "+ " + historial[5].ljust(63) + imprimirCasasHoteles(10) + "+ " + mostrarInformacion()[9])
         if iteracion == 5:
-            print(imprimirCasasHoteles(19) + "+ " + historial[2].ljust(63) + imprimirCasasHoteles(11) + "+")
+            print(imprimirCasasHoteles(19) + "+ " + historial[2].ljust(63) + imprimirCasasHoteles(11) + "+ " + mostrarInformacion()[12])
         if iteracion == 6:
-            print(imprimirCasasHoteles(18) + imprimirCasasHoteles(17) + imprimirCasasHoteles(16) + imprimirCasasHoteles(15) + imprimirCasasHoteles(14) + imprimirCasasHoteles(13) + "+------------" + "+")
+            print(imprimirCasasHoteles(18) + imprimirCasasHoteles(17) + imprimirCasasHoteles(16) + imprimirCasasHoteles(15) + imprimirCasasHoteles(14) + imprimirCasasHoteles(13) + "+------------" + "+ " + mostrarInformacion()[15])
         
         
         for _ in range(alto_casilla):  # Altura de cada casilla (varias líneas por fila)
+            
             if _ == 0:  # Contenido en la línea de arriba de la casilla
                 if tablero.index(fila) >= 1 and tablero.index(fila) < 6:
                     txt = crear_fila_contenido(fila)
                     lineaSeparada = txt.split("|")
                     lineaSeparada[2] = historial[histIt]
+                    lineaJunta = f"|" + f"{lineaSeparada[1]}" + "| " f"{lineaSeparada[2]}".ljust(65) + "|" + f"{lineaSeparada[3]}".ljust(12) + "| " + mostrarInformacion()[20 - (histIt + 6)]
                     histIt -= 3
-                    lineaJunta = f"|" + f"{lineaSeparada[1]}" + "| " f"{lineaSeparada[2]}".ljust(65) + "|" + f"{lineaSeparada[3]}".ljust(12) + "|"
+                    
                     print(lineaJunta)
                 else:
                     print(crear_fila_contenido(fila))
@@ -303,26 +316,26 @@ def imprimir_tablero(calles):
 
                 if iteracion == 0 or iteracion == 6:  #Según la iteracion del bucle for, añade barras verticales y la ocupacion de cada calle para la iteracion 0 y 6, es decir la primera y la última
                     if iteracion == 0:
-                        txt = f"|" + f"".join(calles[0]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[1]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[2]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[3]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[4]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[5]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[6]['Ocupacion']).ljust(12) + f"|"
+                        txt = f"|" + f"".join(calles[0]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[1]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[2]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[3]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[4]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[5]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[6]['Ocupacion']).ljust(12) + f"| " 
                     if iteracion == 6:
-                        txt = f"|" + f"".join(calles[18]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[17]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[16]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[15]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[14]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[13]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[12]['Ocupacion']).ljust(12) + f"|"
+                        txt = f"|" + f"".join(calles[18]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[17]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[16]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[15]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[14]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[13]['Ocupacion']).ljust(12) + f"|" + f"".join(calles[12]['Ocupacion']).ljust(12) + f"| " + mostrarInformacion()[17] 
                     print(txt)
                     
                 else:
                     if iteracion == 1:
-                        txt = f"|" + f"".join(calles[23]['Ocupacion']).ljust(12) + f"| " + f"{historial[12]}".ljust(63) + f"|" + f"".join(calles[7]['Ocupacion']).ljust(12) + f"|"
+                        txt = f"|" + f"".join(calles[23]['Ocupacion']).ljust(12) + f"| " + f"{historial[12]}".ljust(63) + f"|" + f"".join(calles[7]['Ocupacion']).ljust(12) + f"| " + mostrarInformacion()[2]
                     if iteracion == 2:
-                        txt = f"|" + f"".join(calles[22]['Ocupacion']).ljust(12) + f"| " + f"{historial[9]}".ljust(63) + f"|" + f"".join(calles[8]['Ocupacion']).ljust(12) + f"|"
+                        txt = f"|" + f"".join(calles[22]['Ocupacion']).ljust(12) + f"| " + f"{historial[9]}".ljust(63) + f"|" + f"".join(calles[8]['Ocupacion']).ljust(12) + f"| " + mostrarInformacion()[5]
                     if iteracion == 3:
-                        txt = f"|" + f"".join(calles[21]['Ocupacion']).ljust(12) + f"| " + f"{historial[6]}".ljust(63) + f"|" + f"".join(calles[9]['Ocupacion']).ljust(12) + f"|"
+                        txt = f"|" + f"".join(calles[21]['Ocupacion']).ljust(12) + f"| " + f"{historial[6]}".ljust(63) + f"|" + f"".join(calles[9]['Ocupacion']).ljust(12) + f"| " + mostrarInformacion()[8]
                     if iteracion == 4:
-                        txt = f"|" + f"".join(calles[20]['Ocupacion']).ljust(12) + f"| " + f"{historial[3]}".ljust(63) + f"|" + f"".join(calles[10]['Ocupacion']).ljust(12) + f"|"
+                        txt = f"|" + f"".join(calles[20]['Ocupacion']).ljust(12) + f"| " + f"{historial[3]}".ljust(63) + f"|" + f"".join(calles[10]['Ocupacion']).ljust(12) + f"| " + mostrarInformacion()[11]
                     if iteracion == 5:
-                        txt = f"|" + f"".join(calles[19]['Ocupacion']).ljust(12) + f"| " + f"{historial[0]}".ljust(63) + f"|" + f"".join(calles[11]['Ocupacion']).ljust(12) + f"|"
+                        txt = f"|" + f"".join(calles[19]['Ocupacion']).ljust(12) + f"| " + f"{historial[0]}".ljust(63) + f"|" + f"".join(calles[11]['Ocupacion']).ljust(12) + f"| " + mostrarInformacion()[14]
                     
                     print(txt)
                 iteracion += 1
-    print(imprimirCasasHoteles(40) + "+------------+------------+") #Esto crea el ultimo borde horizontal del tablero
+    print(imprimirCasasHoteles(40) + "+------------+------------+ " + mostrarInformacion()[18]) #Esto crea el ultimo borde horizontal del tablero
         #print(crear_borde_horizontal(len(fila), fila))  # Bordes inferiores de cada fila
                 
 
@@ -374,7 +387,7 @@ jugadores = {
         },
 
         "Diners":500,
-        "Carta Especial":None
+        "Carta Especial": []
         
     },
     "groc":{
@@ -382,14 +395,14 @@ jugadores = {
         "Posicio":0,#Para indicar en que posición esta
         "Propiedades":{},
         "Diners":2000,
-        "Carta Especial":None
+        "Carta Especial": []
     },
     "taronja":{
         "Torn":False,
         "Posicio":0,
         "Propiedades":{},
         "Diners":2000,
-        "Carta Especial":None
+        "Carta Especial": []
     },
     "vermell":{
         "Torn":True,
@@ -402,10 +415,11 @@ jugadores = {
             },
         },
         "Diners":2000,
-        "Carta Especial":None
+        "Carta Especial": []
     }
 }
 
+banca = 1000000
 
 
 # Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
@@ -466,4 +480,4 @@ anadirCasa("groc","Pl.Cat")
 
 
 imprimir_tablero(calles)
-print(mostrarInformacion())
+#print(mostrarInformacion())
