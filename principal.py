@@ -57,6 +57,46 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
         actualizarHistorial(f"Error: '{calle}' no se puede comprar.")
         return None
 
+def anadirHotel(jugador, calle):
+    if calle != "Parking" and calle != "Sort" and calle != "Anr pró" and calle != "Caixa" and calle != "Caixa2" and calle != "Sort2" and calle != "Presó":
+        dic = {
+            "Casas" : 0,
+            "Hoteles" : 0
+        }
+
+        key = jugador
+
+        for street in calles:
+            if calle in street.values():
+                dicCalle = street
+
+        for player in jugadores.keys():
+            dicComprobar = jugadores[player]["Propiedades"]
+            
+            if calle in dicComprobar and player != jugador:
+                actualizarHistorial(f"Error al comprar '{calle}': La casilla pertenece a '{player.capitalize()}'")
+                return None
+
+        if calle in jugadores[key]["Propiedades"].keys():
+            if jugadores[key]["Propiedades"][calle]["Casas"] >= 2:
+                if jugadores[key]["Propiedades"][calle]["Hoteles"] < 3: #Se comprueba que el jugador no tenga ya 2 hoteles en esa casilla.
+                    if jugadores[key]["Diners"] >= dicCalle["CmpHotel"]:
+                        jugadores[key]["Propiedades"][calle]["Casas"] -= 2
+                        jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
+                        actualizarHistorial(f"'{jugador}' compra un hotel en {calle}")
+                    else:
+                        actualizarHistorial(f"Error: Un hotel cuesta {dicCalle["CmpHotel"]} y tienes {jugadores[key]["Diners"]}")
+                        return None
+                else:
+                    actualizarHistorial(f"Error: Ya tienes 2 hoteles en {calle}.")
+                    return None
+            else:
+                actualizarHistorial(f"Error: Para comprar un hotel hacen falta al menos 2 casas.")
+                return None
+  
+    else:
+        actualizarHistorial(f"Error: '{calle}' no se puede comprar.")
+        return None
 
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
                               #I hacer .append en todas las funciones de evento
@@ -149,7 +189,7 @@ def imprimir_tablero(calles):
 
     # Definir el tamaño de las casillas
     ancho_casilla = 12 #Solo funciona si es 12
-    alto_casilla = 2 #No funciona bien si este valor no es 1 o 2.
+    alto_casilla = 2 #Solo funciona si es 2.
     
     # Función auxiliar para crear bordes horizontales
     """
@@ -412,5 +452,8 @@ anadirCasa("blau",calles[14]["Nombre"])
 
 
 anadirCasa("groc",calles[5]["Nombre"])
+anadirCasa("groc","Pl.Cat")
+anadirCasa("groc","Pl.Cat")
+anadirCasa("groc","Pl.Cat")
 
 imprimir_tablero(calles)
