@@ -1,5 +1,6 @@
 import random
 import json
+
 def tirarDados():
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6) 
@@ -147,23 +148,6 @@ jugadores = {
 # al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
 #Se podria inicializar en historial en historial = "" e ir actualizandolo ? #No porque solo tendría un valor, en todo caso sería historial = ["","",""...hasta 14] 
 
-historial = [
-    "1.  Ejemplo alguien hace algo",
-    "2.  Pasa esto",
-    "3.  ABCD",
-    "4.  Compra una casa",
-    "5.  Vende una propiedad",
-    "6.  Ha pasado por la salida",
-    "7.  A Vermell no se le ocurren ejemplos",
-    "8.  Ejemplo",
-    "9.  Hola",
-    "10. que",
-    "11. Vermell compra un hotel",
-    "12. Blau ha ganado 2000€",
-    "13. Groc ha entrado en la prisión",
-    "14. Taronja hace algo no se me ocurren más ejemplos"
-]
-
 #Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
 #El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
 #El tercer problema es que es un código muy complicado y ni yo sé del todo por qué funciona bien, así que cualquier modificación por mínima que sea será muy difícil de hacer.
@@ -181,7 +165,7 @@ historial = [
     #una funcion que se llame def turnoAccion()
         #Hacer una lista de str con las opciones que puede hacer y realizarlas DDD
 
-historialJuego = [] #Esta variable almacena el array completo del historial que sera <= 10
+historial = [] #Esta variable almacena el array completo del historial que sera <= 10
 
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
                                #I hacer .append en todas las funciones de evento
@@ -214,14 +198,19 @@ def directoPrision(jugador):
         mensajeSiCarta = f"El jugador {jugador} ha usado la carta 'Sortir de la presó'"
         actualizarHistorial(mensajeSiCarta)
     else:#Si no la tienes vas a la carcel, y si es tu turno se suma 1 a la variable turnos en prision
-        jugadores[jugador]["Esta en prisión"] = True
+        jugadores[jugador]["Esta en prision"] = True
         mensajeNoCarta = f"El jugador {jugador} no tiene la carta especial para salvarse, está en la prisión !"
         actualizarHistorial(mensajeNoCarta)
 
-        if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
+        if jugadores[jugador]["Torn"] == True and jugadores[jugador]["Turnos en prision"] < 3:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
             jugadores[jugador]["Turnos en prisión"] += 1 #Aquí se actualizan
             mensajeTurnosPrision = f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"
             actualizarHistorial(mensajeTurnosPrision)
+        elif jugadores[jugador]["Torn"] == True and jugadores[jugador]["Turnos en prision"] == 3:
+            jugadores[jugador]["Turnos en prision"] = 0
+            mensajeSalidaPrision = f"El jugador {jugador} ha salido de la carcel despues de 3 turnos !"
+            actualizarHistorial(mensajeSalidaPrision)
+
 
     return None  #En un futuro lo suyo sería que las funciones devolvieran none pero que añadan una línea al historial,
                               #haría falta una función que mantenga la cantidad de valores del historial en 10, que elimine las antiguas y meta nuevas lineas.
@@ -249,10 +238,6 @@ def moverJugador (jugador,posicionActual): #Me falta por completarla
 
     return nuevaPosicion
 
-def mostrar_lista_bonita(lista):
-    lista_bonita = json.dumps(lista, indent=4)
-    print(lista_bonita)
-
 def mostrarInformacion(jugador):
 
     mostrarInformacionJugador = []
@@ -267,6 +252,7 @@ def mostrarInformacion(jugador):
     for mensaje in mostrarInformacionJugador:
         print(mensaje)
 
+    return mostrarInformacionJugador
 
 print(mostrarInformacion("groc"))  #Esta funcion como hablamos lo suyo sería que devuelva un array y que cada print de estos sea un string dentro del array.
 
@@ -391,22 +377,6 @@ def cartaCaixa(jugador):
 #He tenido que cambiarlo todo para que se pudiera ver de forma automatica, en teoria así todos los mensajes son variables que se llevan a actualizarHistorial que es la función que lo maneja
 #En teoria se van acumulando hasta que haya un total de 10, i luego se elimina el primero que sería el más antiguo. Es un poco tedioso de ver el código pero es la única forma que he tenido de solucionarlo
 
-"""historial = [
-    "1.  Ejemplo alguien hace algo",
-    "2.  Pasa esto",
-    "3.  ABCD",
-    "4.  Compra una casa",
-    "5.  Vende una propiedad",
-    "6.  Ha pasado por la salida",
-    "7.  A Vermell no se le ocurren ejemplos",
-    "8.  Ejemplo",
-    "9.  Hola",
-    "10. que",
-    "11. Vermell compra un hotel",
-    "12. Blau ha ganado 2000€",
-    "13. Groc ha entrado en la prisión",
-    "14. Taronja hace algo no se me ocurren más ejemplos
-    ]"""
 
 #Esta tengo que revisarla
 """def buscaPosicion(nombreCasilla):
