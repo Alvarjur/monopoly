@@ -12,13 +12,13 @@ def mostrarInformacion():
 
     for jugador in jugadores:
         mostrarInformacionJugador.append(f"Jugador {jugador}")
-        mostrarInformacionJugador.append(f"Carrers: {jugadores[jugador]["Propiedades"]}")
+        mostrarInformacionJugador.append(f"Carrers: {list(jugadores[jugador]["Propiedades"].keys())}")
         mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]["Diners"]}")
-        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Cartas especials"]}")
+        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Carta Especial"]}")
         mostrarInformacionJugador.append("")
-
-    for mensaje in mostrarInformacionJugador:
-        print(mensaje)
+    
+    #for mensaje in mostrarInformacionJugador:
+    #    print(mensaje)
 
     return mostrarInformacionJugador
 
@@ -143,13 +143,6 @@ def moverJugador (jugador,posicionActual):
     #Si es de otro jugador cuanto de alquiler tiene que pagar
     return nuevaPosicion
 
-def mostrarInformacion (jugador):
-    for jugador, info in jugadores.items():
-        print(f"Jugador {jugador.capitalize()}:")
-        print(f"Propiedades: {info['Propiedades']}")
-        print(f"Diners: {info['Diners']}")
-        print(f"Carta Especial: {info['Carta Especial']}")
-        print("")
 
 def imprimirCasasHoteles(posicionCasilla):
     if posicionCasilla == 40: #Obviamente no hay ninguna casilla 40, esto es para las lineas que no necesitan pasar por todo ese código
@@ -473,4 +466,4 @@ anadirCasa("groc","Pl.Cat")
 
 
 imprimir_tablero(calles)
-mostrarInformacion()
+print(mostrarInformacion())
