@@ -1,11 +1,27 @@
 import random
+
 def tirarDados():
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6) 
     resultadoDados = dado1 + dado2
     return dado1, dado2, resultadoDados
 
-    
+def mostrarInformacion():
+
+    mostrarInformacionJugador = []
+
+    for jugador in jugadores:
+        mostrarInformacionJugador.append(f"Jugador {jugador}")
+        mostrarInformacionJugador.append(f"Carrers: {jugadores[jugador]["Propiedades"]}")
+        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]["Diners"]}")
+        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Cartas especials"]}")
+        mostrarInformacionJugador.append("")
+
+    for mensaje in mostrarInformacionJugador:
+        print(mensaje)
+
+    return mostrarInformacionJugador
+
 def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una casa o para el momento de comprar la casilla.
 
     if calle != "Parking" and calle != "Sort" and calle != "Anr pró" and calle != "Caixa" and calle != "Caixa2" and calle != "Sort2" and calle != "Presó":
@@ -454,6 +470,7 @@ anadirCasa("blau",calles[14]["Nombre"])
 anadirCasa("groc",calles[5]["Nombre"])
 anadirCasa("groc","Pl.Cat")
 anadirCasa("groc","Pl.Cat")
-anadirCasa("groc","Pl.Cat")
+
 
 imprimir_tablero(calles)
+mostrarInformacion()
