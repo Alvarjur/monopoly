@@ -5,6 +5,20 @@ def tirarDados():
     resultadoDados = dado1 + dado2
     return dado1, dado2, resultadoDados
 
+historialJuego = [] #Esta variable almacena el array completo del historial que sera <= 10
+
+def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
+                              #I hacer .append en todas las funciones de evento
+
+    historial.insert(0, info)
+    while len(historial) <= 13:
+        historial.append("")
+
+    if len(historialJuego) > 14: #Esto elimina el elemento mas antiguo del historial
+        historial.pop(0)
+    
+
+
 def moverJugador (jugador,posicionActual):
 
     dado1, dado2, totalDado = tirarDados()
@@ -325,26 +339,17 @@ jugadores = {
 #Se podria inicializar en historial en historial = "" e ir actualizandolo ?
 
 historial = [
-    "1.  Ejemplo alguien hace algo",
-    "2.  Pasa esto",
-    "3.  ABCD",
-    "4.  Compra una casa",
-    "5.  Vende una propiedad",
-    "6.  Ha pasado por la salida",
-    "7.  A Vermell no se le ocurren ejemplos",
-    "8.  Ejemplo",
-    "9.  Hola",
-    "10. que",
-    "11. Vermell compra un hotel",
-    "12. Blau ha ganado 2000€",
-    "13. Groc ha entrado en la prisión",
-    "14. Taronja hace algo no se me ocurren más ejemplos"
+    
 ]
+actualizarHistorial(" > Hola")
+actualizarHistorial(" Adios")
+actualizarHistorial(" Estamos haiendo un monopoly que no es muy divertido aaaaaaaa")
 
 inicioPartida(jugadores)
 #print(jugadores)
 imprimir_tablero(calles)
-
+print(len(historial[0]))
+print(historial)
 #Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
 #El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
 #El tercer problema es que es un código muy complicado y ni yo sé del todo por qué funciona bien, así que cualquier modificación por mínima que sea será muy difícil de hacer.
