@@ -5,6 +5,38 @@ def tirarDados():
     resultadoDados = dado1 + dado2
     return dado1, dado2, resultadoDados
 
+    
+def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una casa o para el momento de comprar la casilla.
+    
+    if calle != "Parking" and calle != "Sort" and calle != "Anr pró" and calle != "Caixa" and calle != "Caixa2" and calle != "Sort2" and calle != "Presó":
+        dic = {
+            "Casas" : 0,
+            "Hoteles" : 0
+        }
+        key = jugador
+
+        for player in jugadores.keys():
+            dicComprobar = jugadores[player]["Propiedades"]
+            
+            if calle in dicComprobar and player != jugador:
+                actualizarHistorial(f"Error al comprar '{calle}': La casilla pertenece a '{player.capitalize()}'")
+                return None
+
+        if calle in jugadores[key]["Propiedades"].keys():
+            jugadores[key]["Propiedades"][calle]["Casas"] += 1
+            actualizarHistorial(f"'{jugador.capitalize()}' compra una casa en '{calle}'")
+
+            if jugadores[key]["Propiedades"][calle]["Casas"] >= 4: #Si tiene 4 casas las elimina y añade un hotel
+                jugadores[key]["Propiedades"][calle]["Casas"] -= 4
+                jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
+                actualizarHistorial(f"'{jugador.capitalize()}' ha conseguido 4 casas, se le suma un hotel")
+        else:
+            jugadores[key]["Propiedades"][calle] = dic
+            actualizarHistorial(f"'{jugador.capitalize()}' ha comprado la casilla '{calle}'")
+    else:
+        actualizarHistorial(f"Error: {calle} no se puede comprar.")
+        return None
+
 
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
                               #I hacer .append en todas las funciones de evento
@@ -46,28 +78,13 @@ def mostrarInformacion (jugador):
 def imprimirCasasHoteles(posicionCasilla):
     if posicionCasilla == 40: #Obviamente no hay ninguna casilla 40, esto es para las lineas que no necesitan pasar por todo ese código
         return "+------------" * 5
-    if len(calles[posicionCasilla]["Ocupacion"]) != 0:
-        listJugadores = []
-        for jugador in calles[posicionCasilla]["Ocupacion"]:
-            if jugador == "G":
-                listJugadores.append("groc")
-            if jugador == "B":
-                listJugadores.append("blau")
-            if jugador == "V":
-                listJugadores.append("vermell")
-            if jugador == "T":
-                listJugadores.append("taronja")
-        for jugador in listJugadores:
-            if jugadores[jugador]["Torn"] == True:
-                if calles[posicionCasilla]["Nombre"] in jugadores[jugador]["Propiedades"]:
-                    txt = "+--------" + str(jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Casas"]) + "C" + str(jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Hoteles"]) + "H"
-                    return txt
-                else:
-                    txt = "+--------" + "0" + "C" + "0" + "H"
-                    return txt            
-    else:
-        return "+------------"
-    
+
+    for jugador in jugadores:
+        if calles[posicionCasilla]["Nombre"] in jugadores[jugador]["Propiedades"]:
+            txt = f"+------{jugador[0].capitalize()}-" + str(jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Casas"]) + "C" + str(jugadores[jugador]["Propiedades"][calles[posicionCasilla]["Nombre"]]["Hoteles"]) + "H"
+            return txt
+         
+
     return "+------------"
 
 def inicioPartida(players):
@@ -246,7 +263,7 @@ calles = [
     {"Nombre": "Urquinoa", "Ocupacion": []},        #1
     {"Nombre": "Fontan", "Ocupacion": []},          #2
     {"Nombre": "Sort", "Ocupacion": []},            #3
-    {"Nombre": "Rambles", "Ocupacion": ["B"]},         #4
+    {"Nombre": "Rambles", "Ocupacion": ["B","V"]},         #4
     {"Nombre": "Pl.Cat", "Ocupacion": []},          #5
     {"Nombre": "Anr pró", "Ocupacion": []},         #6
     {"Nombre": "Angel", "Ocupacion": []},           #7
@@ -270,13 +287,9 @@ calles = [
 
 jugadores = {
     "blau":{
-        "Torn":True,
+        "Torn":False,
         "Posicio":0,
         "Propiedades": {
-            calles[0]["Nombre"]: {
-                "Casas": 0,
-                "Hoteles": 0
-            },
             calles[2]["Nombre"]: {
                 "Casas": 0,
                 "Hoteles": 0
@@ -284,10 +297,6 @@ jugadores = {
             calles[14]["Nombre"]: {
                 "Casas": 2,
                 "Hoteles": 1
-            },
-            calles[4]["Nombre"]: {
-                "Casas": 2,
-                "Hoteles": 3
             },
             calles[16]["Nombre"]: {
                 "Casas": 2,
@@ -302,21 +311,19 @@ jugadores = {
     "groc":{
         "Torn":False,
         "Posicio":0,#Para indicar en que posición esta
-        "Propiedades":[],
-        "Construcciones": [],
+        "Propiedades":{},
         "Diners":2000,
         "Carta Especial":None
     },
     "taronja":{
         "Torn":False,
         "Posicio":0,
-        "Propiedades":[],
-        "Construcciones": [],
+        "Propiedades":{},
         "Diners":2000,
         "Carta Especial":None
     },
     "vermell":{
-        "Torn":False,
+        "Torn":True,
         "Posicio":0,
         "Propiedades":{
 
@@ -346,9 +353,8 @@ actualizarHistorial("Estamos haiendo un monopoly que no es muy divertido aaaaaaa
 
 inicioPartida(jugadores)
 #print(jugadores)
-imprimir_tablero(calles)
-print(len(historial[0]))
-print(historial)
+
+
 #Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
 #El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
 #El tercer problema es que es un código muy complicado y ni yo sé del todo por qué funciona bien, así que cualquier modificación por mínima que sea será muy difícil de hacer.
@@ -369,10 +375,6 @@ print(historial)
 #Luego funciones que decidan que acción toma el jugador en su turno
     #una funcion que se llame def turnoAccion()
         #Hacer una lista de str con las opciones que puede hacer y realizarlas
-    
-def propiedadDiccionario(jugador, calle):
-    key = jugador
-    jugadores[key]["Propiedades"][calle["Nombre"]]["Casas"] += 1
 
 
 
@@ -380,3 +382,13 @@ def propiedadDiccionario(jugador, calle):
 #propiedadDiccionario("blau", calles[2])
 #print(jugadores)
 #print(jugadores["blau"]["Propiedades"])
+
+
+anadirCasa("vermell",calles[4]["Nombre"])
+anadirCasa("vermell",calles[4]["Nombre"])
+
+anadirCasa("blau",calles[4]["Nombre"])
+
+anadirCasa("groc",calles[5]["Nombre"])
+
+imprimir_tablero(calles)
