@@ -174,7 +174,7 @@ historial = [
     #Calcular lo que tiene que pagar un jugador si caen e una propiedad
     #Actualiza la key "diners"
     #Esta tiene que ir dentro de compraPropiedad, y meter un if si casilla es de otro jugador then pagaPropiedad
-
+ #a
 #Luego funciones que decidan que acción toma el jugador en su turno
     #una funcion que se llame def turnoAccion()
         #Hacer una lista de str con las opciones que puede hacer y realizarlas DDD
