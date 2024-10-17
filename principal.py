@@ -369,7 +369,8 @@ def cartaCaixa(jugador):
         mensajeBelleza = f"El jugador {jugador} le han dado un premio por su belleza, recibe 10€"
         #actualizarHistorial(mensajeBelleza)
     elif carta == "Anar a la presó":
-        return directoPrision(jugador)
+        if jugadores[jugador]["Esta en prisión"] == False:
+            return directoPrision(jugador)
     
 cartaCaixa("blau")
 cartaSort("groc")
