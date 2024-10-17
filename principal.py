@@ -5,7 +5,6 @@ def tirarDados():
     resultadoDados = dado1 + dado2
     return dado1, dado2, resultadoDados
 
-historialJuego = [] #Esta variable almacena el array completo del historial que sera <= 10
 
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
                               #I hacer .append en todas las funciones de evento
@@ -13,9 +12,8 @@ def actualizarHistorial(info): #Esta función es la que usaremos para recoger to
     historial.insert(0, info)
     while len(historial) <= 13:
         historial.append("")
-
-    if len(historialJuego) > 14: #Esto elimina el elemento mas antiguo del historial
-        historial.pop(0)
+    while len(historial) > 14:
+        historial.pop(-1)
     
 
 
@@ -341,9 +339,10 @@ jugadores = {
 historial = [
     
 ]
-actualizarHistorial(" > Hola")
-actualizarHistorial(" Adios")
-actualizarHistorial(" Estamos haiendo un monopoly que no es muy divertido aaaaaaaa")
+
+actualizarHistorial("Hola")
+actualizarHistorial("Adios")
+actualizarHistorial("Estamos haiendo un monopoly que no es muy divertido aaaaaaaa")
 
 inicioPartida(jugadores)
 #print(jugadores)
