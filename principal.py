@@ -13,7 +13,12 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
             "Casas" : 0,
             "Hoteles" : 0
         }
+
         key = jugador
+
+        for street in calles:
+            if calle in street.values():
+                dicCalle = street
 
         for player in jugadores.keys():
             dicComprobar = jugadores[player]["Propiedades"]
@@ -23,18 +28,33 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
                 return None
 
         if calle in jugadores[key]["Propiedades"].keys():
-            jugadores[key]["Propiedades"][calle]["Casas"] += 1
-            actualizarHistorial(f"'{jugador.capitalize()}' compra una casa en '{calle}'")
+            if jugadores[key]["Propiedades"][calle]["Casas"] >= 4:
+                actualizarHistorial(f"Error: Se pueden tener cómo máximo 4 casas, compra un hotel.")
+                return None
+            elif jugadores[key]["Diners"] >= dicCalle["CmpCasa"]: #Si tiene dinero suficiente para comprar una casa.
+                jugadores[key]["Propiedades"][calle]["Casas"] += 1
+                jugadores[key]["Diners"] -= dicCalle["CmpCasa"] #Resta el dinero de la casa al dinero del jugador
 
-            if jugadores[key]["Propiedades"][calle]["Casas"] >= 2: #Si tiene 4 casas las elimina y añade un hotel
-                jugadores[key]["Propiedades"][calle]["Casas"] -= 2
-                jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
-                actualizarHistorial(f"'{jugador.capitalize()}' ha conseguido 4 casas, se le suma un hotel")
+                actualizarHistorial(f"'{jugador.capitalize()}' compra una casa en '{calle}'")
+
+                #if jugadores[key]["Propiedades"][calle]["Casas"] >= 2: #Si tiene 4 casas las elimina y añade un hotel
+                #    jugadores[key]["Propiedades"][calle]["Casas"] -= 2
+                #    jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
+                #    actualizarHistorial(f"'{jugador.capitalize()}' ha conseguido 4 casas, se le suma un hotel")
+            else:
+                actualizarHistorial(f"Error: Una casa cuesta {dicCalle["CmpCasa"]} y tienes {jugadores[key]["Diners"]}")
+                return None
         else:
-            jugadores[key]["Propiedades"][calle] = dic
-            actualizarHistorial(f"'{jugador.capitalize()}' ha comprado la casilla '{calle}'")
+            if jugadores[key]["Diners"] >= dicCalle["CmpCasa"]:
+                jugadores[key]["Propiedades"][calle] = dic
+                actualizarHistorial(f"'{jugador.capitalize()}' ha comprado la casilla '{calle}'")
+                jugadores[key]["Diners"] -= dicCalle["CmpCasa"] #Resta el dinero de la casilla al dinero del jugador
+                return None
+            else:
+                actualizarHistorial(f"Error: La casilla cuesta {dicCalle["CmpCasa"]} y tienes {jugadores[key]["Diners"]}")
+                return None
     else:
-        actualizarHistorial(f"Error: {calle} no se puede comprar.")
+        actualizarHistorial(f"Error: '{calle}' no se puede comprar.")
         return None
 
 
@@ -264,13 +284,13 @@ calles = [
     {"Nombre": "Fontan", "Ocupacion": [], "LlCasa": 30, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 425, "CmpHotel": 300},          #2
     {"Nombre": "Sort", "Ocupacion": []},            #3
     {"Nombre": "Rambles", "Ocupacion": ["B","V"], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 450, "CmpHotel": 310},         #4
-    {"Nombre": "Pl.Cat", "Ocupacion": []},          #5
+    {"Nombre": "Pl.Cat", "Ocupacion": [], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 475, "CmpHotel": 325},          #5
     {"Nombre": "Anr pró", "Ocupacion": []},         #6
-    {"Nombre": "Angel", "Ocupacion": []},           #7
-    {"Nombre": "Augusta", "Ocupacion": []},         #8
+    {"Nombre": "Angel", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 500, "CmpHotel": 330},           #7
+    {"Nombre": "Augusta", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 340},         #8
     {"Nombre": "Caixa", "Ocupacion": []},           #9
-    {"Nombre": "Balmes", "Ocupacion": ["B"]},          #10
-    {"Nombre": "Gracia", "Ocupacion": []},          #11
+    {"Nombre": "Balmes", "Ocupacion": ["B"], "LlCasa": 50, "LlHotel": 40, "CmpTrrny": 80, "CmpCasa": 550, "CmpHotel": 350},          #10
+    {"Nombre": "Gracia", "Ocupacion": [], "LlCasa": 50, "LlHotel": 50, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 360},          #11
     {"Nombre": "Sortida", "Ocupacion": []},         #12
     {"Nombre": "Lauria", "Ocupacion": [], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 200, "CmpHotel": 250},          #13
     {"Nombre": "Rosell", "Ocupacion": ["B"], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 225, "CmpHotel": 255},          #14
@@ -304,7 +324,7 @@ jugadores = {
             }
         },
 
-        "Diners":2000,
+        "Diners":500,
         "Carta Especial":None
         
     },
@@ -389,6 +409,7 @@ anadirCasa("vermell",calles[4]["Nombre"])
 
 anadirCasa("blau",calles[4]["Nombre"])
 anadirCasa("blau",calles[14]["Nombre"])
+
 
 anadirCasa("groc",calles[5]["Nombre"])
 
