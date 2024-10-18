@@ -114,6 +114,34 @@ def anadirHotel(jugador, calle):
         actualizarHistorial(f"Error: '{calle}' no se puede comprar.")
         return None
 
+jugadoresEnBancarrota = []
+def bancaRota():
+    for jugador in jugadores.keys():
+        if jugadores[jugador]["Diners"] <= 0 and jugador not in jugadoresEnBancarrota and jugadores[jugador]["Torn"] == True:
+            jugadoresEnBancarrota.append(jugador)
+            actualizarHistorial(f"{jugador} está en bancarrota.")
+            eleccion = input("1. Vender al banco 2. Vender a otro jugador")
+            ValorAlVender = 0
+            if eleccion == "1":
+                for propiedad in jugadores[jugador]["Propiedades"]:
+                    for calle in calles:
+                        if calle["Nombre"] == propiedad:
+                            print(propiedad + ":")
+                            #print(calle)
+                            for construccion in jugadores[jugador]["Propiedades"][propiedad].keys():
+                                if construccion == "Casas":
+                                    valorInd = calle["CmpCasa"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
+                                if construccion == "Hoteles":
+                                    valorInd = calle["CmpHotel"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
+                                ValorAlVender += valorInd
+                ValorAlVender = (ValorAlVender * 50) // 100
+                #MIRAR EL QUE SE ELIMINEN TODAS LAS PROPIEDADES DEL JUGADOR Y QUE SE SUME EL DINERO A SU BALANCE
+                print(str(ValorAlVender) + "\n")
+                    #for construccion in jugadores[jugador]["Propiedades"][propiedad].items():
+                    #    ValorAlVender += calles[propiedad]["CmpCasa"] * construccion
+                    #    print(ValorAlVender)
+                
+
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
                               #I hacer .append en todas las funciones de evento
 
@@ -369,24 +397,24 @@ calles = [
 
 jugadores = {
     "blau":{
-        "Torn":False,
+        "Torn":True,
         "Posicio":0,
         "Propiedades": {
             calles[2]["Nombre"]: {
-                "Casas": 0,
+                "Casas": 2,
                 "Hoteles": 0
             },
             calles[14]["Nombre"]: {
-                "Casas": 1,
+                "Casas": 0,
                 "Hoteles": 1
             },
             calles[16]["Nombre"]: {
-                "Casas": 1,
-                "Hoteles": 1
+                "Casas": 3,
+                "Hoteles": 0
             }
         },
 
-        "Diners":500,
+        "Diners":0,
         "Carta Especial": []
         
     },
@@ -405,7 +433,7 @@ jugadores = {
         "Carta Especial": []
     },
     "vermell":{
-        "Torn":True,
+        "Torn":False,
         "Posicio":0,
         "Propiedades":{
 
@@ -480,4 +508,5 @@ anadirCasa("groc","Pl.Cat")
 
 
 imprimir_tablero(calles)
+bancaRota()
 #print(mostrarInformacion())
