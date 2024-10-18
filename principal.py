@@ -309,7 +309,7 @@ def moverJugador(jugador):
     else:
         if nuevaCalle["Nombre"] == "Sort2" or nuevaCalle["Nombre"] == "Sort":
             pass
-
+    #HACER EL RESTO DE LAS CASILLAS ESPECIALES
 
         
     #Hacer que se mueva y eso
