@@ -116,8 +116,7 @@ def inicioPartida():
         elif jugadores == "taronja":
             inicialesJugadores.append("T")
 
-    calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
-    #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
+    calles[12]['Ocupacion'].extend(inicialesJugadores) 
     return None
 #Falataria modificar la ocupacion a la primera Letra del jugador /////////////////
 #Añadir los mensajes de la banca ////////////
@@ -134,12 +133,12 @@ def moverJugador (jugador,posicionActual):
 
     if jugadores[jugador]["Posicion"] == calleEnJuego["Casilla"]: #Esto siempre se va a dar
         if not calleEnJuego["Ocupacion"] and calleEnJuego["Nombre"] not in callesNoCompra:
-            opcion = input("Que desea hacer ['Pass','cmpTerreny','cmpCasa','cmpHotel','verPrecios','preuBanc','preuJugador','vendreBanc',vendreJugador'? ")
+            opcion = input("Que desea hacer ['Pass','CmpTerreny','CmpCasa','CmpHotel','verPrecios','preuBanc','preuJugador','vendreBanc',vendreJugador'? ")
             if opcion == 'Pass':
                 jugadores[jugador]["Torn"] = False
                 mensajePasar = f"El jugador {jugador} ha pasado turno. No ha realizadno ningún movimient"
                 actualizarHistorial(mensajePasar)
-            elif opcion == "cmpTerreny":
+            elif opcion == "CmpTerreny":
                 if jugadores[jugador]["Diners"] >= calleEnJuego["CmpTerreny"]:
                     jugadores[jugador]["Diners"] -= calleEnJuego["CmpTerreny"]
                     calleEnJuego["Ocupacion"] = jugadores[jugador]
@@ -150,11 +149,11 @@ def moverJugador (jugador,posicionActual):
                 else:
                     mensajeNoDinero = f"El jugador {jugador} no tiene suficiente dinero para comprar el terrno"
                     actualizarHistorial(mensajeNoDinero)
-            elif opcion == "cmpCasa":
+            elif opcion == "CmpCasa":
                 if jugadores[jugador]["Diners"] >= calleEnJuego["CmpCasa"]:
                     if jugadores[jugador]["construcciones"]["casa"] < 4:
-                        jugadores[jugador]["Diners"] -= calleEnJuego["cmpCasa"]
-                        banca = banca + calleEnJuego["cmpCasa"]
+                        jugadores[jugador]["Diners"] -= calleEnJuego["CmpCasa"]
+                        banca = banca + calleEnJuego["CmpCasa"]
                         mensajeCompraCasa = f"El jugador {jugador} ha compraro una casa en {calleEnJuego["Nombre"]}"
                         actualizarHistorial(mensajeCompraCasa)
                     else:
@@ -167,7 +166,7 @@ def moverJugador (jugador,posicionActual):
                 else:
                     mensajeNoDineroCasa = f"El jugador {jugador}, no tiene suficiente dinero para comprar una casa"
                     actualizarHistorial(mensajeNoDineroCasa)
-            elif opcion == "cmpHotel":
+            elif opcion == "CmpHotel":
                 if jugadores[jugador]["construcciones"]["Casa"] < 2:
                     print("No puedes constuir un hotel debido a que no tienes casas suficientes")
                 if jugadores[jugador]["Diners"] < calleEnJuego["CmpHotel"]:
@@ -189,13 +188,15 @@ def moverJugador (jugador,posicionActual):
                         mensajeCompraHotel = f"El jugador {jugador} ha comprado un hotel en {calleEnJuego["Nombre"]}"
                         actualizarHistorial(mensajeCompraHotel)
             elif opcion == "preus":
-                mensajePreus = f"Casa: {calleEnJuego['cmpCasa']}, Hotel: {calleEnJuego['cmpHotel']}"
+                mensajePreus = f"Casa: {calleEnJuego['CmpCasa']}, Hotel: {calleEnJuego['cmpHotel']}"
+                print(mensajePreus)
                 actualizarHistorial(mensajePreus)
                 #"""elif opcion == "banc" and jugadores[jugador]["Diners"] < // aqui me faltaria poner, preuBanc, preuJugador, vendreBanc, vendreJugador"""
         elif calleEnJuego["Nombre"] not in callesNoCompra and calleEnJuego["Ocupacion"] is not None and jugadores[jugador[0]].upper() not in calleEnJuego["Ocupacion"]:
             #Este bloque de codigo es para cuando el jugado cae en una casilla con alquiler
+            #Modificar en base
             if calleEnJuego["Ocupacion"] == "V":
-                pagojugador = (jugadores["vermell"]["construcciones"]["casa"]*calleEnJuego["Ll.Casa"]) + (jugadores["vermell"]["construcciones"]["casa"]*calleEnJuego["Ll.Hotel"])
+                pagojugador = (jugadores["vermell"]["construcciones"]["casa"]*calleEnJuego["Ll.Casa"]) + (jugadores["vermell"]["construcciones"]["hotel"]*calleEnJuego["Ll.Hotel"])
                 jugadores[jugador]["Diners"] -= pagojugador
                 jugadores[jugador]["vermell"] += pagojugador
                 mensajeVermell = f"El jugador {jugador} paga {pagojugador}€ al jugador {jugadores["vermell"]} por sus propiedades"
@@ -241,7 +242,7 @@ def moverJugador (jugador,posicionActual):
     print(f"El jugador {jugador} se mueve a {calles[nuevaPosicion]['Nombre']}")
 
     return nuevaPosicion
-
+print(moverJugador("groc",18))
 # Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
 # al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
 #Se podria inicializar en historial en historial = "" e ir actualizandolo ? #No porque solo tendría un valor, en todo caso sería historial = ["","",""...hasta 14] 
