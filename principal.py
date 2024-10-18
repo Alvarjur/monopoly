@@ -1,38 +1,100 @@
 import random
 import json
 
+calles = [
+    {"Nombre": "Parking", "Ocupacion": [],"Casilla" : 0},         #0
+    {"Nombre": "Urquinoa", "Ocupacion": [], "LlCasa": 30, "LlHotel": 25, "CmpTrrny": 70, "CmpCasa": 400, "CmpHotel": 290,"Casilla" : 1},        #1
+    {"Nombre": "Fontan", "Ocupacion": [], "LlCasa": 30, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 425, "CmpHotel": 300,"Casilla" : 2},          #2
+    {"Nombre": "Sort", "Ocupacion": [],"Casilla" : 3},            #3
+    {"Nombre": "Rambles", "Ocupacion": ["B","V"], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 450, "CmpHotel": 310,"Casilla" : 4},         #4
+    {"Nombre": "Pl.Cat", "Ocupacion": [], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 475, "CmpHotel": 325,"Casilla" : 5},          #5
+    {"Nombre": "Anr pró", "Ocupacion": [],"Casilla" : 6},         #6
+    {"Nombre": "Angel", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 500, "CmpHotel": 330,"Casilla" : 7},           #7
+    {"Nombre": "Augusta", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 340,"Casilla" : 8},         #8
+    {"Nombre": "Caixa", "Ocupacion": [],"Casilla" : 9},           #9
+    {"Nombre": "Balmes", "Ocupacion": ["B"], "LlCasa": 50, "LlHotel": 40, "CmpTrrny": 80, "CmpCasa": 550, "CmpHotel": 350,"Casilla" : 10},          #10
+    {"Nombre": "Gracia", "Ocupacion": [], "LlCasa": 50, "LlHotel": 50, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 360,"Casilla" : 11},          #11
+    {"Nombre": "Sortida", "Ocupacion": [],"Casilla" : 12},         #12
+    {"Nombre": "Lauria", "Ocupacion": [], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 200, "CmpHotel": 250,"Casilla" : 13},          #13
+    {"Nombre": "Rosell", "Ocupacion": ["B"], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 225, "CmpHotel": 255,"Casilla" : 14},          #14
+    {"Nombre": "Sort2", "Ocupacion": [],"Casilla" : 15},           #15
+    {"Nombre": "Marina", "Ocupacion": ["V", "B"], "LlCasa": 15, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 250, "CmpHotel": 260,"Casilla" : 16},          #16
+    {"Nombre": "Consell", "Ocupacion": ["B"], "LlCasa": 15, "LlHotel": 20, "CmpTrrny": 50, "CmpCasa": 275, "CmpHotel": 265,"Casilla" : 17},         #17
+    {"Nombre": "Presó", "Ocupacion": [],"Casilla" : 18},           #18
+    {"Nombre": "Muntan", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 300, "CmpHotel": 270,"Casilla" : 19},          #19
+    {"Nombre": "Aribau", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 325, "CmpHotel": 275,"Casilla" : 20},          #20
+    {"Nombre": "Caixa2", "Ocupacion": [],"Casilla" : 21},          #21
+    {"Nombre": "S.Joan", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 350, "CmpHotel": 280,"Casilla" : 22},          #22
+    {"Nombre": "Aragó", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 375, "CmpHotel": 285,"Casilla" : 23}            #23
+]
+#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
+
+jugadores = {
+    "blau":{
+        "Torn":False,
+        "Posicio":0,#Para indicar en que posición esta
+        "Propiedades":[],
+        "Construcciones":{
+            "Casa":0,
+            "Hotel":0
+        },
+        "CartasEspecials": [],
+        "Diners":2000,
+        "CartaSalirDeLaPrision":False,
+        "EstaEnPrision":False,
+        "TurnosEnPrision":0
+    },
+    "groc":{
+        "Torn":False,
+        "Posicio":0,#Para indicar en que posición esta
+        "Propiedades":[],
+        "Construcciones":{
+            "Casa":0,
+            "Hotel":0
+        },
+        "CartasEspecials": [],
+        "Diners":2000,
+        "CartaSalirDeLaPrision":False, #Aquí esto puede que sea mejor ponerlo como un if "CartaSalirDePrision" in jugadores[jugador]["Cartas especials"] #como idea solo.
+        "EstaEnPrision":False, #También como estándar seguramente sería mejor poner los nombres de las keys sin espacios ni acentos, por si acaso da errores.
+        "TurnosEnPrision":0
+    },
+    "taronja":{
+        "Torn":False,
+        "Posicio":0,#Para indicar en que posición esta
+        "Propiedades":[],
+        "Construcciones":{
+            "Casa":0,
+            "Hotel":0
+        },
+        "CartasEspecials": [],
+        "Diners":2000,
+        "CartaSalirDeLaPrision":False,
+        "EstaEnPrision":False,
+        "TurnosEnPrision":0
+    },
+    "vermell":{
+        "Torn":False,
+        "Posicio":0,#Para indicar en que posición esta
+        "Propiedades":[],
+        "Construcciones":{
+            "Casa":0,
+            "Hotel":0
+        },
+        "CartasEspecials": [],
+        "Diners":2000,
+        "CartaSalirDeLaPrision":False,#Nos dice si tiene la carta de salir prisión o no para despues poder usarla
+        "EstaEnPrision":False,#Estos nos dice si esta en prisión o no
+        "TurnosEnPrision":0 #Como dice el nombre cuantos turnos lleva en prisión
+    }
+}
+banca = 1000000
+historial = []
+
 def tirarDados():
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6) 
     resultadoDados = dado1 + dado2
     return dado1, dado2, resultadoDados
-
-def moverJugador (jugador,posicionActual):
-
-    dado1, dado2, totalDado = tirarDados()
-    print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
-
-    nuevaPosicion = (posicionActual + totalDado) % len(calles)
-
-    if nuevaPosicion < posicionActual:
-        print(f"El jugador {jugador}, ha pasado por la casilla y recibe 200€")
-        jugadores[jugador]["Diners"] += 200
-    
-    print(f"El jugador {jugador} se mueve a {calles[nuevaPosicion]['Nombre']}")
-    #Aqui se podría añadir si el jugador cae en una casilla de suerte (if jugador in calles[casilla de la suerte])
-    #Que salga una carta al azar de las de suerte
-    #También si la casilla en la que recae no esta comprada por otro propietario ofrecer comprarlas
-    #Si es de otro jugador cuanto de alquiler tiene que pagar
-    return nuevaPosicion
-
-"""def mostrarInformacion (jugador):
-    for jugador, info in jugadores.items():
-        print(f"Jugador {jugador.capitalize()}:")
-        print(f"Carrers: {info['Carrers']}")
-        print(f"Diners: {info['Diners']}")
-        print(f"Carta Especial: {info['Carta Especial']}")
-        print("")"""
-
 
 def inicioPartida():
     global jugadores
@@ -57,115 +119,135 @@ def inicioPartida():
     calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
     #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
     return None
+#Falataria modificar la ocupacion a la primera Letra del jugador /////////////////
+#Añadir los mensajes de la banca ////////////
+#Verificar que el jugador que construya casa o hotel sea el dueño de la propiedad
+def moverJugador (jugador,posicionActual):
 
-calles = [
-    {"Nombre": "Parking", "Casilla":0, "Ocupacion": [],},         
-    {"Nombre": "Urquinoa", "Casilla":1, "Ocupacion": []},        
-    {"Nombre": "Fontan", "Casilla":2,"Ocupacion": []},         
-    {"Nombre": "Sort", "Casilla":3,"Ocupacion": []},            
-    {"Nombre": "Rambles", "Casilla":4, "Ocupacion": []},         
-    {"Nombre": "Pl.Cat", "Casilla":5,"Ocupacion": []},          
-    {"Nombre": "Anr pró", "Casilla":6,"Ocupacion": []},         
-    {"Nombre": "Angel", "Casilla":7,"Ocupacion": []},           
-    {"Nombre": "Augusta", "Casilla":8, "Ocupacion": []},         
-    {"Nombre": "Caixa", "Casilla":9,"Ocupacion": []},          
-    {"Nombre": "Balmes", "Casilla":10, "Ocupacion": []},          
-    {"Nombre": "Gracia", "Casilla":11,"Ocupacion": []},          
-    {"Nombre": "Sortida", "Casilla":12,"Ocupacion": []},         
-    {"Nombre": "Lauria", "Casilla":13,"Ocupacion": []},          
-    {"Nombre": "Rosell", "Casilla":14, "Ocupacion": []},          
-    {"Nombre": "Sort2", "Casilla":15,"Ocupacion": []},           
-    {"Nombre": "Marina", "Casilla":16,"Ocupacion": []},          
-    {"Nombre": "Consell", "Casilla":17,"Ocupacion": []},         
-    {"Nombre": "Presó", "Casilla":18,"Ocupacion": []},           
-    {"Nombre": "Muntan", "Casilla":19, "Ocupacion": []},          
-    {"Nombre": "Aribau", "Casilla":20,"Ocupacion": []},          
-    {"Nombre": "Caixa2", "Casilla":21,"Ocupacion": []},          
-    {"Nombre": "S.Joan", "Casilla":22,"Ocupacion": []},          
-    {"Nombre": "Aragó", "Casilla":23, "Ocupacion": []}            
-]#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
+    callesNoCompra = ["Parking","Sort","Anr pró","Caixa","Sortida","Sort2","Presó","Caixa2"]
+    dado1, dado2, totalDado = tirarDados()
+    print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
 
-jugadores = {
-    "blau":{
-        "Torn":False,
-        "Posicio":0,#Para indicar en que posición esta
-        "Propiedades":[],
-        "Construcciones":{
-            "Casa":0,
-            "Hotel":0
-        },
-        "Cartas especials": [],
-        "Diners":2000,
-        "Carta salir de la prision":False,
-        "Esta en prision":False,
-        "Turnos en prision":0
-    },
-    "groc":{
-        "Torn":False,
-        "Posicio":0,#Para indicar en que posición esta
-        "Propiedades":[],
-        "Construcciones":{
-            "Casa":0,
-            "Hotel":0
-        },
-        "Cartas especials": [],
-        "Diners":2000,
-        "Carta salir de la prision":False, #Aquí esto puede que sea mejor ponerlo como un if "CartaSalirDePrision" in jugadores[jugador]["Cartas especials"] #como idea solo.
-        "Esta en prision":False, #También como estándar seguramente sería mejor poner los nombres de las keys sin espacios ni acentos, por si acaso da errores.
-        "Turnos en prision":0
-    },
-    "taronja":{
-        "Torn":False,
-        "Posicio":0,#Para indicar en que posición esta
-        "Propiedades":[],
-        "Construcciones":{
-            "Casa":0,
-            "Hotel":0
-        },
-        "Cartas especials": [],
-        "Diners":2000,
-        "Carta salir de la prision":False,
-        "Esta en prision":False,
-        "Turnos en prision":0
-    },
-    "vermell":{
-        "Torn":False,
-        "Posicio":0,#Para indicar en que posición esta
-        "Propiedades":[],
-        "Construcciones":{
-            "Casa":0,
-            "Hotel":0
-        },
-        "Cartas especials": [],
-        "Diners":2000,
-        "Carta salir de la prision":False,#Nos dice si tiene la carta de salir prisión o no para despues poder usarla
-        "Esta en prision":False,#Estos nos dice si esta en prisión o no
-        "Turnos en prision":0 #Como dice el nombre cuantos turnos lleva en prisión
-    }
-}
+    nuevaPosicion = (posicionActual + totalDado) % len(calles)
+    jugadores[jugador]["Posicion"] = nuevaPosicion
+    calleEnJuego = calles[nuevaPosicion] #Esto es para que me devuelva el valor de la entrada según la posicion del jugador (es como un indice)
+
+    if jugadores[jugador]["Posicion"] == calleEnJuego["Casilla"]: #Esto siempre se va a dar
+        if not calleEnJuego["Ocupacion"] and calleEnJuego["Nombre"] not in callesNoCompra:
+            opcion = input("Que desea hacer ['Pass','cmpTerreny','cmpCasa','cmpHotel','verPrecios','preuBanc','preuJugador','vendreBanc',vendreJugador'? ")
+            if opcion == 'Pass':
+                jugadores[jugador]["Torn"] = False
+                mensajePasar = f"El jugador {jugador} ha pasado turno. No ha realizadno ningún movimient"
+                actualizarHistorial(mensajePasar)
+            elif opcion == "cmpTerreny":
+                if jugadores[jugador]["Diners"] >= calleEnJuego["CmpTerreny"]:
+                    jugadores[jugador]["Diners"] -= calleEnJuego["CmpTerreny"]
+                    calleEnJuego["Ocupacion"] = jugadores[jugador]
+                    banca = banca + calleEnJuego["CmpTerreny"]
+                    mensajeCompraTerreno = f"El jugador {jugador}, ha comprado un terreno en la calle {calleEnJuego["Nombre"]}"
+                    actualizarHistorial(mensajeCompraTerreno)
+                    #jugadores[jugador]["Torn"] = False // Finalizamos el turno ? (esto para todos los casos)
+                else:
+                    mensajeNoDinero = f"El jugador {jugador} no tiene suficiente dinero para comprar el terrno"
+                    actualizarHistorial(mensajeNoDinero)
+            elif opcion == "cmpCasa":
+                if jugadores[jugador]["Diners"] >= calleEnJuego["CmpCasa"]:
+                    if jugadores[jugador]["construcciones"]["casa"] < 4:
+                        jugadores[jugador]["Diners"] -= calleEnJuego["cmpCasa"]
+                        banca = banca + calleEnJuego["cmpCasa"]
+                        mensajeCompraCasa = f"El jugador {jugador} ha compraro una casa en {calleEnJuego["Nombre"]}"
+                        actualizarHistorial(mensajeCompraCasa)
+                    else:
+                        mensajeMaxCasa = input(f"Ya tienes 4 casas construidas, desea comprar un hotel ? [s/n]")
+                        if mensajeMaxCasa == "s":
+                            jugadores[jugador]["construcciones"]["casa"] -= 2
+                            jugadores[jugador]["construcciones"]["Hotel"] += 1
+                            mensajeCompraHotel = f"El jugador {jugador} ha cambiao 2 casas por un hotel en la calle {calleEnJuego['Nombre']}"
+                            actualizarHistorial(mensajeCompraHotel)
+                else:
+                    mensajeNoDineroCasa = f"El jugador {jugador}, no tiene suficiente dinero para comprar una casa"
+                    actualizarHistorial(mensajeNoDineroCasa)
+            elif opcion == "cmpHotel":
+                if jugadores[jugador]["construcciones"]["Casa"] < 2:
+                    print("No puedes constuir un hotel debido a que no tienes casas suficientes")
+                if jugadores[jugador]["Diners"] < calleEnJuego["CmpHotel"]:
+                    mensajeNoDineroHotel = f"El jugador {jugador} no puede comprar un hotel porque no tiene suficiente dinero"
+                    actualizarHistorial(mensajeNoDineroHotel)
+                elif jugadores[jugador]["Diners"] >= calleEnJuego["CmpHotel"]:
+                    if jugadores[jugador]["construcciones"]["Hotel"] == 2 and jugadores[jugador]["construcciones"]["casa"] < 4:
+                        mensajeMaxHotel = input(f"No puede comprar mas hoteles, deseas comprar mas casas ? [s/n]")
+                        if mensajeMaxHotel == "s":
+                            jugadores[jugador]["diners"] -= calleEnJuego["CmpCasa"]
+                            jugadores[jugador]["construcciones"]["casa"] += 1
+                            actualizarHistorial(mensajeCompraCasa)
+                        elif jugadores[jugador]["construcciones"]["Hotel"] == 2 and jugadores[jugador]["construcciones"]["casa"] == 4:
+                            mensajeCalleCompleta = f"No puedes construir mas propiedades, la calle esta completa"
+                            actualizarHistorial(mensajeCalleCompleta)
+                    elif jugadores[jugador]["construcciones"]["Hotel"] < 2 and jugadores[jugador]["construcciones"]["Casa"] >= 2:
+                        jugador[jugador]["Diners"] -= calleEnJuego["CmpHotel"]
+                        banca = banca + calleEnJuego["CmpHotel"]
+                        mensajeCompraHotel = f"El jugador {jugador} ha comprado un hotel en {calleEnJuego["Nombre"]}"
+                        actualizarHistorial(mensajeCompraHotel)
+            elif opcion == "preus":
+                mensajePreus = f"Casa: {calleEnJuego['cmpCasa']}, Hotel: {calleEnJuego['cmpHotel']}"
+                actualizarHistorial(mensajePreus)
+                #"""elif opcion == "banc" and jugadores[jugador]["Diners"] < // aqui me faltaria poner, preuBanc, preuJugador, vendreBanc, vendreJugador"""
+        elif calleEnJuego["Nombre"] not in callesNoCompra and calleEnJuego["Ocupacion"] is not None and jugadores[jugador[0]].upper() not in calleEnJuego["Ocupacion"]:
+            #Este bloque de codigo es para cuando el jugado cae en una casilla con alquiler
+            if calleEnJuego["Ocupacion"] == "V":
+                pagojugador = (jugadores["vermell"]["construcciones"]["casa"]*calleEnJuego["Ll.Casa"]) + (jugadores["vermell"]["construcciones"]["casa"]*calleEnJuego["Ll.Hotel"])
+                jugadores[jugador]["Diners"] -= pagojugador
+                jugadores[jugador]["vermell"] += pagojugador
+                mensajeVermell = f"El jugador {jugador} paga {pagojugador}€ al jugador {jugadores["vermell"]} por sus propiedades"
+                actualizarHistorial(mensajeVermell)
+            elif calleEnJuego["Ocupacion"] == "T":
+                pagojugador = (jugador["taronja"]["construcciones"]["casa"]*calleEnJuego["Ll.Casa"]) + (jugadores["taronja"]["construcciones"]["casa"]*calleEnJuego["Ll.Hotel"])
+                jugadores[jugador]["Diners"] -= pagojugador
+                jugadores[jugador]["taronja"] += pagojugador
+                mensajeTaronja = f"El jugador {jugador} paga {pagojugador}€ al jugador {jugadores["Taronja"]} por sus propiedades"
+                actualizarHistorial(mensajeTaronja)
+            elif calleEnJuego["Ocupacion"] == "B":
+                pagojugador = (jugador["blau"]["construcciones"]["casa"]*calleEnJuego["Ll.Casa"]) + (jugadores["blau"]["construcciones"]["casa"]*calleEnJuego["Ll.Hotel"])
+                jugadores[jugador]["Diners"] -= pagojugador
+                jugadores[jugador]["blau"] += pagojugador
+                mensajeBlau = f"El jugador {jugador} paga {pagojugador}€ al jugador {jugadores["blau"]} por sus propiedades"
+                actualizarHistorial(mensajeBlau)
+            elif calleEnJuego["Ocupacion"] == "G":
+                pagojugador = (jugador["groc"]["construcciones"]["casa"]*calleEnJuego["Ll.Casa"]) + (jugadores["groc"]["construcciones"]["casa"]*calleEnJuego["Ll.Hotel"])
+                jugadores[jugador]["Diners"] -= pagojugador
+                jugadores[jugador]["groc"] += pagojugador
+                mensajeGroc = f"El jugador {jugador} paga {pagojugador}€ al jugador {jugadores["groc"]} por sus propiedades"
+                actualizarHistorial(mensajeGroc)
+            #A partir de aqui son las casillas de evento
+        elif calleEnJuego["Nombre"] in callesNoCompra:
+            if calleEnJuego["Nombre"] == "Sort" or calleEnJuego["Nombre"] == "Sort2":
+                cartaSort(jugador)
+            elif calleEnJuego["Nombre"] == "Anr pró" or calleEnJuego["Nombre"] == "Presó":
+                directoPrision(jugador)
+            elif calleEnJuego["Nombre"] == "Caixa" or calleEnJuego["Nombre"] == "Caixa2":
+                cartaCaixa(jugador)
+            elif calleEnJuego["Nombre"] == "Sortida" and jugadores[jugador]["Posicion"] >= calles["Casilla"][12]: #Esta tiene que ir dentro o fuera del if ?
+                mensajeSalida = f"El jugador {jugador}, ha pasado por la casilla y recibe 200€"
+                jugadores[jugador]["Diners"] += 200
+                actualizarHistorial(mensajeSalida)
+            elif calleEnJuego["Nombre"] == "Parking":
+                mensajeParking = f"El jugador a caído en el Parking, pasa su turno"
+                actualizarHistorial(mensajeParking)
+                
+    #if nuevaPosicion < posicionActual:
+        #print(f"El jugador {jugador}, ha pasado por la casilla y recibe 200€")
+        #jugadores[jugador]["Diners"] += 200
+    
+    print(f"El jugador {jugador} se mueve a {calles[nuevaPosicion]['Nombre']}")
+
+    return nuevaPosicion
 
 # Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
 # al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
 #Se podria inicializar en historial en historial = "" e ir actualizandolo ? #No porque solo tendría un valor, en todo caso sería historial = ["","",""...hasta 14] 
 
-#Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
-#El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
-#El tercer problema es que es un código muy complicado y ni yo sé del todo por qué funciona bien, así que cualquier modificación por mínima que sea será muy difícil de hacer.
-
-
-#def compraPropiedad(jugador,propiedad)
-    #Esta función tiene que permitir a un jugador comprar una propiedad
-    #Tiene que verificar que el jugador tenga suficiente dinero y que la propiedad no esté ocupada por otro jugador
-#def pagarAlquiler(jugador,propiedad)
-    #Calcular lo que tiene que pagar un jugador si caen e una propiedad
-    #Actualiza la key "diners"
-    #Esta tiene que ir dentro de compraPropiedad, y meter un if si casilla es de otro jugador then pagaPropiedad
- #a
-#Luego funciones que decidan que acción toma el jugador en su turno
-    #una funcion que se llame def turnoAccion()
-        #Hacer una lista de str con las opciones que puede hacer y realizarlas DDD
-
 historial = [] #Esta variable almacena el array completo del historial que sera <= 10
+
 
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
                                #I hacer .append en todas las funciones de evento
@@ -175,36 +257,31 @@ def actualizarHistorial(info): #Esta función es la que usaremos para recoger to
     while len(historial) > 14:
         historial.pop(-1)
 
-def tirarDados():
-    dado1 = random.randint(1,6)
-    dado2 = random.randint(1,6) 
-    resultadoDados = dado1 + dado2
-    return dado1, dado2, resultadoDados
-
 def directoPrision(jugador):
 
     #Primero te envian directo a prisión y se actualizan tus valores 
     mensajePrision = f"El jugador {jugador} va directo a la prisión"
     actualizarHistorial(mensajePrision)
     jugadores[jugador]["Posicio"] = 18
-    jugadores[jugador]["Esta en prisión"] = True
-    jugadores[jugador]["Turnos en prisión"] = 0
+    jugadores[jugador]["EstaEnPrision"] = True
+    jugadores[jugador]["TurnosEnPrision"] = 0
   
     #Aqui entra en juego si tiene o no la carta
     #Si la tienes puedes seguir jugando y se actualizan los valores del diccionario
-    if jugadores[jugador]["Carta salir de la prisión"] == True:
-        jugadores[jugador]["Carta salir de la prisión"] = False
-        jugadores[jugador]["Esta en prisión"] = False
+    if jugadores[jugador]["CartaSalirDeLaPrision"] == True:
+        jugadores[jugador]["CartaSalirDeLaPrision"] = False
+        jugadores[jugador]["EstaEnPrision"] = False
         mensajeSiCarta = f"El jugador {jugador} ha usado la carta 'Sortir de la presó'"
         actualizarHistorial(mensajeSiCarta)
     else:#Si no la tienes vas a la carcel, y si es tu turno se suma 1 a la variable turnos en prision
-        jugadores[jugador]["Esta en prision"] = True
+
+        jugadores[jugador]["EstaEnPrision"] = True
         mensajeNoCarta = f"El jugador {jugador} no tiene la carta especial para salvarse, está en la prisión !"
         actualizarHistorial(mensajeNoCarta)
 
-        if jugadores[jugador]["Torn"] == True and jugadores[jugador]["Turnos en prision"] < 3:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
-            jugadores[jugador]["Turnos en prisión"] += 1 #Aquí se actualizan
-            mensajeTurnosPrision = f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"
+        if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
+            jugadores[jugador]["EstaEnPrision"] += 1 #Aquí se actualizan
+            mensajeTurnosPrision = f"El jugador {jugador} ha pasado {jugadores[jugador]["EstaEnPrision"]} turnos en prision"
             actualizarHistorial(mensajeTurnosPrision)
         elif jugadores[jugador]["Torn"] == True and jugadores[jugador]["Turnos en prision"] == 3:
             jugadores[jugador]["Turnos en prision"] = 0
@@ -243,41 +320,16 @@ def mostrarInformacion(jugador):
     mostrarInformacionJugador = []
 
     for jugador in jugadores:
-        mostrarInformacionJugador.append(f"Jugador {jugador}")
-        mostrarInformacionJugador.append(f"Carrers: {jugadores[jugador]["Propiedades"]}")
-        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]["Diners"]}")
-        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Cartas especials"]}")
+        mostrarInformacionJugador.append(f"Jugador {jugador.capitalize()}")
+        mostrarInformacionJugador.append(f"Carrers: {', '.join(list(jugadores[jugador]['Propiedades'].keys()))}")
+        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]['Diners']}")
+        mostrarInformacionJugador.append(f"Especial: {', '.join(jugadores[jugador]['Carta Especial'])}")
         mostrarInformacionJugador.append("")
     
-    for mensaje in mostrarInformacionJugador:
-        print(mensaje)
+    #for mensaje in mostrarInformacionJugador:
+    #    print(mensaje)
 
     return mostrarInformacionJugador
-
-print(mostrarInformacion("groc"))  #Esta funcion como hablamos lo suyo sería que devuelva un array y que cada print de estos sea un string dentro del array.
-
-def inicioPartida():
-    global jugadores
-    listaJugadores = []
-
-    for key in jugadores:
-        listaJugadores.append(key)
-    random.shuffle(listaJugadores)
-
-    inicialesJugadores = []
-
-    for jugadores in listaJugadores:
-        if jugadores == "groc":
-            inicialesJugadores.append("G")
-        elif jugadores == "vermell":
-            inicialesJugadores.append("V")
-        elif jugadores == "blau":
-            inicialesJugadores.append("B")
-        elif jugadores == "taronja":
-            inicialesJugadores.append("T")
-
-    calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
-    #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
 
 def cartaSort(jugador):
     cartasSuerte = [
@@ -294,8 +346,8 @@ def cartaSort(jugador):
     actualizarHistorial(mensajeSuerte)
 
     if carta == "Sortir de la presó": #Basicamente est es actualizar los valores del diccionario
-        jugadores[jugador]["Carta salir de la prisión"] = True
-        jugadores[jugador]["Cartas especials"].append(carta)
+        jugadores[jugador]["CartaSalirDeLaPrision"] = True
+        jugadores[jugador]["CartasEspecials"].append(carta)
         mensajeSalirPrision = f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"
         actualizarHistorial(mensajeSalirPrision)
     elif carta == "Anar a la presó": #Aqui se usa la funcion ir a la prision
@@ -345,8 +397,8 @@ def cartaCaixa(jugador):
     actualizarHistorial(mensajeCaja)
 
     if carta == "Sortir de la presó":
-        jugadores[jugador]["Carta salir de la prisión"] = True
-        jugadores[jugador]["Cartas especials"].append("Sortir de la presó")
+        jugadores[jugador]["CartaSalirDeLaPrision"] = True
+        jugadores[jugador]["CartasEspecials"].append("Sortir de la presó")
         mensajeSlavarPrision = f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"
         actualizarHistorial(mensajeSlavarPrision)
     elif carta == "Error de la banca, guanyes 150€":
@@ -370,13 +422,16 @@ def cartaCaixa(jugador):
         mensajeBelleza = f"El jugador {jugador} le han dado un premio por su belleza, recibe 10€"
         actualizarHistorial(mensajeBelleza)
     elif carta == "Anar a la presó":
-        if jugadores[jugador]["Esta en prisión"] == False:
+        if jugadores[jugador]["EstaEnPrisión"] == False:
             return directoPrision(jugador)
     
-#cartaSort("groc")
-#He tenido que cambiarlo todo para que se pudiera ver de forma automatica, en teoria así todos los mensajes son variables que se llevan a actualizarHistorial que es la función que lo maneja
-#En teoria se van acumulando hasta que haya un total de 10, i luego se elimina el primero que sería el más antiguo. Es un poco tedioso de ver el código pero es la única forma que he tenido de solucionarlo
-
+def buscaPosicion(nombreCasilla):
+    for i,Casilla in enumerate(calles):
+        if calles[Casilla] == nombreCasilla:
+            posicion = i
+            return posicion
+        else:
+            return "No se ha encontrado la posicion"
 
 #Esta tengo que revisarla
 """def buscaPosicion(nombreCasilla):
@@ -386,4 +441,3 @@ def cartaCaixa(jugador):
         return "No se ha encontrado la posición"""
        
 
-#Las funciones sería lo suyo que en vez de mostrar la información de la función con un print, se añadan al historial, no digo que lo hagas ahora es solo para tenerlo en mente
