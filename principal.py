@@ -128,11 +128,10 @@ def moverJugador(jugador):
     for calle in calles:
         if jugador in calle["Ocupacion"]:
             casillaAlLlamar = calles.index(calle)
-
+    #Hacer que se mueva y eso
     print(casillaAlLlamar)
     
-    if a:
-        pass
+    
 
 def tirarDados():
     dado1 = random.randint(1,6)
