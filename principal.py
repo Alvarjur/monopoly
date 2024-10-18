@@ -1,62 +1,5 @@
 import random
 import json
-def tirarDados():
-    dado1 = random.randint(1,6)
-    dado2 = random.randint(1,6) 
-    resultadoDados = dado1 + dado2
-    return dado1, dado2, resultadoDados
-
-def moverJugador (jugador,posicionActual):
-
-    dado1, dado2, totalDado = tirarDados()
-    print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
-
-    nuevaPosicion = (posicionActual + totalDado) % len(calles)
-
-    if nuevaPosicion < posicionActual:
-        print(f"El jugador {jugador}, ha pasado por la casilla y recibe 200€")
-        jugadores[jugador]["Diners"] += 200
-    
-    print(f"El jugador {jugador} se mueve a {calles[nuevaPosicion]['Nombre']}")
-    #Aqui se podría añadir si el jugador cae en una casilla de suerte (if jugador in calles[casilla de la suerte])
-    #Que salga una carta al azar de las de suerte
-    #También si la casilla en la que recae no esta comprada por otro propietario ofrecer comprarlas
-    #Si es de otro jugador cuanto de alquiler tiene que pagar
-    return nuevaPosicion
-
-"""def mostrarInformacion (jugador):
-    for jugador, info in jugadores.items():
-        print(f"Jugador {jugador.capitalize()}:")
-        print(f"Carrers: {info['Carrers']}")
-        print(f"Diners: {info['Diners']}")
-        print(f"Carta Especial: {info['Carta Especial']}")
-        print("")"""
-
-
-def inicioPartida():
-    global jugadores
-    listaJugadores = []
-
-    for key in jugadores:
-        listaJugadores.append(key)
-    random.shuffle(listaJugadores)
-
-    inicialesJugadores = []
-
-    for jugadores in listaJugadores:
-        if jugadores == "groc":
-            inicialesJugadores.append("G")
-        elif jugadores == "vermell":
-            inicialesJugadores.append("V")
-        elif jugadores == "blau":
-            inicialesJugadores.append("B")
-        elif jugadores == "taronja":
-            inicialesJugadores.append("T")
-
-    calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
-    #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
-    return None
-
 calles = [
     {"Nombre": "Parking", "Casilla":0, "Ocupacion": [],},         
     {"Nombre": "Urquinoa", "Casilla":1, "Ocupacion": []},        
@@ -93,11 +36,11 @@ jugadores = {
             "Casa":0,
             "Hotel":0
         },
-        "Cartas especials": [],
+        "CartasEspecials": [],
         "Diners":2000,
-        "Carta salir de la prision":False,
-        "Esta en prision":False,
-        "Turnos en prision":0
+        "CartaSalirDeLaPrision":False,
+        "EstaEnPrision":False,
+        "TurnosEnPrision":0
     },
     "groc":{
         "Torn":False,
@@ -107,11 +50,11 @@ jugadores = {
             "Casa":0,
             "Hotel":0
         },
-        "Cartas especials": [],
+        "CartasEspecials": [],
         "Diners":2000,
-        "Carta salir de la prision":False, #Aquí esto puede que sea mejor ponerlo como un if "CartaSalirDePrision" in jugadores[jugador]["Cartas especials"] #como idea solo.
-        "Esta en prision":False, #También como estándar seguramente sería mejor poner los nombres de las keys sin espacios ni acentos, por si acaso da errores.
-        "Turnos en prision":0
+        "CartaSalirDeLaPrision":False, #Aquí esto puede que sea mejor ponerlo como un if "CartaSalirDePrision" in jugadores[jugador]["Cartas especials"] #como idea solo.
+        "EstaEnPrision":False, #También como estándar seguramente sería mejor poner los nombres de las keys sin espacios ni acentos, por si acaso da errores.
+        "TurnosEnPrision":0
     },
     "taronja":{
         "Torn":False,
@@ -121,11 +64,11 @@ jugadores = {
             "Casa":0,
             "Hotel":0
         },
-        "Cartas especials": [],
+        "CartasEspecials": [],
         "Diners":2000,
-        "Carta salir de la prision":False,
-        "Esta en prision":False,
-        "Turnos en prision":0
+        "CartaSalirDeLaPrision":False,
+        "EstaEnPrision":False,
+        "TurnosEnPrision":0
     },
     "vermell":{
         "Torn":False,
@@ -135,140 +78,21 @@ jugadores = {
             "Casa":0,
             "Hotel":0
         },
-        "Cartas especials": [],
+        "CartasEspecials": [],
         "Diners":2000,
-        "Carta salir de la prision":False,#Nos dice si tiene la carta de salir prisión o no para despues poder usarla
-        "Esta en prision":False,#Estos nos dice si esta en prisión o no
-        "Turnos en prision":0 #Como dice el nombre cuantos turnos lleva en prisión
+        "CartaSalirDeLaPrision":False,#Nos dice si tiene la carta de salir prisión o no para despues poder usarla
+        "EstaEnPrision":False,#Estos nos dice si esta en prisión o no
+        "TurnosEnPrision":0 #Como dice el nombre cuantos turnos lleva en prisión
     }
 }
 
-# Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
-# al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
-#Se podria inicializar en historial en historial = "" e ir actualizandolo ? #No porque solo tendría un valor, en todo caso sería historial = ["","",""...hasta 14] 
-
-historial = [
-    "1.  Ejemplo alguien hace algo",
-    "2.  Pasa esto",
-    "3.  ABCD",
-    "4.  Compra una casa",
-    "5.  Vende una propiedad",
-    "6.  Ha pasado por la salida",
-    "7.  A Vermell no se le ocurren ejemplos",
-    "8.  Ejemplo",
-    "9.  Hola",
-    "10. que",
-    "11. Vermell compra un hotel",
-    "12. Blau ha ganado 2000€",
-    "13. Groc ha entrado en la prisión",
-    "14. Taronja hace algo no se me ocurren más ejemplos"
-]
-
-#Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
-#El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
-#El tercer problema es que es un código muy complicado y ni yo sé del todo por qué funciona bien, así que cualquier modificación por mínima que sea será muy difícil de hacer.
-
-
-#def compraPropiedad(jugador,propiedad)
-    #Esta función tiene que permitir a un jugador comprar una propiedad
-    #Tiene que verificar que el jugador tenga suficiente dinero y que la propiedad no esté ocupada por otro jugador
-#def pagarAlquiler(jugador,propiedad)
-    #Calcular lo que tiene que pagar un jugador si caen e una propiedad
-    #Actualiza la key "diners"
-    #Esta tiene que ir dentro de compraPropiedad, y meter un if si casilla es de otro jugador then pagaPropiedad
- #a
-#Luego funciones que decidan que acción toma el jugador en su turno
-    #una funcion que se llame def turnoAccion()
-        #Hacer una lista de str con las opciones que puede hacer y realizarlas DDD
-
-historialJuego = [] #Esta variable almacena el array completo del historial que sera <= 10
-
-def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
-                               #I hacer .append en todas las funciones de evento
-    historial.insert(0, info)
-    while len(historial) <= 13:
-        historial.append("")
-    while len(historial) > 14:
-        historial.pop(-1)
-
+historial = []
+  
 def tirarDados():
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6) 
     resultadoDados = dado1 + dado2
     return dado1, dado2, resultadoDados
-
-def directoPrision(jugador):
-
-    #Primero te envian directo a prisión y se actualizan tus valores 
-    mensajePrision = f"El jugador {jugador} va directo a la prisión"
-    actualizarHistorial(mensajePrision)
-    jugadores[jugador]["Posicio"] = 18
-    jugadores[jugador]["Esta en prisión"] = True
-    jugadores[jugador]["Turnos en prisión"] = 0
-  
-    #Aqui entra en juego si tiene o no la carta
-    #Si la tienes puedes seguir jugando y se actualizan los valores del diccionario
-    if jugadores[jugador]["Carta salir de la prisión"] == True:
-        jugadores[jugador]["Carta salir de la prisión"] = False
-        jugadores[jugador]["Esta en prisión"] = False
-        mensajeSiCarta = f"El jugador {jugador} ha usado la carta 'Sortir de la presó'"
-        actualizarHistorial(mensajeSiCarta)
-    else:#Si no la tienes vas a la carcel, y si es tu turno se suma 1 a la variable turnos en prision
-        jugadores[jugador]["Esta en prisión"] = True
-        mensajeNoCarta = f"El jugador {jugador} no tiene la carta especial para salvarse, está en la prisión !"
-        actualizarHistorial(mensajeNoCarta)
-
-        if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
-            jugadores[jugador]["Turnos en prisión"] += 1 #Aquí se actualizan
-            mensajeTurnosPrision = f"El jugador {jugador} ha pasado {jugadores[jugador]["Turnos en prisión"]} turnos en prision"
-            actualizarHistorial(mensajeTurnosPrision)
-
-    return None  #En un futuro lo suyo sería que las funciones devolvieran none pero que añadan una línea al historial,
-                              #haría falta una función que mantenga la cantidad de valores del historial en 10, que elimine las antiguas y meta nuevas lineas.
-                              # ^
-                              #En teoria de esta forma ya estaría solucionado
-
-def moverJugador (jugador,posicionActual): #Me falta por completarla
-
-    dado1, dado2, totalDado = tirarDados()
-    print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
-
-    nuevaPosicion = (posicionActual + totalDado) % len(calles)
-
-    if nuevaPosicion < posicionActual:
-        print(f"El jugador {jugador}, ha pasado por la casilla y recibe 200€")
-        jugadores[jugador]["Diners"] += 200
-    
-    print(f"El jugador {jugador} se mueve a {calles[nuevaPosicion]['Nombre']}")
-    #Aqui se podría añadir si el jugador cae en una casilla de suerte (if jugador in calles[casilla de la suerte])
-    #Que salga una carta al azar de las de suerte
-    #También si la casilla en la que recae no esta comprada por otro propietario ofrecer comprarlas
-    #Si es de otro jugador cuanto de alquiler tiene que pagar
-    # ^
-    # Para esto es mejor hacerlo en esta función o crear otra? #Seguramente crear otra sea lo mejor
-
-    return nuevaPosicion
-
-def mostrar_lista_bonita(lista):
-    lista_bonita = json.dumps(lista, indent=4)
-    print(lista_bonita)
-
-def mostrarInformacion(jugador):
-
-    mostrarInformacionJugador = []
-
-    for jugador in jugadores:
-        mostrarInformacionJugador.append(f"Jugador {jugador}")
-        mostrarInformacionJugador.append(f"Carrers: {jugadores[jugador]["Propiedades"]}")
-        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]["Diners"]}")
-        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Cartas especials"]}")
-        mostrarInformacionJugador.append("")
-    
-    for mensaje in mostrarInformacionJugador:
-        print(mensaje)
-
-
-print(mostrarInformacion("groc"))  #Esta funcion como hablamos lo suyo sería que devuelva un array y que cada print de estos sea un string dentro del array.
 
 def inicioPartida():
     global jugadores
@@ -292,6 +116,92 @@ def inicioPartida():
 
     calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
     #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
+    return None
+
+def moverJugador (jugador,posicionActual):
+
+    dado1, dado2, totalDado = tirarDados()
+    print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
+
+    nuevaPosicion = (posicionActual + totalDado) % len(calles)
+
+    if nuevaPosicion < posicionActual:
+        print(f"El jugador {jugador}, ha pasado por la casilla y recibe 200€")
+        jugadores[jugador]["Diners"] += 200
+    
+    print(f"El jugador {jugador} se mueve a {calles[nuevaPosicion]['Nombre']}")
+    #Aqui se podría añadir si el jugador cae en una casilla de suerte (if jugador in calles[casilla de la suerte])
+    #Que salga una carta al azar de las de suerte
+    #También si la casilla en la que recae no esta comprada por otro propietario ofrecer comprarlas
+    #Si es de otro jugador cuanto de alquiler tiene que pagar
+    return nuevaPosicion
+
+# Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
+# al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
+#Se podria inicializar en historial en historial = "" e ir actualizandolo ? #No porque solo tendría un valor, en todo caso sería historial = ["","",""...hasta 14] 
+
+#Luego funciones que decidan que acción toma el jugador en su turno
+    #una funcion que se llame def turnoAccion()
+        #Hacer una lista de str con las opciones que puede hacer y realizarlas DDD
+#Esta variable almacena el array completo del historial que sera <= 10
+
+def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
+                               #I hacer .append en todas las funciones de evento
+    historial.insert(0, info)
+    while len(historial) <= 13:
+        historial.append("")
+    while len(historial) > 14:
+        historial.pop(-1)
+
+def directoPrision(jugador):
+
+    #Primero te envian directo a prisión y se actualizan tus valores 
+    mensajePrision = f"El jugador {jugador} va directo a la prisión"
+    actualizarHistorial(mensajePrision)
+    jugadores[jugador]["Posicio"] = 18
+    jugadores[jugador]["EstaEnPrision"] = True
+    jugadores[jugador]["TurnosEnPrision"] = 0
+  
+    #Aqui entra en juego si tiene o no la carta
+    #Si la tienes puedes seguir jugando y se actualizan los valores del diccionario
+    if jugadores[jugador]["CartaSalirDeLaPrision"] == True:
+        jugadores[jugador]["CartaSalirDeLaPrision"] = False
+        jugadores[jugador]["EstaEnPrision"] = False
+        mensajeSiCarta = f"El jugador {jugador} ha usado la carta 'Sortir de la presó'"
+        actualizarHistorial(mensajeSiCarta)
+    else:#Si no la tienes vas a la carcel, y si es tu turno se suma 1 a la variable turnos en prision
+        jugadores[jugador]["EstaEnPrision"] = True
+        mensajeNoCarta = f"El jugador {jugador} no tiene la carta especial para salvarse, está en la prisión !"
+        actualizarHistorial(mensajeNoCarta)
+
+        if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
+            jugadores[jugador]["EstaEnPrision"] += 1 #Aquí se actualizan
+            mensajeTurnosPrision = f"El jugador {jugador} ha pasado {jugadores[jugador]["EstaEnPrision"]} turnos en prision"
+            actualizarHistorial(mensajeTurnosPrision)
+
+    return None  #En un futuro lo suyo sería que las funciones devolvieran none pero que añadan una línea al historial,
+                              #haría falta una función que mantenga la cantidad de valores del historial en 10, que elimine las antiguas y meta nuevas lineas.
+                              # ^
+                              #En teoria de esta forma ya estaría solucionado
+
+def mostrar_lista_bonita(lista):
+    lista_bonita = json.dumps(lista, indent=4)
+    print(lista_bonita)
+
+def mostrarInformacion(jugador):
+
+    mostrarInformacionJugador = []
+
+    for jugador in jugadores:
+        mostrarInformacionJugador.append(f"Jugador {jugador}")
+        mostrarInformacionJugador.append(f"Carrers: {jugadores[jugador]["Propiedades"]}")
+        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]["Diners"]}")
+        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Cartas especials"]}")
+        mostrarInformacionJugador.append("")
+    
+    for mensaje in mostrarInformacionJugador:
+        print(mensaje)
+
 
 def cartaSort(jugador):
     cartasSuerte = [
@@ -308,8 +218,8 @@ def cartaSort(jugador):
     actualizarHistorial(mensajeSuerte)
 
     if carta == "Sortir de la presó": #Basicamente est es actualizar los valores del diccionario
-        jugadores[jugador]["Carta salir de la prisión"] = True
-        jugadores[jugador]["Cartas especials"].append(carta)
+        jugadores[jugador]["CartaSalirDeLaPrision"] = True
+        jugadores[jugador]["CartasEspecials"].append(carta)
         mensajeSalirPrision = f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"
         actualizarHistorial(mensajeSalirPrision)
     elif carta == "Anar a la presó": #Aqui se usa la funcion ir a la prision
@@ -359,8 +269,8 @@ def cartaCaixa(jugador):
     actualizarHistorial(mensajeCaja)
 
     if carta == "Sortir de la presó":
-        jugadores[jugador]["Carta salir de la prisión"] = True
-        jugadores[jugador]["Cartas especials"].append("Sortir de la presó")
+        jugadores[jugador]["CartaSalirDeLaPrision"] = True
+        jugadores[jugador]["CartasEspecials"].append("Sortir de la presó")
         mensajeSlavarPrision = f"El jugador {jugador} ha obtenido una carta para salir de la prisión !"
         actualizarHistorial(mensajeSlavarPrision)
     elif carta == "Error de la banca, guanyes 150€":
@@ -384,36 +294,18 @@ def cartaCaixa(jugador):
         mensajeBelleza = f"El jugador {jugador} le han dado un premio por su belleza, recibe 10€"
         actualizarHistorial(mensajeBelleza)
     elif carta == "Anar a la presó":
-        if jugadores[jugador]["Esta en prisión"] == False:
+        if jugadores[jugador]["EstaEnPrisión"] == False:
             return directoPrision(jugador)
     
+def buscaPosicion(nombreCasilla):
+    for i,Casilla in enumerate(calles):
+        if calles[Casilla] == nombreCasilla:
+            posicion = i
+            return posicion
+        else:
+            return "No se ha encontrado la posicion"
+
 #cartaSort("groc")
 #He tenido que cambiarlo todo para que se pudiera ver de forma automatica, en teoria así todos los mensajes son variables que se llevan a actualizarHistorial que es la función que lo maneja
-#En teoria se van acumulando hasta que haya un total de 10, i luego se elimina el primero que sería el más antiguo. Es un poco tedioso de ver el código pero es la única forma que he tenido de solucionarlo
-
-"""historial = [
-    "1.  Ejemplo alguien hace algo",
-    "2.  Pasa esto",
-    "3.  ABCD",
-    "4.  Compra una casa",
-    "5.  Vende una propiedad",
-    "6.  Ha pasado por la salida",
-    "7.  A Vermell no se le ocurren ejemplos",
-    "8.  Ejemplo",
-    "9.  Hola",
-    "10. que",
-    "11. Vermell compra un hotel",
-    "12. Blau ha ganado 2000€",
-    "13. Groc ha entrado en la prisión",
-    "14. Taronja hace algo no se me ocurren más ejemplos
-    ]"""
-
-#Esta tengo que revisarla
-"""def buscaPosicion(nombreCasilla):
-    for i, "Nombre", in enumerate(calles):
-        if calles["Nombre"] == nombreCasilla:
-            return i
-        return "No se ha encontrado la posición"""
-       
-
+#En teoria se van acumulando hasta que haya un total de 10, i luego se elimina el primero que sería el más antiguo. Es un poco tedioso de ver el código pero es la única forma que he tenido de soluciona
 #Las funciones sería lo suyo que en vez de mostrar la información de la función con un print, se añadan al historial, no digo que lo hagas ahora es solo para tenerlo en mente
