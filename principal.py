@@ -1,31 +1,32 @@
 import random
 import json
 calles = [
-    {"Nombre": "Parking", "Casilla":0, "Ocupacion": [],},         
-    {"Nombre": "Urquinoa", "Casilla":1, "Ocupacion": []},        
-    {"Nombre": "Fontan", "Casilla":2,"Ocupacion": []},         
-    {"Nombre": "Sort", "Casilla":3,"Ocupacion": []},            
-    {"Nombre": "Rambles", "Casilla":4, "Ocupacion": []},         
-    {"Nombre": "Pl.Cat", "Casilla":5,"Ocupacion": []},          
-    {"Nombre": "Anr pró", "Casilla":6,"Ocupacion": []},         
-    {"Nombre": "Angel", "Casilla":7,"Ocupacion": []},           
-    {"Nombre": "Augusta", "Casilla":8, "Ocupacion": []},         
-    {"Nombre": "Caixa", "Casilla":9,"Ocupacion": []},          
-    {"Nombre": "Balmes", "Casilla":10, "Ocupacion": []},          
-    {"Nombre": "Gracia", "Casilla":11,"Ocupacion": []},          
-    {"Nombre": "Sortida", "Casilla":12,"Ocupacion": []},         
-    {"Nombre": "Lauria", "Casilla":13,"Ocupacion": []},          
-    {"Nombre": "Rosell", "Casilla":14, "Ocupacion": []},          
-    {"Nombre": "Sort2", "Casilla":15,"Ocupacion": []},           
-    {"Nombre": "Marina", "Casilla":16,"Ocupacion": []},          
-    {"Nombre": "Consell", "Casilla":17,"Ocupacion": []},         
-    {"Nombre": "Presó", "Casilla":18,"Ocupacion": []},           
-    {"Nombre": "Muntan", "Casilla":19, "Ocupacion": []},          
-    {"Nombre": "Aribau", "Casilla":20,"Ocupacion": []},          
-    {"Nombre": "Caixa2", "Casilla":21,"Ocupacion": []},          
-    {"Nombre": "S.Joan", "Casilla":22,"Ocupacion": []},          
-    {"Nombre": "Aragó", "Casilla":23, "Ocupacion": []}            
-]#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
+    {"Nombre": "Parking", "Ocupacion": []},         #0
+    {"Nombre": "Urquinoa", "Ocupacion": [], "LlCasa": 30, "LlHotel": 25, "CmpTrrny": 70, "CmpCasa": 400, "CmpHotel": 290},        #1
+    {"Nombre": "Fontan", "Ocupacion": [], "LlCasa": 30, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 425, "CmpHotel": 300},          #2
+    {"Nombre": "Sort", "Ocupacion": []},            #3
+    {"Nombre": "Rambles", "Ocupacion": ["B","V"], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 450, "CmpHotel": 310},         #4
+    {"Nombre": "Pl.Cat", "Ocupacion": [], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 475, "CmpHotel": 325},          #5
+    {"Nombre": "Anr pró", "Ocupacion": []},         #6
+    {"Nombre": "Angel", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 500, "CmpHotel": 330},           #7
+    {"Nombre": "Augusta", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 340},         #8
+    {"Nombre": "Caixa", "Ocupacion": []},           #9
+    {"Nombre": "Balmes", "Ocupacion": ["B"], "LlCasa": 50, "LlHotel": 40, "CmpTrrny": 80, "CmpCasa": 550, "CmpHotel": 350},          #10
+    {"Nombre": "Gracia", "Ocupacion": [], "LlCasa": 50, "LlHotel": 50, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 360},          #11
+    {"Nombre": "Sortida", "Ocupacion": []},         #12
+    {"Nombre": "Lauria", "Ocupacion": [], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 200, "CmpHotel": 250},          #13
+    {"Nombre": "Rosell", "Ocupacion": ["B"], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 225, "CmpHotel": 255},          #14
+    {"Nombre": "Sort2", "Ocupacion": []},           #15
+    {"Nombre": "Marina", "Ocupacion": ["V", "B"], "LlCasa": 15, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 250, "CmpHotel": 260},          #16
+    {"Nombre": "Consell", "Ocupacion": ["B"], "LlCasa": 15, "LlHotel": 20, "CmpTrrny": 50, "CmpCasa": 275, "CmpHotel": 265},         #17
+    {"Nombre": "Presó", "Ocupacion": []},           #18
+    {"Nombre": "Muntan", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 300, "CmpHotel": 270},          #19
+    {"Nombre": "Aribau", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 325, "CmpHotel": 275},          #20
+    {"Nombre": "Caixa2", "Ocupacion": []},          #21
+    {"Nombre": "S.Joan", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 350, "CmpHotel": 280},          #22
+    {"Nombre": "Aragó", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 375, "CmpHotel": 285}            #23
+]
+#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
 
 jugadores = {
     "blau":{
@@ -85,7 +86,7 @@ jugadores = {
         "TurnosEnPrision":0 #Como dice el nombre cuantos turnos lleva en prisión
     }
 }
-
+banca = 1000000
 historial = []
   
 def tirarDados():
@@ -120,10 +121,53 @@ def inicioPartida():
 
 def moverJugador (jugador,posicionActual):
 
+    callesNoCompra = ["Parking","Sort","Anr pró","Caixa","Sortida","Sort2","Presó","Caixa2"]
     dado1, dado2, totalDado = tirarDados()
     print(f"Ha salido {dado1} y {dado2}, en total te mueves {totalDado} casillas")
 
     nuevaPosicion = (posicionActual + totalDado) % len(calles)
+    jugadores[jugador]["Posicion"] = nuevaPosicion
+    if jugadores[jugador][nuevaPosicion] =
+    if not calles["Ocupacion"] and calles["Nombre"] not in callesNoCompra:
+        opcion = input("Que desea hacer ['Pass','cmpTerreny','cmpCasa','cmpHotel','verPrecios','preuBanc','preuJugador','vendreBanc',vendreJugador'? "):
+        if opcion == 'Pass':
+            jugadores[jugador]["Torn"] = False
+            mensajePasar = f"El jugador {jugador} ha pasado turno. No ha realizadno ningún movimient"
+            actualizarHistorial(mensajePasar)
+        elif opcion == "cmpTerreny":
+            jugadores[jugador]["Diners"] -= calles["CmpTerreny"]
+            calles["Ocupacion"] = jugadores[jugador]
+            banca = banca + calles["CmpTerreny"]
+            mensajeCompraTerreno = f"El jugador {jugador}, ha comprado un terreno en la calle {calles["Nombre"]}"
+            actualizarHistorial(mensajeCompraTerreno)
+            #jugadores[jugador]["Torn"] = False // Finalizamos el turno ? (esto para todos los casos)
+        elif opcion == "cmpCasa":
+            if jugadores[jugador]["construcciones"]["casa"] < 4:
+                jugadores[jugador]["Diners"] -= calles["cmpCasa"]
+                banca = banca + calles["cmpCasa"]
+                mensajeCompraCasa = f"El jugador {jugador} ha compraro una casa en {calles["Nombre"]}"
+                actualizarHistorial(mensajeCompraCasa)
+            else:
+                mensajeMaxCasa = input(f"Ya tienes 4 casas construidas, desea comprar un hotel ? [s/n]")
+                if mensajeMaxCasa == "s":
+                    jugadores[jugador]["construcciones"]["casa"] -= 2
+                    jugadores[jugador]["construcciones"]["Hotel"] += 1
+                    mensajeCompraHotel = f"El jugador {jugador} ha cambiao 2 casas por un hotel en la calle {calles['Nombre']}"
+                    actualizarHistorial(mensajeCompraHotel)
+        elif opcion == "cmpHotel":
+            if jugadores[jugador]["construcciones"]["Hotel"] == 2 and jugadores[jugador]["construcciones"]["casa"] < 4:
+                mensajeMaxHotel = input(f"No puede comprar mas hoteles, deseas comprar mas casas ? [s/n]")
+                if mensajeMaxHotel == "s":
+                    jugadores[jugador]["construcciones"]["casa"] += 1
+                    actualizarHistorial(mensajeCompraCasa)
+                elif jugadores[jugador]["construcciones"]["Hotel"] == 2 and jugadores[jugador]["construcciones"]["casa"] == 4:
+                    mensajeCalleCompleta = f"No puedes construir mas propiedades, la calle esta completa"
+                    actualizarHistorial(mensajeCalleCompleta)
+        elif opcion == "preus":
+            mensajePreus = f"Casa: {calles['cmpCasa']}, Hotel: {calles['cmpHotel']}"
+            actualizarHistorial(mensajePreus)
+        """elif opcion == "banc" and jugadores[jugador]["Diners"] < // aqui me faltaria poner, preuBanc, preuJugador, vendreBanc, vendreJugador"""
+
 
     if nuevaPosicion < posicionActual:
         print(f"El jugador {jugador}, ha pasado por la casilla y recibe 200€")
@@ -188,20 +232,21 @@ def mostrar_lista_bonita(lista):
     lista_bonita = json.dumps(lista, indent=4)
     print(lista_bonita)
 
-def mostrarInformacion(jugador):
+def mostrarInformacion():
 
     mostrarInformacionJugador = []
 
     for jugador in jugadores:
-        mostrarInformacionJugador.append(f"Jugador {jugador}")
-        mostrarInformacionJugador.append(f"Carrers: {jugadores[jugador]["Propiedades"]}")
-        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]["Diners"]}")
-        mostrarInformacionJugador.append(f"Especial: {jugadores[jugador]["Cartas especials"]}")
+        mostrarInformacionJugador.append(f"Jugador {jugador.capitalize()}")
+        mostrarInformacionJugador.append(f"Carrers: {', '.join(list(jugadores[jugador]['Propiedades'].keys()))}")
+        mostrarInformacionJugador.append(f"Diners: {jugadores[jugador]['Diners']}")
+        mostrarInformacionJugador.append(f"Especial: {', '.join(jugadores[jugador]['Carta Especial'])}")
         mostrarInformacionJugador.append("")
     
-    for mensaje in mostrarInformacionJugador:
-        print(mensaje)
+    #for mensaje in mostrarInformacionJugador:
+    #    print(mensaje)
 
+    return mostrarInformacionJugador
 
 def cartaSort(jugador):
     cartasSuerte = [
