@@ -11,3 +11,8 @@ dic = {
 #dic.pop("Calle1")
 #print(dic)
 print(dic)
+
+if "Calle1" in dic:
+    print("a")
+lista = [1,2,3,4,5]
+lista.remove
