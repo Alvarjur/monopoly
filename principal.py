@@ -119,69 +119,75 @@ def bancaRota(rendirse = False):
     global banca
     for jugador in jugadores.keys():
         if jugadores[jugador]["Diners"] <= 0 and jugador not in jugadoresEnBancarrota and jugadores[jugador]["Torn"] == True:
-            jugadoresEnBancarrota.append(jugador)
-            actualizarHistorial(f"{jugador.capitalize()} está en bancarrota.")
-            eleccion = input("1. Vender al banco 2. Vender a otro jugador 3. Darse en bancarrota")
-            ValorAlVender = 0
-            if eleccion == "1":
-                for propiedad in jugadores[jugador]["Propiedades"]:
-                    for calle in calles:
-                        if calle["Nombre"] == propiedad:
-                            #print(propiedad + ":")
-                            #print(calle)
-                            for construccion in jugadores[jugador]["Propiedades"][propiedad].keys():
-                                if construccion == "Casas":
-                                    valorInd = calle["CmpCasa"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
-                                if construccion == "Hoteles":
-                                    valorInd = calle["CmpHotel"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
-                                ValorAlVender += valorInd
-                jugadores[jugador]["Propiedades"] = {} #Se vacían las propiedades del jugador
-                ValorAlVender = (ValorAlVender * 50) // 100
-                banca -= ValorAlVender
-                #print(jugadores[jugador]["Diners"])
-                jugadores[jugador]["Diners"] += ValorAlVender
-                actualizarHistorial(f"{jugador.capitalize()} ha vendido sus propiedades a la banca por {ValorAlVender}")
-            elif eleccion == "2":
-                jugadoresNoTurno = []
-                for player in jugadores:
-                    if player != jugador:
-                        jugadoresNoTurno.append(player)
-                while True:
-                    comprador = input(f"A quién le quieres vender?: "+ ", ".join(jugadoresNoTurno)+" ")
-                    comprador = comprador.lower()
-                    if comprador in jugadoresNoTurno:
-                        break
-                    
-                for propiedad in jugadores[jugador]["Propiedades"]:
-                    for calle in calles:
-                        if calle["Nombre"] == propiedad:
-                            #print(propiedad + ":")
-                            #print(calle)
-                            for construccion in jugadores[jugador]["Propiedades"][propiedad].keys():
-                                if construccion == "Casas":
-                                    valorInd = calle["CmpCasa"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
-                                if construccion == "Hoteles":
-                                    valorInd = calle["CmpHotel"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
-                                ValorAlVender += valorInd
-                ValorAlVender = (ValorAlVender * 90) // 100 #Al ser otro jugador el comprador, es un 90% de lo que pagó el vendedor
-                if jugadores[comprador]["Diners"] >= ValorAlVender:
-                    jugadores[comprador]["Diners"] -= ValorAlVender
-                    jugadores[jugador]["Diners"] += ValorAlVender
-
-                    propiedadesJugador = jugadores[jugador]["Propiedades"].items()
-
-                    jugadores[comprador]["Propiedades"].update(propiedadesJugador)
-                    jugadores[jugador]["Propiedades"] = {}
-
-                    actualizarHistorial(f"{jugador.capitalize()} ha vendido sus propiedades a {comprador.capitalize()} por {ValorAlVender}")
-                else:
-                    print(f"{comprador} no tiene dinero")
-                    actualizarHistorial(f"{comprador.capitalize()} no tiene suficiente dinero")
-                    
-            elif eleccion == "3" or rendirse == True:
-                jugadores[jugador]["Propiedades"] = {}
+            actualizarHistorial(f"{jugador.capitalize()} está en bancarrota")
+            while True:
                 jugadoresEnBancarrota.append(jugador)
-                actualizarHistorial(f"{jugador.capitalize()} se ha dado en bancarrota, no jugará más")
+                eleccion = ""
+                if rendirse == False:
+                    eleccion = input("1. Vender al banco 2. Vender a otro jugador 3. Darse en bancarrota")
+                ValorAlVender = 0
+                if eleccion == "1":
+                    for propiedad in jugadores[jugador]["Propiedades"]:
+                        for calle in calles:
+                            if calle["Nombre"] == propiedad:
+                                #print(propiedad + ":")
+                                #print(calle)
+                                for construccion in jugadores[jugador]["Propiedades"][propiedad].keys():
+                                    if construccion == "Casas":
+                                        valorInd = calle["CmpCasa"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
+                                    if construccion == "Hoteles":
+                                        valorInd = calle["CmpHotel"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
+                                    ValorAlVender += valorInd
+                    jugadores[jugador]["Propiedades"] = {} #Se vacían las propiedades del jugador
+                    ValorAlVender = (ValorAlVender * 50) // 100
+                    banca -= ValorAlVender
+                    #print(jugadores[jugador]["Diners"])
+                    jugadores[jugador]["Diners"] += ValorAlVender
+                    actualizarHistorial(f"{jugador.capitalize()} ha vendido sus propiedades a la banca por {ValorAlVender}")
+                    break
+                elif eleccion == "2":
+                    jugadoresNoTurno = []
+                    for player in jugadores:
+                        if player != jugador:
+                            jugadoresNoTurno.append(player)
+                    while True:
+                        comprador = input(f"A quién le quieres vender?: "+ ", ".join(jugadoresNoTurno)+" ")
+                        comprador = comprador.lower()
+                        if comprador in jugadoresNoTurno:
+                            break
+                        
+                    for propiedad in jugadores[jugador]["Propiedades"]:
+                        for calle in calles:
+                            if calle["Nombre"] == propiedad:
+                                #print(propiedad + ":")
+                                #print(calle)
+                                for construccion in jugadores[jugador]["Propiedades"][propiedad].keys():
+                                    if construccion == "Casas":
+                                        valorInd = calle["CmpCasa"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
+                                    if construccion == "Hoteles":
+                                        valorInd = calle["CmpHotel"] * jugadores[jugador]["Propiedades"][propiedad][construccion]
+                                    ValorAlVender += valorInd
+                    ValorAlVender = (ValorAlVender * 90) // 100 #Al ser otro jugador el comprador, es un 90% de lo que pagó el vendedor
+                    if jugadores[comprador]["Diners"] >= ValorAlVender:
+                        jugadores[comprador]["Diners"] -= ValorAlVender
+                        jugadores[jugador]["Diners"] += ValorAlVender
+
+                        propiedadesJugador = jugadores[jugador]["Propiedades"].items()
+
+                        jugadores[comprador]["Propiedades"].update(propiedadesJugador)
+                        jugadores[jugador]["Propiedades"] = {}
+
+                        actualizarHistorial(f"{jugador.capitalize()} ha vendido sus propiedades a {comprador.capitalize()} por {ValorAlVender}")
+                        break
+                    else:
+                        print(f"{comprador} no tiene dinero")
+                        actualizarHistorial(f"{comprador.capitalize()} no tiene suficiente dinero")
+                        
+                elif eleccion == "3" or rendirse == True:
+                    jugadores[jugador]["Propiedades"] = {}
+                    jugadoresEnBancarrota.append(jugador)
+                    actualizarHistorial(f"{jugador.capitalize()} se ha dado en bancarrota, no jugará más")
+                    break
             
 
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
@@ -269,27 +275,6 @@ def imprimir_tablero(calles):
     # Definir el tamaño de las casillas
     ancho_casilla = 12 #Solo funciona si es 12
     alto_casilla = 2 #Solo funciona si es 2.
-    
-    # Función auxiliar para crear bordes horizontales
-    """
-    def crear_borde_horizontal(cantidad, fila): #Esta función se usa dentro del bucle for para crear las líneas horizontales
-        if fila[0] != "" and fila[1] == "": #Si el primer valor del array de la iteración del bucle no es "" y el segundo valor es "", quiere decir que es uno de los arrays
-                                            #que tiene que dejar huecos en medio
-                                            
-            if tablero.index(fila) <= len(tablero) -3: #Si el index de la fila (que es cada iteracion del bucle for), es menor o igual que la cantidad de arrays en tablero
-                if tablero.index(fila) == len(tablero) - 3:
-                    return "+" + ("-" * ancho_casilla + "+ ") + historial[2].ljust(63) + "+" + ("-" * ancho_casilla + "+")
-                elif tablero.index(fila) == len(tablero) - 4:
-                    return "+" + ("-" * ancho_casilla + "+ ") + historial[5].ljust(63) + "+" + ("-" * ancho_casilla + "+")
-                elif tablero.index(fila) == len(tablero) - 5:
-                    return "+" + ("-" * ancho_casilla + "+ ") + historial[8].ljust(63) + "+" + ("-" * ancho_casilla + "+")
-                elif tablero.index(fila) == len(tablero) - 6:
-                    return "+" + ("-" * ancho_casilla + "+ ") + historial[11].ljust(63) + "+" + ("-" * ancho_casilla + "+")
-        #if tablero.index(fila) == len(tablero) - 7:
-        #    pass
-        return "+" + ("-" * ancho_casilla + "+") * cantidad
-    """
-    
 
     # Función auxiliar para crear contenido de una fila
     def crear_fila_contenido(fila):
@@ -344,9 +329,7 @@ def imprimir_tablero(calles):
         
         return resultado
     
-    # Imprimir la parte superior del tablero
 
-    #print(crear_borde_horizontal(len(tablero[0]), ["a", "a", "a"])) #Aquí el ["a", "a", "a"] es porque la funcion requiere un array como parámetro, pero no hace nada con el en esta ocasión
     
     # Imprimir las filas con contenido
     iteracion = 0
@@ -479,10 +462,6 @@ jugadores = {
         "Posicio":0,
         "Propiedades":{
 
-            calles[16]["Nombre"]: {
-                "Casas": 1,
-                "Hoteles": 3
-            },
         },
         "Diners":2000,
         "Carta Especial": []
@@ -490,11 +469,6 @@ jugadores = {
 }
 
 banca = 1000000
-
-
-# Mi idea con el historial es que siempre tenga este número de valores, aunque estén vacíos y parezca que no haya nada (""), porque en el caso de que se borren valores dará error
-# al intentar buscar el valor en el index 13 por ejemplo y esté fuera del rango del array
-#Se podria inicializar en historial en historial = "" e ir actualizandolo ?
 
 historial = [
     
@@ -505,36 +479,6 @@ actualizarHistorial("Adios")
 actualizarHistorial("Estamos haiendo un monopoly que no es muy divertido aaaaaaaa")
 
 inicioPartida(jugadores)
-#print(jugadores)
-
-
-#Hay varios problemas con este tablero, el primero es que seguramente al poner qué jugador está en X casilla, toda la linea se moverá, desencajando el tablero, #SOLUCIONADO
-#El segundo problema es que el hueco del medio no está "vacio", simplemente son espacios en blanco así que no sabría cómo hacer que saliera el historial por ahí. #Solucionado????
-#El tercer problema es que es un código muy complicado y ni yo sé del todo por qué funciona bien, así que cualquier modificación por mínima que sea será muy difícil de hacer.
-
-
-#def compraPropiedad(jugador,propiedad)
-    #Esta función tiene que permitir a un jugador comprar una propiedad
-    #Tiene que verificar que el jugador tenga suficiente dinero y que la propiedad no esté ocupada por otro jugador
-#def pagarAlquiler(jugador,propiedad)
-    #Calcular lo que tiene que pagar un jugador si caen e una propiedad
-    #Actualiza la key "diners"
-    #Esta tiene que ir dentro de compraPropiedad, y meter un if si casilla es de otro jugador then pagaPropiedad
-
-#Las cartas especiales se me ha ocurrido hacerlas de tal forma
-#def usarCartaEspecial(jugador)
-    #Aqui el jugador debe poder permitir usar una carta especial. Antes crear una funcion random que te de el valor de la carta especial
-    
-#Luego funciones que decidan que acción toma el jugador en su turno
-    #una funcion que se llame def turnoAccion()
-        #Hacer una lista de str con las opciones que puede hacer y realizarlas
-
-
-
-
-#propiedadDiccionario("blau", calles[2])
-#print(jugadores)
-#print(jugadores["blau"]["Propiedades"])
 
 
 anadirCasa("vermell",calles[4]["Nombre"])
