@@ -126,6 +126,36 @@ def moverJugador (jugador,posicionActual):
     return nuevaPosicion
 
 """
+
+def seguirEnPrision(jugador):
+    dado1, dado2, totalDado = tirarDados()
+
+    
+
+
+    if jugadores[jugador]["EstaEnPrision"] == True:
+        if dado1 == dado2:
+            jugadores[jugador]["EstaEnPrision"] = False
+            actualizarHistorial(f"  Los dados son '{dado1}' y '{dado2}', sale de prisión!")
+            return None
+        else:
+            actualizarHistorial(f"  Los dados son '{dado1}' y '{dado2}', no han coincidido")
+
+        if jugadores[jugador]["TurnosPrision"] < 3:
+
+            jugadores[jugador]["TurnosPrision"] += 1
+            if jugadores[jugador]["TurnosPrision"] == 1:
+                actualizarHistorial(f"  '{jugador.capitalize()}' ha pasado {jugadores[jugador]['TurnosPrision']} turno en prisión")
+            else:
+                actualizarHistorial(f"  '{jugador.capitalize()}' ha pasado {jugadores[jugador]['TurnosPrision']} turnos en prisión")
+
+            
+
+            
+        else:
+            jugadores[jugador]["EstaEnPrision"] = False
+            actualizarHistorial(f"  '{jugador.capitalize()}' sale de prisión tras 3 turnos!")
+
 def pagarABanca(jugador, dinero, motivo=""):
     """Esta funcion se puede llamar con el argumento 'jugador' como ('V') o ('vermell')"""
     global banca
@@ -207,7 +237,7 @@ def pagarCasillaDeJugador(jugador):
 
 def moverJugador(jugador):
 
-    callesEspeciales = ["Sort", "Sort2", "Anr pró", "Caixa", "Caixa2", "Presó"]
+    callesEspeciales = ["Sort", "Sort2", "Anr pró", "Caixa", "Caixa2"]
     if jugador == "V":
         player = "vermell"
     elif jugador == "B":
@@ -216,6 +246,10 @@ def moverJugador(jugador):
         player = "groc"
     elif jugador == "T":
         player = "taronja"
+
+    if jugadores[player]["EstaEnPrision"] == True:
+        seguirEnPrision(player)
+        return None
 
     dado1, dado2, totalDado = tirarDados()
 
@@ -247,12 +281,14 @@ def moverJugador(jugador):
         return None
 
     #AQUÍ SE PUEDE HACER UN BUCLE QUE ABARCE EL RESTO DEL CÓDIGO DE ESTA FUNCION Y DURE HASTA QUE SE ACABE EL TURNO DEL JUGADOR O LE DE A PASS
-    
-    if nuevaCalle["Nombre"] not in callesEspeciales:
+
+
+    elif nuevaCalle["Nombre"] not in callesEspeciales:
         while True:
+            clearScreen()
+            imprimir_tablero(calles)
             print(f"Qué quieres hacer? (1. Passar / 2. Comprar Terreny / 3. Comprar Casa / 4. Comprar hotel / 5. Mirar precios / 6. Precio al banco / 7. Precio a un jugador / 8. Vender al banco / 9. Vender a un jugador)")
             eleccion = str(input())
-
             if eleccion == "1":
                 jugadores[player]["Torn"] = False
                 actualizarHistorial(f"  '{player.capitalize()}' pasa de turno.")
@@ -260,16 +296,13 @@ def moverJugador(jugador):
             
             elif eleccion == "2":
                 anadirCasa(player, nuevaCalle["Nombre"])
-
             elif eleccion == "3":
                 if nuevaCalle["Nombre"] in jugadores[player]["Propiedades"]:
                     anadirCasa(player, nuevaCalle["Nombre"])
                 else:
                     print(f"Error, '{nuevaCalle['Nombre']}' no es de tu propiedad")
-
             elif eleccion == "4":
                 anadirHotel(player, nuevaCalle["Nombre"])
-
             elif eleccion == "5":
                 pass
             
@@ -286,7 +319,6 @@ def moverJugador(jugador):
                                 valorTotal += valorInd
                 valorTotal = (valorTotal * 50) // 100
                 actualizarHistorial(f"  Ganarias al vender tus propiedades al banco: {valorTotal}")
-
             elif eleccion == "7":
                 valorTotal = 0
                 for propiedad in jugadores[player]["Propiedades"]:
@@ -300,7 +332,6 @@ def moverJugador(jugador):
                                 valorTotal += valorInd
                 valorTotal = (valorTotal * 90) // 100 #Al ser otro jugador el comprador, es un 90% de lo que pagó el vendedor
                 actualizarHistorial(f"  Ganarias al vender tus propiedades a un jugador: {valorTotal}")
-
             elif eleccion == "8":
                 valorTotal = 0
                 for propiedad in jugadores[player]["Propiedades"]:
@@ -313,20 +344,15 @@ def moverJugador(jugador):
                                     valorInd = calle["CmpHotel"] * jugadores[player]["Propiedades"][propiedad][construccion]
                                 valorTotal += valorInd
                 valorTotal = (valorTotal * 50) // 100
-
                 jugadores[player]["Diners"] += valorTotal
                 jugadores[player]["Propiedades"] = {}
-
                 actualizarHistorial(f"  {player.capitalize()} ha vendido sus propiedades al banco por {valorTotal}")
-
             elif eleccion == "9":
                 jugadoresNoTurno = []
                 for videojugador in jugadores:
                     if jugadores[videojugador]["Torn"] == False:
                         jugadoresNoTurno.append(videojugador)
-
                 valorTotal = 0
-
                 for propiedad in jugadores[player]["Propiedades"]:
                     for calle in calles:
                         if calle["Nombre"] == propiedad:
@@ -337,44 +363,44 @@ def moverJugador(jugador):
                                     valorInd = calle["CmpHotel"] * jugadores[player]["Propiedades"][propiedad][construccion]
                                 valorTotal += valorInd
                 valorTotal = (valorTotal * 90) // 100
-
                 while True:
                     print(f"A quién quieres venderle?: " + ", ".join(jugadoresNoTurno))
-
                     comprador = input()
                     comprador = comprador.lower()
                     if comprador in jugadoresNoTurno:
                         break
-
                 if comprador in jugadoresNoTurno:
                     if jugadores[comprador]["Diners"] >= valorTotal:
                             jugadores[comprador]["Diners"] -= valorTotal
                             jugadores[player]["Diners"] += valorTotal
-
                             propiedadesJugador = jugadores[player]["Propiedades"].items()
-
                             jugadores[comprador]["Propiedades"].update(propiedadesJugador)
                             jugadores[player]["Propiedades"] = {}
-
                             actualizarHistorial(f"  {player.capitalize()} ha vendido sus propiedades a {comprador.capitalize()} por {valorTotal}")
 
-            else:
-                if nuevaCalle["Nombre"] == "Sort2" or nuevaCalle["Nombre"] == "Sort":
-                    cartaSort(player)
-            #HACER EL RESTO DE LAS CASILLAS ESPECIALES
-                elif nuevaCalle["Nombre"] == "Caixa" or nuevaCalle["Nombre"] == "Caixa2":
-                    pass
+    else:
+        #print(nuevaCalle["Nombre"])
+        #input()
+        if nuevaCalle["Nombre"] == "Sort2" or nuevaCalle["Nombre"] == "Sort":
+            cartaSort(player)
+        #HACER EL RESTO DE LAS CASILLAS ESPECIALES
+        elif nuevaCalle["Nombre"] == "Caixa" or nuevaCalle["Nombre"] == "Caixa2":
+            cartaCaixa(player)
+       
+        elif nuevaCalle["Nombre"] == "Anr pró":
+            directoPrision(player)
 
-            imprimir_tablero(calles)
-                
-            #Hacer que se mueva y eso
+        
+
+        imprimir_tablero(calles)
+        #Hacer que se mueva y eso
     
     
 
 def tirarDados():
     dado1 = random.randint(1,6)
     dado2 = random.randint(1,6) 
-    
+
     resultadoDados = dado1 + dado2
     return dado1, dado2, resultadoDados
 
@@ -396,6 +422,8 @@ def mostrarInformacion():
 
 def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una casa o para el momento de comprar la casilla.
     while True:
+        clearScreen()
+        imprimir_tablero(calles)
         if calle != "Parking" and calle != "Sort" and calle != "Anr pró" and calle != "Caixa" and calle != "Caixa2" and calle != "Sort2" and calle != "Presó":
             dic = {
                 "Casas" : 0,
@@ -427,15 +455,16 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
                     return None
                 else:
                     actualizarHistorial(f"  Error: Una casa cuesta {dicCalle['CmpCasa']} y tienes {jugadores[key]['Diners']}")
-                    
+                    return None
             else:
                 #print(jugadores[key]["Diners"])
                 #print(dicCalle["CmpTrrny"])
                 if jugadores[key]["Diners"] >= dicCalle["CmpTrrny"]:
-                    print("wawa")
+                    #print("wawa")
                     jugadores[key]["Propiedades"][calle] = dic
                     actualizarHistorial(f"  '{jugador.capitalize()}' ha comprado el terreno '{calle}'")
                     jugadores[key]["Diners"] -= dicCalle["CmpTrrny"] #Resta el dinero de la casilla al dinero del jugador
+                    imprimir_tablero(calles)
                     return None
                 else:
                     actualizarHistorial(f"  Error: La casilla cuesta {dicCalle['CmpTrrny']} y tienes {jugadores[key]['Diners']}")
@@ -447,6 +476,8 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
             return None
 
 def anadirHotel(jugador, calle):
+    clearScreen()
+    imprimir_tablero(calles)
     if calle != "Parking" and calle != "Sort" and calle != "Anr pró" and calle != "Caixa" and calle != "Caixa2" and calle != "Sort2" and calle != "Presó":
         dic = {
             "Casas" : 0,
@@ -476,7 +507,7 @@ def anadirHotel(jugador, calle):
                     if jugadores[key]["Diners"] >= dicCalle["CmpHotel"]:
                         jugadores[key]["Propiedades"][calle]["Casas"] -= 2
                         jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
-                        actualizarHistorial(f"  '{jugador}' compra un hotel en {calle}")
+                        actualizarHistorial(f"  '{jugador.capitalize()}' compra un hotel en {calle}")
                     else:
                         actualizarHistorial(f"  Error: Un hotel cuesta {dicCalle['CmpHotel']} y tienes {jugadores[key]['Diners']}")
                         return None
@@ -795,18 +826,8 @@ def directoPrision(jugador):
         if jugadores[jugador]["Torn"] == True:  # Si es el turno del jugador se va actualizando el valor de turnos en prisión 
 
             jugadores[jugador]["TurnosPrision"] += 1 #Aquí se actualizan
-            mensajeTurnosPrision = f"  El jugador {jugador} ha pasado {jugadores[jugador]['TurnosPrision']} turnos en prision"
+            mensajeTurnosPrision = f"  '{jugador.capitalize()}' ha pasado {jugadores[jugador]['TurnosPrision']} turno en prision"
             actualizarHistorial(mensajeTurnosPrision)
-
-        elif jugadores[jugador]["Torn"] == True and jugadores[jugador]["TurnosPrision"] == 3:
-
-            jugadores[jugador]["TurnosPrision"] = 0
-            mensajeSalidaPrision = f"  El jugador {jugador} ha salido de la carcel despues de 3 turnos !"
-            actualizarHistorial(mensajeSalidaPrision)
-            
-            #supongo que falta esto
-            jugadores[jugador]["EstaEnPrision"] = False
-
 
 def cartaSort(jugador):
     if jugador == "vermell":
@@ -868,8 +889,10 @@ def cartaSort(jugador):
             totalCasas = 0
             totalHoteles = 0
             for propiedad in jugadores[jugador]["Propiedades"]:
-                totalCasas += jugadores[jugador][propiedad]["Casas"]
-                totalHoteles += jugadores[jugador][propiedad]["Hoteles"]
+                print(propiedad)
+                input()
+                totalCasas += jugadores[jugador]["Propiedades"][propiedad]["Casas"]
+                totalHoteles += jugadores[jugador]["Propiedades"][propiedad]["Hoteles"]
             totalAPagar = (25 * totalCasas) + (100 * totalHoteles)
             pagarABanca(jugador, totalAPagar, "por reparaciones")
 
@@ -899,36 +922,41 @@ def cartaCaixa(jugador):
     ]
 
     carta = random.choice(cartasCaixa)
-    mensajeCaja = f"  El jugador {jugador.capitalize()} ha recibido la carta: '{carta}'"
+    mensajeCaja = f"  A '{jugador.capitalize()}' le ha tocado: '{carta}'"
     actualizarHistorial(mensajeCaja)
 
     if carta == "Sortir de la presó":
-        jugadores[jugador]["CartaSalirDeLaPrision"] = True
         jugadores[jugador]["CartasEspecials"].append("Sortir de la presó")
-        mensajeSlavarPrision = f"  El jugador '{jugador.capitalize()}' ha obtenido una carta para salir de la prisión !"
+        mensajeSlavarPrision = f"  '{jugador.capitalize()}' ha obtenido una carta para salir de la prisión!"
         actualizarHistorial(mensajeSlavarPrision)
+
     elif carta == "Error de la banca, guanyes 150€":
         jugadores[jugador]["Diners"] += 150
-        mensajeErrorBanca = f"  El jugador '{jugador.capitalize()}' ha obtenido 150€ gracias a un error de la banca !"
+        mensajeErrorBanca = f"  '{jugador.capitalize()}' ha obtenido 150€ gracias a un error de la banca!"
         actualizarHistorial(mensajeErrorBanca)
+
     elif carta == "Despeses mèdiques, pagues 50€":
         jugadores[jugador]["Diners"] -= 50
-        mensajeMedico = f"  El jugador {jugador} le ha tocado pagar 50€ a sanidad !"
+        mensajeMedico = f"  A '{jugador.capitalize()}' le ha tocado pagar 50€ a sanidad!"
         actualizarHistorial(mensajeMedico)
+
     elif carta == "Despeses escolars, pagues 50€":
         jugadores[jugador]["Diners"] -= 50
-        mensajeEscuela = f"  El jugador {jugador} le ha tocado pagar 50€ a educación"
+        mensajeEscuela = f"  A '{jugador.capitalize()}' le ha tocado pagar 50€ a educación"
         actualizarHistorial(mensajeEscuela)
+
     elif carta == "Reparacions al carrer, pagues 40€":
         jugadores[jugador]["Diners"] -= 40
-        mensajeComunidad = f"  El jugador {jugador} tiene que aportar 40€ a la comunidad"
+        mensajeComunidad = f"  '{jugador.capitalize()}' tiene que aportar 40€ a la comunidad"
         actualizarHistorial(mensajeComunidad)
+
     elif carta == "Concurs de bellesa, guanyes 10€":
         jugadores[jugador]["Diners"] += 10
-        mensajeBelleza = f"  El jugador {jugador} le han dado un premio por su belleza, recibe 10€"
+        mensajeBelleza = f"  A '{jugador.capitalize()}' le han dado un premio por su belleza, recibe 10€"
         actualizarHistorial(mensajeBelleza)
+
     elif carta == "Anar a la presó":
-        if jugadores[jugador]["EstaEnPrisión"] == False:
+        if jugadores[jugador]["EstaEnPrision"] == False:
             return directoPrision(jugador)
         
 def monopoly():
@@ -936,8 +964,17 @@ def monopoly():
     
     while True:
         for jugador in orden:
+            if jugador == "V":
+                player = "vermell"
+            elif jugador == "B":
+                player = "blau"
+            elif jugador == "T":
+                player = "taronja"
+            elif jugador == "G":
+                player = "groc"
+            jugadores[player]["Torn"] = True
             clearScreen()
-            actualizarHistorial(f"> Turno de {jugador}")
+            actualizarHistorial(f"> Turno de {player.capitalize()}")
             imprimir_tablero(calles)
             moverJugador(jugador)
             actualizarHistorial(f"")
@@ -945,6 +982,7 @@ def monopoly():
             clearScreen()
             imprimir_tablero(calles)
             input("Aceptar.")
+            jugadores[player]["Torn"] = False
 
 
 calles = [
@@ -976,7 +1014,7 @@ calles = [
 
 jugadores = {
     "blau":{
-        "Torn":True,
+        "Torn":False,
         "Posicio":0,
         "Propiedades": {
             
@@ -1065,7 +1103,4 @@ historial = [
 #print(jugadores["taronja"]["Propiedades"])
 monopoly()
 
-#COMPROBAR QUE NO SE PASA DEL INDEX DE CALLES EN NINGÚN MOMENTO Y QUE HACE EL MOVIMIENTO BIEN.
-#Y LO DE LAS CASILLAS CAIXA
 #LA PRISIÓN NO FUNCIONA, ENTRAN PERO NO TIENEN QUE PASAR NINGÚN TURNO DENTRO
-#ANR PRÓ NO MANDA A LOS JUGADORES A LA PRISIÓN
