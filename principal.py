@@ -327,6 +327,7 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
             if calle in jugadores[key]["Propiedades"].keys():
                 if jugadores[key]["Propiedades"][calle]["Casas"] >= 4:
                     actualizarHistorial(f"  Error: Se pueden tener cómo máximo 4 casas, compra un hotel.")
+                    return None
     
                 elif jugadores[key]["Diners"] >= dicCalle["CmpCasa"]: #Si tiene dinero suficiente para comprar una casa.
                     jugadores[key]["Propiedades"][calle]["Casas"] += 1
@@ -861,7 +862,7 @@ def monopoly():
                 player = "groc"
             jugadores[player]["Torn"] = True
             clearScreen()
-            actualizarHistorial(f"> Turno de {player.capitalize()}")
+            actualizarHistorial(f"> Turno de '{player.capitalize()}':")
             imprimir_tablero(calles)
             moverJugador(jugador)
             actualizarHistorial(f"")
@@ -949,3 +950,4 @@ monopoly()
 #FALTA HACER QUE GANE 200 CADA VEZ QUE PASA POR LA SALIDA.
 #FALTAN LOS TRUCOS
 #FALTA LO DE PONER LOS PRECIOS EN MEDIO DE LA PANTALLA
+#FALTA LO DE QUE LA BANCA NUNCA BAJE DE 500000, AUNQUE ES PRÁCTICAMENTE IMPOSIBLE QUE ESO PASE DE TODAS FORMAS
