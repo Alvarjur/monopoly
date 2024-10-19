@@ -373,13 +373,18 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
                     actualizarHistorial(f"Error: Una casa cuesta {dicCalle['CmpCasa']} y tienes {jugadores[key]['Diners']}")
                     
             else:
+                #print(jugadores[key]["Diners"])
+                #print(dicCalle["CmpTrrny"])
                 if jugadores[key]["Diners"] >= dicCalle["CmpTrrny"]:
+                    print("wawa")
                     jugadores[key]["Propiedades"][calle] = dic
                     actualizarHistorial(f"'{jugador.capitalize()}' ha comprado el terreno '{calle}'")
                     jugadores[key]["Diners"] -= dicCalle["CmpTrrny"] #Resta el dinero de la casilla al dinero del jugador
                     return None
                 else:
                     actualizarHistorial(f"Error: La casilla cuesta {dicCalle['CmpTrrny']} y tienes {jugadores[key]['Diners']}")
+                    print(f"Error: La casilla cuesta {dicCalle['CmpTrrny']} y tienes {jugadores[key]['Diners']}")
+                    return None
 
         else:
             actualizarHistorial(f"Error: '{calle}' no se puede comprar.")
