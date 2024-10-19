@@ -225,10 +225,12 @@ def moverJugador(jugador):
             
             casillaAlLlamar = calles.index(calle)
             #print(casillaAlLlamar)
-            if casillaAlLlamar + totalDado > len(calles):
+            if casillaAlLlamar + totalDado >= len(calles):
                 casillaAlLlamar -= 24
                 print(casillaAlLlamar)
             #print(casillaAlLlamar + totalDado)
+            print(casillaAlLlamar + totalDado)
+            print(len(calles))
             calle["Ocupacion"].remove(jugador)
             calles[casillaAlLlamar + totalDado]["Ocupacion"].extend(jugador)
             nuevaCalle = calles[casillaAlLlamar + totalDado]
@@ -242,7 +244,7 @@ def moverJugador(jugador):
             break
 
     if pagarCasillaDeJugador(jugador) == "Bancarrota":
-        return
+        return None
 
     if nuevaCalle["Nombre"] not in callesEspeciales:
 
@@ -613,10 +615,10 @@ def inicioPartida(players):
             inicialesJugadores.append("T")
 
     calles[12]['Ocupacion'].extend(inicialesJugadores) #calles[12] es la casilla de salida
+    return inicialesJugadores
     
     #Verificar que establezca correctamente el orden y que inicialmente esten bien colocados
     #print(jugadores)
-    return None
 
 
 def imprimir_tablero(calles):
@@ -801,7 +803,6 @@ def directoPrision(jugador):
             #supongo que falta esto
             jugadores[jugador]["EstaEnPrision"] = False
 
-    return None
 
 def cartaSort(jugador):
     if jugador == "vermell":
@@ -924,8 +925,10 @@ def cartaCaixa(jugador):
             return directoPrision(jugador)
         
 def monopoly():
-    inicioPartida(jugadores)
-    orden = calles[12]["Ocupacion"]
+    orden = inicioPartida(jugadores)
+    
+    print(orden)
+    input()
     while True:
         for jugador in orden:
             clearScreen()
@@ -937,7 +940,8 @@ def monopoly():
             clearScreen()
             imprimir_tablero(calles)
             input("Aceptar.")
-        print("wawa")
+        print(orden)
+        input()
 
 
 calles = [
@@ -1057,3 +1061,5 @@ historial = [
 
 #print(jugadores["taronja"]["Propiedades"])
 monopoly()
+
+#COMPROBAR QUE NO SE PASA DEL INDEX DE CALLES EN NINGÚN MOMENTO Y QUE HACE EL MOVIMIENTO BIEN.
