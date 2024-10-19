@@ -136,11 +136,11 @@ def moverJugador(jugador):
         if jugador in calle["Ocupacion"]:
             
             casillaAlLlamar = calles.index(calle)
-            #print(casillaAlLlamar)
+
             if casillaAlLlamar + totalDado >= len(calles):
                 casillaAlLlamar -= 24
                 print(casillaAlLlamar)
-            #print(casillaAlLlamar + totalDado)
+
             print(casillaAlLlamar + totalDado)
             print(len(calles))
             calle["Ocupacion"].remove(jugador)
@@ -158,15 +158,14 @@ def moverJugador(jugador):
     if pagarCasillaDeJugador(jugador) == "Bancarrota":
         return None
 
-    #AQUÍ SE PUEDE HACER UN BUCLE QUE ABARCE EL RESTO DEL CÓDIGO DE ESTA FUNCION Y DURE HASTA QUE SE ACABE EL TURNO DEL JUGADOR O LE DE A PASS
-
-
     elif nuevaCalle["Nombre"] not in callesEspeciales:
         while True:
             clearScreen()
             imprimir_tablero(calles)
             print(f"Qué quieres hacer? (1. Passar / 2. Comprar Terreny / 3. Comprar Casa / 4. Comprar hotel / 5. Mirar precios / 6. Precio al banco / 7. Precio a un jugador / 8. Vender al banco / 9. Vender a un jugador)")
+
             eleccion = str(input())
+
             if eleccion == "1":
                 jugadores[player]["Torn"] = False
                 actualizarHistorial(f"  '{player.capitalize()}' pasa de turno.")
@@ -260,11 +259,9 @@ def moverJugador(jugador):
                             actualizarHistorial(f"  {player.capitalize()} ha vendido sus propiedades a {comprador.capitalize()} por {valorTotal}")
 
     else:
-        #print(nuevaCalle["Nombre"])
-        #input()
         if nuevaCalle["Nombre"] == "Sort2" or nuevaCalle["Nombre"] == "Sort":
             cartaSort(player)
-        #HACER EL RESTO DE LAS CASILLAS ESPECIALES
+
         elif nuevaCalle["Nombre"] == "Caixa" or nuevaCalle["Nombre"] == "Caixa2":
             cartaCaixa(player)
        
@@ -274,8 +271,6 @@ def moverJugador(jugador):
         
 
         imprimir_tablero(calles)
-        #Hacer que se mueva y eso
-    
     
 
 def tirarDados():
