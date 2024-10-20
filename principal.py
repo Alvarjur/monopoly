@@ -847,6 +847,8 @@ def cartaCaixa(jugador):
             return directoPrision(jugador)
         
 def monopoly():
+    global banca
+
     orden = inicioPartida(jugadores)
     
     while True:
@@ -870,6 +872,11 @@ def monopoly():
             imprimir_tablero(calles)
             input("Aceptar.")
             jugadores[player]["Torn"] = False
+
+            if banca <= 500000:
+                banca += 500000
+                actualizarHistorial(f"Banca + 500000")
+                actualizarHistorial(f"")
 
 
 calles = [
@@ -946,7 +953,6 @@ historial = [
 
 monopoly()
 
-#FALTA HACER QUE GANE 200 CADA VEZ QUE PASA POR LA SALIDA.
 #FALTAN LOS TRUCOS
 #FALTA LO DE PONER LOS PRECIOS EN MEDIO DE LA PANTALLA
 #FALTA LO DE QUE LA BANCA NUNCA BAJE DE 500000, AUNQUE ES PRÁCTICAMENTE IMPOSIBLE QUE ESO PASE DE TODAS FORMAS
