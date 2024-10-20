@@ -948,11 +948,53 @@ def trucs():
                     calle["Ocupacion"].remove("B")
             for calle in calles:
                 if calle["Nombre"] == desplazarJugador:
-                    if "B" not in calle["Ocupacion"]:
+                    if "B" not in calle["Ocupacion"]: #Esto creo que es redundante porque antes lo estoy eliminando en el anterior for
                         calle["Ocupacion"].extend("B")
                         actualizarHistorial(f"El jugador 'azul' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
+        # Aquí seria poner el mismo bloque de codigo para los demas jugadores (Esperar confirmación)
+        if selectJugador == "2":
+            desplazarJugador = input("A que casilla deseas desplazarlo ? \n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
+            for calle in calles :
+                if "G" in calle["Ocupacion"]:
+                    calle["Ocupacion"].remove("G")
+            for calle in calles:
+                if calle["Nombre"] == desplazarJugador:
+                    if "B" not in calle["Ocupacion"]:
+                        calle["Ocupacion"].extend("G")
+                        actualizarHistorial(f"El jugador 'Groc' se ha movido hasta la casilla {desplazarJugador}")
+                else:
+                    return f"La casilla que estas buscando no existe"
+        if selectJugador == "3":
+            desplazarJugador = input("A que casilla deseas desplazarlo ? \n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
+            for calle in calles :
+                if "T" in calle["Ocupacion"]:
+                    calle["Ocupacion"].remove("T")
+            for calle in calles:
+                if calle["Nombre"] == desplazarJugador:
+                    if "T" not in calle["Ocupacion"]:
+                        calle["Ocupacion"].extend("T")
+                        actualizarHistorial(f"El jugador 'taronja' se ha movido hasta la casilla {desplazarJugador}")
+                else:
+                    return f"La casilla que estas buscando no existe"
+        elif selectJugador == "4":
+            desplazarJugador = input("A que casilla deseas desplazarlo ? \n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
+            for calle in calles :
+                if "V" in calle["Ocupacion"]:
+                    calle["Ocupacion"].remove("B")
+            for calle in calles:
+                if calle["Nombre"] == desplazarJugador:
+                    if "V" not in calle["Ocupacion"]:
+                        calle["Ocupacion"].extend("V")
+                        actualizarHistorial(f"El jugador 'azul' se ha movido hasta la casilla {desplazarJugador}")
+                else:
+                    return f"La casilla que estas buscando no existe"
+
+    elif text == "2":
+        selectJugadorCasa = input("A que jugador quieres anadir (1 - 4) casas ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
+        if selectJugador == "1":
+
 
     elif text == "5":
         anadirQuitar = input("Quieres añadir o quitar dinero de un jugador? [1. Añadir, 2.Quitar\n]")
