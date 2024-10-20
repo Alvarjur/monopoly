@@ -3,6 +3,74 @@ import json
 import random
 import os
 
+calles = [
+    {"Nombre": "Parking", "Ocupacion": []},         #0
+    {"Nombre": "Urquinoa", "Ocupacion": [], "LlCasa": 30, "LlHotel": 25, "CmpTrrny": 70, "CmpCasa": 400, "CmpHotel": 290},        #1
+    {"Nombre": "Fontan", "Ocupacion": [], "LlCasa": 30, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 425, "CmpHotel": 300},          #2
+    {"Nombre": "Sort", "Ocupacion": []},            #3
+    {"Nombre": "Rambles", "Ocupacion": [], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 450, "CmpHotel": 310},         #4
+    {"Nombre": "Pl.Cat", "Ocupacion": [], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 475, "CmpHotel": 325},          #5
+    {"Nombre": "Anr pró", "Ocupacion": []},         #6
+    {"Nombre": "Angel", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 500, "CmpHotel": 330},           #7
+    {"Nombre": "Augusta", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 340},         #8
+    {"Nombre": "Caixa", "Ocupacion": []},           #9
+    {"Nombre": "Balmes", "Ocupacion": [], "LlCasa": 50, "LlHotel": 40, "CmpTrrny": 80, "CmpCasa": 550, "CmpHotel": 350},          #10
+    {"Nombre": "Gracia", "Ocupacion": [], "LlCasa": 50, "LlHotel": 50, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 360},          #11
+    {"Nombre": "Sortida", "Ocupacion": []},         #12
+    {"Nombre": "Lauria", "Ocupacion": [], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 200, "CmpHotel": 250},          #13
+    {"Nombre": "Rosell", "Ocupacion": [], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 225, "CmpHotel": 255},          #14
+    {"Nombre": "Sort2", "Ocupacion": []},           #15
+    {"Nombre": "Marina", "Ocupacion": [], "LlCasa": 15, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 250, "CmpHotel": 260},          #16
+    {"Nombre": "Consell", "Ocupacion": [], "LlCasa": 15, "LlHotel": 20, "CmpTrrny": 50, "CmpCasa": 275, "CmpHotel": 265},         #17
+    {"Nombre": "Presó", "Ocupacion": []},           #18
+    {"Nombre": "Muntan", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 300, "CmpHotel": 270},          #19
+    {"Nombre": "Aribau", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 325, "CmpHotel": 275},          #20
+    {"Nombre": "Caixa2", "Ocupacion": []},          #21
+    {"Nombre": "S.Joan", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 350, "CmpHotel": 280},          #22
+    {"Nombre": "Aragó", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 375, "CmpHotel": 285}            #23
+]
+
+jugadores = {
+    "blau":{
+        "Torn":False,
+        "Propiedades": {},
+        "Diners":2000,
+        "CartasEspecials": [],
+        "EstaEnPrision": False,
+        "TurnosPrision": 0
+    },
+    "groc":{
+        "Torn":False,
+        "Propiedades":{},
+        "Diners":2000,
+        "CartasEspecials": [],
+        "EstaEnPrision": False,
+        "TurnosPrision": 0
+    },
+    "taronja":{
+         "Torn":False,
+         "Propiedades":{},
+         "Diners":2000,
+         "CartasEspecials": [],
+         "EstaEnPrision": False,
+         "TurnosPrision": 0
+     },
+    "vermell":{
+        "Torn":False,
+        "Propiedades":{},
+        "Diners":2000,
+        "CartasEspecials": [],
+        "EstaEnPrision": False,
+        "TurnosPrision": 0
+    }
+}
+
+banca = 1000000
+
+historial = [
+    "","","","","","","","","","","","","",""
+]
+
 def clearScreen():
     if os.name == "nt":
         os.system("cls")
@@ -22,16 +90,12 @@ def seguirEnPrision(jugador):
             actualizarHistorial(f"  Los dados son '{dado1}' y '{dado2}', no han coincidido")
 
         if jugadores[jugador]["TurnosPrision"] < 3:
-
             jugadores[jugador]["TurnosPrision"] += 1
             if jugadores[jugador]["TurnosPrision"] == 1:
                 actualizarHistorial(f"  '{jugador.capitalize()}' ha pasado {jugadores[jugador]['TurnosPrision']} turno en prisión")
             else:
                 actualizarHistorial(f"  '{jugador.capitalize()}' ha pasado {jugadores[jugador]['TurnosPrision']} turnos en prisión")
-
-            
-
-            
+  
         else:
             jugadores[jugador]["EstaEnPrision"] = False
             actualizarHistorial(f"  '{jugador.capitalize()}' sale de prisión tras 3 turnos!")
@@ -39,7 +103,7 @@ def seguirEnPrision(jugador):
 def pagarABanca(jugador, dinero, motivo=""):
     """Esta funcion se puede llamar con el argumento 'jugador' como ('V') o ('vermell')"""
     global banca
-
+    #No entiendo para que se usa el len(jugador)
     if len(jugador) == 1:
         if jugador == "V":
             jugador = "vermell"
@@ -49,7 +113,6 @@ def pagarABanca(jugador, dinero, motivo=""):
             jugador = "taronja"
         elif jugador == "B":
             jugador = "blau"
-
 
     if jugadores[jugador]["Diners"] > dinero:
         jugadores[jugador]["Diners"] -= dinero
@@ -76,7 +139,7 @@ def buscarIndexCasilla(jugador):
 
     for calle in calles:
         if player in calle["Ocupacion"]: 
-            return calles.index(calle), calle
+            return calles.index(calle), calle #Esto me imagino que devuelve le nombre de la calle y la posición en la que se encuentra
         
 def pagarCasillaDeJugador(jugador):
     """El parámetro de esta funcion tiene que ser la incial del jugador ('V') por ejemplo"""
@@ -90,7 +153,7 @@ def pagarCasillaDeJugador(jugador):
         player = "groc"
 
     valorAPagar = 0
-
+    #Que es videojugador ?
     for calle in calles:
         if jugador in calle["Ocupacion"]:
             if calle["Nombre"] not in jugadores[player]["Propiedades"]:
@@ -151,6 +214,9 @@ def moverJugador(jugador):
 
             actualizarHistorial(f"  Los dados han dado: '{dado1}' y '{dado2}' con un total de '{totalDado}'")
             actualizarHistorial(f"  '{player.capitalize()}' se ha movido hasta '{calles[casillaAlLlamar + totalDado]['Nombre']}'")
+            
+            if casillaAlLlamar < 12 and casillaAlLlamar.index(nuevaCalle) >= 12:
+                actualizarHistorial(f"  '{player.capitalize()}' ha pasado por la casilla de salida, +200€")
 
             clearScreen()
             imprimir_tablero(calles)
@@ -246,6 +312,7 @@ def moverJugador(jugador):
                                 valorTotal += valorInd
                 valorTotal = (valorTotal * 90) // 100
                 while True:
+                    ###
                     print(f"A quién quieres venderle?: " + ", ".join(jugadoresNoTurno))
                     comprador = input()
                     comprador = comprador.lower()
@@ -506,7 +573,7 @@ def imprimirCasasHoteles(posicionCasilla):
          
 
     return "+------------"
-
+#  Esta para que sirve ?
 def desordenarDiccionario(dic):
     items = list(dic.items())
 
@@ -685,7 +752,7 @@ def directoPrision(jugador):
     mensajePrision = f"  El jugador '{jugador.capitalize()}' va directo a prisión"
     actualizarHistorial(mensajePrision)
 
-    # jugadores[jugador]["Posicio"] = 18
+    #jugadores[jugador]["Posicio"] = 18 -> tendriamos que poner que se van directo a la posicion 18 (?)
     jugadores[jugador]["EstaEnPrision"] = True
     jugadores[jugador]["TurnosPrision"] = 0
 
@@ -737,7 +804,7 @@ def cartaSort(jugador):
     mensajeSuerte = f"  '{jugador.capitalize()}' recibió la carta: '{carta}'"
     actualizarHistorial(mensajeSuerte)
 
-    if carta == "Sortir de la presó": #Basicamente est es actualizar los valores del diccionario
+    if carta == "Sortir de la presó": #Basicamente esto es actualizar los valores del diccionario
         jugadores[jugador]["CartaSalirDeLaPrision"] = True
         jugadores[jugador]["CartasEspecials"].append(carta)
         mensajeSalirPrision = f"  '{jugador.capitalize()}' podrá salir de la cárcel!"
@@ -770,7 +837,7 @@ def cartaSort(jugador):
         actualizarHistorial(mensajeTresEspacios)
 
     elif carta == "Reparacions propietats":
-        if len(jugadores[jugador]["Propiedades"]) > 0:
+        if len(jugadores[jugador]["Propiedades"]) > 0: #Aqui entiendo que usar len para comprobar que la lista no este vacia (?)
             totalCasas = 0
             totalHoteles = 0
             for propiedad in jugadores[jugador]["Propiedades"]:
@@ -869,77 +936,6 @@ def monopoly():
             input("Aceptar.")
             jugadores[player]["Torn"] = False
 
-
-calles = [
-    {"Nombre": "Parking", "Ocupacion": []},         #0
-    {"Nombre": "Urquinoa", "Ocupacion": [], "LlCasa": 30, "LlHotel": 25, "CmpTrrny": 70, "CmpCasa": 400, "CmpHotel": 290},        #1
-    {"Nombre": "Fontan", "Ocupacion": [], "LlCasa": 30, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 425, "CmpHotel": 300},          #2
-    {"Nombre": "Sort", "Ocupacion": []},            #3
-    {"Nombre": "Rambles", "Ocupacion": [], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 450, "CmpHotel": 310},         #4
-    {"Nombre": "Pl.Cat", "Ocupacion": [], "LlCasa": 35, "LlHotel": 30, "CmpTrrny": 70, "CmpCasa": 475, "CmpHotel": 325},          #5
-    {"Nombre": "Anr pró", "Ocupacion": []},         #6
-    {"Nombre": "Angel", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 500, "CmpHotel": 330},           #7
-    {"Nombre": "Augusta", "Ocupacion": [], "LlCasa": 40, "LlHotel": 35, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 340},         #8
-    {"Nombre": "Caixa", "Ocupacion": []},           #9
-    {"Nombre": "Balmes", "Ocupacion": [], "LlCasa": 50, "LlHotel": 40, "CmpTrrny": 80, "CmpCasa": 550, "CmpHotel": 350},          #10
-    {"Nombre": "Gracia", "Ocupacion": [], "LlCasa": 50, "LlHotel": 50, "CmpTrrny": 80, "CmpCasa": 525, "CmpHotel": 360},          #11
-    {"Nombre": "Sortida", "Ocupacion": []},         #12
-    {"Nombre": "Lauria", "Ocupacion": [], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 200, "CmpHotel": 250},          #13
-    {"Nombre": "Rosell", "Ocupacion": [], "LlCasa": 10, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 225, "CmpHotel": 255},          #14
-    {"Nombre": "Sort2", "Ocupacion": []},           #15
-    {"Nombre": "Marina", "Ocupacion": [], "LlCasa": 15, "LlHotel": 15, "CmpTrrny": 50, "CmpCasa": 250, "CmpHotel": 260},          #16
-    {"Nombre": "Consell", "Ocupacion": [], "LlCasa": 15, "LlHotel": 20, "CmpTrrny": 50, "CmpCasa": 275, "CmpHotel": 265},         #17
-    {"Nombre": "Presó", "Ocupacion": []},           #18
-    {"Nombre": "Muntan", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 300, "CmpHotel": 270},          #19
-    {"Nombre": "Aribau", "Ocupacion": [], "LlCasa": 20, "LlHotel": 20, "CmpTrrny": 60, "CmpCasa": 325, "CmpHotel": 275},          #20
-    {"Nombre": "Caixa2", "Ocupacion": []},          #21
-    {"Nombre": "S.Joan", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 350, "CmpHotel": 280},          #22
-    {"Nombre": "Aragó", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 375, "CmpHotel": 285}            #23
-]#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
-
-jugadores = {
-    "blau":{
-        "Torn":False,
-        "Propiedades": {},
-        "Diners":2000,
-        "CartasEspecials": [],
-        "EstaEnPrision": False,
-        "TurnosPrision": 0
-    },
-    "groc":{
-        "Torn":False,
-        "Propiedades":{},
-        "Diners":2000,
-        "CartasEspecials": [],
-        "EstaEnPrision": False,
-        "TurnosPrision": 0
-    },
-    "taronja":{
-         "Torn":False,
-         "Propiedades":{},
-         "Diners":2000,
-         "CartasEspecials": [],
-         "EstaEnPrision": False,
-         "TurnosPrision": 0
-     },
-    "vermell":{
-        "Torn":False,
-        "Propiedades":{},
-        "Diners":2000,
-        "CartasEspecials": [],
-        "EstaEnPrision": False,
-        "TurnosPrision": 0
-    }
-}
-
-banca = 1000000
-
-historial = [
-    "","","","","","","","","","","","","",""
-]
-
-
-
 # AQUÍ INICIA EL JUEGO
 
 monopoly()
@@ -948,3 +944,4 @@ monopoly()
 #FALTAN LOS TRUCOS
 #FALTA LO DE PONER LOS PRECIOS EN MEDIO DE LA PANTALLA
 #FALTA LO DE QUE LA BANCA NUNCA BAJE DE 500000, AUNQUE ES PRÁCTICAMENTE IMPOSIBLE QUE ESO PASE DE TODAS FORMAS
+#Esto se puede con un if banca < 500000: banca += 1000000
