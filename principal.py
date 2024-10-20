@@ -908,6 +908,8 @@ def monopoly():
 
     actualizarHistorial(f"")
     actualizarHistorial(f"Ha ganado {ganador.capitalize()}!".center(40))
+    imprimir_tablero(calles)
+    
 calles = [
     {"Nombre": "Parking", "Ocupacion": []},         #0
     {"Nombre": "Urquinoa", "Ocupacion": [], "LlCasa": 30, "LlHotel": 25, "CmpTrrny": 70, "CmpCasa": 400, "CmpHotel": 290},        #1
