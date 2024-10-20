@@ -954,6 +954,7 @@ def trucs():
                 if calle["Nombre"] == desplazarJugador:
                     if "B" not in calle["Ocupacion"]: #Esto creo que es redundante porque antes lo estoy eliminando en el anterior for
                         calle["Ocupacion"].extend("B")
+                        #jugadores["blau"]["Posicion"] = calle
                         actualizarHistorial(f"El jugador 'blau' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
@@ -996,6 +997,7 @@ def trucs():
                         actualizarHistorial(f"El jugador 'vermell' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
+    #Imprimir tablero calles para ver la posicion actualizada (?)
     #TRUCO PARA AÑADIR CASAS A UN JUGADOR
     elif text == "2":
         selectJugadorCasa = input("A que jugador quieres anadir (1 - 4) casas ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
@@ -1073,7 +1075,7 @@ def trucs():
                         jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
                         jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] -= 2 
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'blau'")
-                    elif jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] == 2 and  jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                    elif jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] == 0 and  jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
                         jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
                         jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] -= 4
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'blau'")
@@ -1096,7 +1098,7 @@ def trucs():
                         jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
                         jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] -= 2 
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'groc'")
-                    elif jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] == 2 and  jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                    elif jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] == 0 and  jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
                         jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
                         jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] -= 4
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'groc'")
@@ -1119,7 +1121,7 @@ def trucs():
                         jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
                         jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] -= 2 
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'taronja'")
-                    elif jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] == 2 and  jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                    elif jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] == 0 and  jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
                         jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
                         jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] -= 4
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'taronja'")
@@ -1142,7 +1144,7 @@ def trucs():
                         jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
                         jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] -= 2 
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'vermell'")
-                    elif jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] == 2 and  jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                    elif jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] == 0 and  jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
                         jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
                         jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] -= 4
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'vermell'")
@@ -1194,22 +1196,23 @@ def trucs():
             if trucoJugador == "1":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["blau"]["Diners"] += cantidadAnadir
-                return f" Se han añadido {cantidadAnadir} al jugador 'blau', total: {jugadores["blau"]["Diners"]}"
+                actualizarHistorial(f" Se han añadido {cantidadAnadir} al jugador 'blau', total: {jugadores["blau"]["Diners"]}")
+                #Se podria añadir un print(jugadores["jugador"]["Diners"], para comprobar que realmente se han añadido (?))
             #Jugador amarillo
             elif trucoJugador == "2":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["groc"]["Diners"] += cantidadAnadir
-                return f" Se han añadido {cantidadAnadir} al jugador 'groc', total: {jugadores["groc"]["Diners"]}"
+                actualizarHistorial(f" Se han añadido {cantidadAnadir} al jugador 'groc', total: {jugadores["groc"]["Diners"]}")
             #Jugador naranja
             elif trucoJugador == "3":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["taronja"]["Diners"] += cantidadAnadir
-                return f" Se han añadido {cantidadAnadir} al jugador 'taronja', total: {jugadores["taronja"]["Diners"]}"
+                actualizarHistorial(f" Se han añadido {cantidadAnadir} al jugador 'taronja', total: {jugadores["taronja"]["Diners"]}")
             #Jugador rojo
             elif trucoJugador == "4":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["vermell"]["Diners"] += cantidadAnadir
-                return f" Se han añadido {cantidadAnadir} al jugador 'vermell', total: {jugadores["vermell"]["Diners"]}"
+                actualizarHistorial(f" Se han añadido {cantidadAnadir} al jugador 'vermell', total: {jugadores["vermell"]["Diners"]}")
         #Quitar dinero
         if anadirQuitar == "2":
             trucoJugador = input("A que jugador deseas quitar dinero ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]")
@@ -1244,6 +1247,7 @@ def trucs():
             quitarDinero = float(input("Que canitad quieres quitar ?\n"))
             banca -= quitarDinero
             return f"Se ha sacado la cantidad de {quitarDinero} a banca: total = {banca}"
+        #if banca < 500000: banca += 100000000000 (Por si al Albert le da por quitar 10 millones (?))
             
 
 # AQUÍ INICIA EL JUEGO
@@ -1255,4 +1259,3 @@ monopoly()
 #FALTA LO DE QUE LA BANCA NUNCA BAJE DE 500000, AUNQUE ES PRÁCTICAMENTE IMPOSIBLE QUE ESO PASE DE TODAS FORMAS
 #^
 #Esto se puede con un if banca < 500000: banca += 1000000
-#Faltaria, añadir actualizarHistorial en truco de añadirCasas + revisar que los prints esten bajo su respectivo color
