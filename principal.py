@@ -990,12 +990,163 @@ def trucs():
                         actualizarHistorial(f"El jugador 'vermell' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
-
     elif text == "2":
         selectJugadorCasa = input("A que jugador quieres anadir (1 - 4) casas ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
-        if selectJugador == "1":
+        if selectJugadorCasa == "1":
+            calleCasa = input("A que calle quieres añadrile una casa")
+            numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
+            if 1 <= numeroAnadirCasas <= 4:
+                if calleCasa in jugadores["blau"]["Propiedades"]:
+                    #Aqui inicio el diccionario para añadir Casas en propiedades
+                    if "Casas" not in jugadores["blau"]["Propiedades"][calleCasa]:
+                        jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] = 0
+                    jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] += numeroAnadirCasas   
+                else:
+                    actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+            else:
+                actualizarHistorial("No se pueden añadir mas de cuatro casas")
+        if selectJugador == "2":
+            calleCasa = input("A que calle quieres añadrile una casa")
+            numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
+            if 1 <= numeroAnadirCasas <= 4:
+                if calleCasa in jugadores["groc"]["Propiedades"]:
+                    #Aqui inicio el diccionario para añadir Casas en propiedades
+                    if "Casas" not in jugadores["groc"]["Propiedades"][calleCasa]:
+                        jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] = 0
+                    jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] += numeroAnadirCasas   
+                else:
+                    actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+            else:
+                actualizarHistorial("No se pueden añadir mas de cuatro casas")
+        if selectJugador == "3":
+            calleCasa = input("A que calle quieres añadrile una casa")
+            numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
+            if 1 <= numeroAnadirCasas <= 4:
+                if calleCasa in jugadores["taronja"]["Propiedades"]:
+                    #Aqui inicio el diccionario para añadir Casas en propiedades
+                    if "Casas" not in jugadores["taronja"]["Propiedades"][calleCasa]:
+                        jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] = 0
+                    jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] += numeroAnadirCasas   
+                else:
+                    actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+            else:
+                actualizarHistorial("No se pueden añadir mas de cuatro casas")
+        if selectJugador == "4":
+            calleCasa = input("A que calle quieres añadrile una casa")
+            numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
+            if 1 <= numeroAnadirCasas <= 4:
+                if calleCasa in jugadores["vermell"]["Propiedades"]:
+                    #Aqui inicio el diccionario para añadir Casas en propiedades
+                    if "Casas" not in jugadores["vermell"]["Propiedades"][calleCasa]:
+                        jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] = 0
+                    jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] += numeroAnadirCasas   
+                else:
+                    actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+            else:
+                actualizarHistorial("No se pueden añadir mas de cuatro casas")
+    elif text == "3":
+        selectJugadorHotel = input("Aque jugador quieres añadir Hoteles ?[1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n ")
+        if selectJugadorHotel == "1":
+            calleHotel = input("A que calle quieres añadirle un hotel ?\n")
+            numeroAnadirHotel = input("Cuantos hoteles quieres anadir ? [1 o 2]")
+            if  1 <= numeroAnadirHotel <= 2:
+                if calleHotel in jugadores["blau"]["Propiedades"]:
+                    if "Hoteles" not in jugadores["blau"]["Propiedades"][calleCasa]:
+                        jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] = 0
 
+                    if jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] == 2:
+                        actualizarHistorial(f"No se pueden añadir mas hoteles")
+                    elif jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
+                        jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] -= 2 
+                        actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'blau'")
+                    elif jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] == 2 and  jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                        jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] -= 4
+                        actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'blau'")
+                else:
+                    actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+            else:
+                actualizarHistorial("No se pueden añadir mas de 2 hoteles")
+        else:
+            actualizarHistorial(f"No existe el jugador")
 
+        if selectJugadorHotel == "2":
+            calleHotel = input("A que calle quieres añadirle un hotel ?\n")
+            numeroAnadirHotel = input("Cuantos hoteles quieres anadir ? [1 o 2]")
+            if  1 <= numeroAnadirHotel <= 2:
+                if calleHotel in jugadores["groc"]["Propiedades"]:
+                    if "Hoteles" not in jugadores["groc"]["Propiedades"][calleCasa]:
+                        jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] = 0
+
+                    if jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] == 2:
+                        actualizarHistorial(f"No se pueden añadir mas hoteles")
+                    elif jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
+                        jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] -= 2 
+                        actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'groc'")
+                    elif jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] == 2 and  jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                        jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] -= 4
+                        actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'groc'")
+                    else:
+                        actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+                else:
+                    actualizarHistorial("No se pueden añadir mas de 2 hoteles")
+        else:
+            actualizarHistorial(f"No existe el jugador")
+            
+        if selectJugadorHotel == "3":
+            calleHotel = input("A que calle quieres añadirle un hotel ?\n")
+            numeroAnadirHotel = input("Cuantos hoteles quieres anadir ? [1 o 2]")
+            if  1 <= numeroAnadirHotel <= 2:
+                if calleHotel in jugadores["taronja"]["Propiedades"]:
+                    if "Hoteles" not in jugadores["taronja"]["Propiedades"][calleCasa]:
+                        jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] = 0
+
+                    if jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] == 2:
+                        actualizarHistorial(f"No se pueden añadir mas hoteles")
+                    elif jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
+                        jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] -= 2 
+                        actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'taronja'")
+                    elif jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] == 2 and  jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                        jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] -= 4
+                        actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'taronja'")
+                    else:
+                        actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+                else:
+                    actualizarHistorial("No se pueden añadir mas de 2 hoteles")
+        else:
+            actualizarHistorial(f"No existe el jugador")
+
+        if selectJugadorHotel == "4":
+            calleHotel = input("A que calle quieres añadirle un hotel ?\n")
+            numeroAnadirHotel = input("Cuantos hoteles quieres anadir ? [1 o 2]")
+            if  1 <= numeroAnadirHotel <= 2:
+                if calleHotel in jugadores["vermell"]["Propiedades"]:
+                    if "Hoteles" not in jugadores["vermell"]["Propiedades"][calleCasa]:
+                        jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] = 0
+
+                    if jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] == 2:
+                        actualizarHistorial(f"No se pueden añadir mas hoteles")
+                    elif jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
+                        jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] -= 2 
+                        actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'vermell'")
+                    elif jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] == 2 and  jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                        jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] -= 4
+                        actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'vermell'")
+                    else:
+                        actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+                else:
+                    actualizarHistorial("No se pueden añadir mas de 2 hoteles")
+        else:
+            actualizarHistorial(f"No existe el jugador")
+    elif text == "4":
+        return None
     elif text == "5":
         anadirQuitar = input("Quieres añadir o quitar dinero de un jugador? [1. Añadir, 2.Quitar\n]")
         if anadirQuitar == "1":
@@ -1055,3 +1206,4 @@ monopoly()
 #FALTA LO DE QUE LA BANCA NUNCA BAJE DE 500000, AUNQUE ES PRÁCTICAMENTE IMPOSIBLE QUE ESO PASE DE TODAS FORMAS
 #^
 #Esto se puede con un if banca < 500000: banca += 1000000
+#Faltaria, añadir actualizarHistorial en truco de añadirCasas + revisar que los prints esten bajo su respectivo color
