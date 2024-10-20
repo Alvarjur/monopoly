@@ -1154,7 +1154,36 @@ def trucs():
             actualizarHistorial(f"No existe el jugador seleccionado")
     #TRUCO PARA ADELANTAR TURNOS
     elif text == "4":
-        return None
+        adelantarTurno = input("De que jugador quieres adelantar su turno ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
+        #Jugador azul
+        if adelantarTurno == "1":
+            jugadores["azul"]["Torn"] = True
+            jugadores["groc"]["Torn"] = False
+            jugadores["taronja"]["Torn"] = False
+            jugadores["vermell"]["Torn"] = False
+            actualizarHistorial(f"Es el turno del jugador 'blau' ")
+        #Jugador amarillo
+        elif adelantarTurno == "2":
+            jugadores["azul"]["Torn"] = False
+            jugadores["groc"]["Torn"] = True
+            jugadores["taronja"]["Torn"] = False
+            jugadores["vermell"]["Torn"] = False
+            actualizarHistorial(f"Es el turno del jugador 'groc' ")
+        #Jugador rojo
+        elif adelantarTurno == "3":
+            jugadores["azul"]["Torn"] = False
+            jugadores["groc"]["Torn"] = False
+            jugadores["taronja"]["Torn"] = True
+            jugadores["vermell"]["Torn"] = False
+            actualizarHistorial(f"Es el turno del jugador 'taronja' ")
+        elif adelantarTurno == "4":
+            jugadores["azul"]["Torn"] = False
+            jugadores["groc"]["Torn"] = False
+            jugadores["taronja"]["Torn"] = False
+            jugadores["vermell"]["Torn"] = True
+            actualizarHistorial(f"Es el turno del jugador 'taronja' ")
+        else:
+            actualizarHistorial("No existe el jugador seleccionado")
     #TRUCO PARA AÑADIR DINERO
     elif text == "5":
         anadirQuitar = input("Quieres añadir o quitar dinero de un jugador? [1. Añadir, 2.Quitar\n]")
