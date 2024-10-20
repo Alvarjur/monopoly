@@ -416,10 +416,12 @@ def anadirHotel(jugador, calle):
         actualizarHistorial(f"  Error: '{calle}' no se puede comprar.")
         return None
 
-jugadoresEnBancarrota = []
+
 
 def bancaRota(rendirse = False, videojugador=""):
     global banca
+    global jugadoresEnBancarrota
+
     for jugador in jugadores.keys():
         if (jugadores[jugador]["Diners"] <= 0 and jugador not in jugadoresEnBancarrota and jugadores[jugador]["Torn"] == True) or videojugador in jugadores.keys():
 
@@ -859,13 +861,23 @@ def cartaCaixa(jugador):
     elif carta == "Anar a la presó":
         if jugadores[jugador]["EstaEnPrision"] == False:
             return directoPrision(jugador)
-        
+
+def hayGanador():
+    global jugadoresEnBancarrota
+    if len(jugadoresEnBancarrota) == 3:
+        for jugador in jugadores:
+            if jugador not in jugadoresEnBancarrota:
+                return jugador
+    else:
+        return ""
+    
 def monopoly():
     global banca
 
     orden = inicioPartida(jugadores)
-    
-    while True:
+    ganador = ""
+
+    while ganador == "":
         for jugador in orden:
             if jugador == "V":
                 player = "vermell"
@@ -892,7 +904,10 @@ def monopoly():
                 actualizarHistorial(f"Banca + 500000")
                 actualizarHistorial(f"")
 
+            ganador = hayGanador()
 
+    actualizarHistorial(f"")
+    actualizarHistorial(f"Ha ganado {ganador.capitalize()}!".center(40))
 calles = [
     {"Nombre": "Parking", "Ocupacion": []},         #0
     {"Nombre": "Urquinoa", "Ocupacion": [], "LlCasa": 30, "LlHotel": 25, "CmpTrrny": 70, "CmpCasa": 400, "CmpHotel": 290},        #1
@@ -961,6 +976,8 @@ historial = [
     "","","","","","","","","","","","","",""
 ]
 
+jugadoresEnBancarrota = []
+
 
 
 # AQUÍ INICIA EL JUEGO
@@ -968,4 +985,4 @@ historial = [
 monopoly()
 
 #FALTAN LOS TRUCOS
-#FALTA LO DE PONER LOS PRECIOS EN MEDIO DE LA PANTALLA
+#FALTA EL QUE SE ACABE EL JUEGO CUANDO SOLO QUEDA UNO QUE NO ESTÉ EN BANCARROTA #HECHO CREO
