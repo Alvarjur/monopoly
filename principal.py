@@ -28,8 +28,6 @@ def seguirEnPrision(jugador):
                 actualizarHistorial(f"  '{jugador.capitalize()}' ha pasado {jugadores[jugador]['TurnosPrision']} turnos en prisión")
 
             
-
-            
         else:
             jugadores[jugador]["EstaEnPrision"] = False
             actualizarHistorial(f"  '{jugador.capitalize()}' sale de prisión tras 3 turnos!")
@@ -149,6 +147,10 @@ def moverJugador(jugador):
 
             actualizarHistorial(f"  Los dados han dado: '{dado1}' y '{dado2}' con un total de '{totalDado}'")
             actualizarHistorial(f"  '{player.capitalize()}' se ha movido hasta '{calles[casillaAlLlamar + totalDado]['Nombre']}'")
+
+            if casillaAlLlamar < 12 and calles.index(nuevaCalle) >= 12:
+                actualizarHistorial(f"  '{player.capitalize()}' ha pasado por la casilla de salida, +200")
+                jugadores[player]["Diners"] += 200
 
             clearScreen()
             imprimir_tablero(calles)
@@ -384,6 +386,7 @@ def anadirHotel(jugador, calle):
                     if jugadores[key]["Diners"] >= dicCalle["CmpHotel"]:
                         jugadores[key]["Propiedades"][calle]["Casas"] -= 2
                         jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
+                        jugadores[key]["Diners"] -= dicCalle["CmpHotel"]
                         actualizarHistorial(f"  '{jugador.capitalize()}' compra un hotel en {calle}")
                     else:
                         actualizarHistorial(f"  Error: Un hotel cuesta {dicCalle['CmpHotel']} y tienes {jugadores[key]['Diners']}")
@@ -748,12 +751,13 @@ def cartaSort(jugador):
         posActual, calleActual = buscarIndexCasilla(jugador)
         calles[posActual]["Ocupacion"].remove(player)
         calles[12]["Ocupacion"].extend(player) 
-        mensajeSalida = f"  '{jugador.capitalize()}' vuelve a la casilla de salida!"
+        mensajeSalida = f"  '{jugador.capitalize()}' vuelve a la casilla de salida, +200!"
         actualizarHistorial(mensajeSalida)
+        jugadores[jugador]["Diners"] += 200
 
     elif carta == "Anar tres espais enrere":
 
-
+        #EN ESTÁ, SI ES SORT2 RETROCEDE HASTA LA SALIDA, POR LO QUE NO SÉ SI DEBERÍA GANAR 200 O NO
         posActual, calleActual = buscarIndexCasilla(jugador)
 
         posNueva = posActual - 3
