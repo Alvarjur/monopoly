@@ -1181,7 +1181,7 @@ def trucs():
             jugadores["groc"]["Torn"] = False
             jugadores["taronja"]["Torn"] = False
             jugadores["vermell"]["Torn"] = True
-            actualizarHistorial(f"Es el turno del jugador 'taronja' ")
+            actualizarHistorial(f"Es el turno del jugador 'vermell' ")
         else:
             actualizarHistorial("No existe el jugador seleccionado")
     #TRUCO PARA AÑADIR DINERO
