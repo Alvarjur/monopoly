@@ -936,12 +936,69 @@ def monopoly():
             input("Aceptar.")
             jugadores[player]["Torn"] = False
 
+def trucs(text):
+    text = input("Que truco quieres utilizar ? [1. Ir a X casilla, 2. Añadir X casas, 3. Añadir X hoteles, 4. Siguiente X, 5. Dineros X, YY, 6. Dineros Banca]")
+    if text == "1":
+        selectJugador = input("A que jugador quieres desplazar ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
+        desplazarJugador = input("A que casilla deseas desplazarlo ? \n")
+        
+
+    elif text == "5":
+        anadirQuitar = input("Quieres añadir o quitar dinero de un jugador? [1. Añadir, 2.Quitar\n]")
+        if anadirQuitar == "1":
+            trucoJugador = input("A que jugador deseas añadir dinero ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
+            if trucoJugador == "1":
+                cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
+                jugadores["blau"]["Diners"] += cantidadAnadir
+                return f" Se han añadido {cantidadAnadir} al jugador 'blau', total: {jugadores["blau"]["Diners"]}"
+            elif trucoJugador == "2":
+                cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
+                jugadores["groc"]["Diners"] += cantidadAnadir
+                return f" Se han añadido {cantidadAnadir} al jugador 'groc', total: {jugadores["groc"]["Diners"]}"
+            elif trucoJugador == "3":
+                cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
+                jugadores["taronja"]["Diners"] += cantidadAnadir
+                return f" Se han añadido {cantidadAnadir} al jugador 'taronja', total: {jugadores["taronja"]["Diners"]}"
+            elif trucoJugador == "4":
+                cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
+                jugadores["vermell"]["Diners"] += cantidadAnadir
+                return f" Se han añadido {cantidadAnadir} al jugador 'vermell', total: {jugadores["vermell"]["Diners"]}"
+        if anadirQuitar == "2":
+            trucoJugador = input("A que jugador deseas quitar dinero ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]")
+            if trucoJugador == "1":
+                cantidadQuitar = float(input("Que cantidad quieres quitar ?\n"))
+                jugadores["blau"]["Diners"] -= cantidadQuitar
+                return f" Se han quitado {cantidadQuitar} al jugador 'blau', total: {jugadores["blau"]["Diners"]}"
+            elif trucoJugador == "2":
+                cantidadQuitar = float(input("Que cantidad quieres añadir ?\n"))
+                jugadores["groc"]["Diners"] -= cantidadQuitar
+                return f" Se han quitado {cantidadQuitar} al jugador 'groc', total: {jugadores["groc"]["Diners"]}"
+            elif trucoJugador == "3":
+                cantidadQuitar = float(input("Que cantidad quieres añadir ?\n"))
+                jugadores["taronja"]["Diners"] -= cantidadQuitar
+                return f" Se han quitado {cantidadQuitar} al jugador 'taronja', total: {jugadores["taronja"]["Diners"]}"
+            elif trucoJugador == "4":
+                cantidadQuitar = float(input("Que cantidad quieres añadir ?\n"))
+                jugadores["vermell"]["Diners"] -= cantidadQuitar
+                return f" Se han quitado {cantidadQuitar} al jugador 'vermell', total: {jugadores["vermell"]["Diners"]}"
+    elif text == "6":
+        dinersBanca = input("Quieres añadir o quitar dinero a la banca ?[1.Aañadir, 2.Quitar]")
+        if dinersBanca == 1:
+            anadirDinero = float(input("Que canitad quieres añadir ?\n"))
+            banca += anadirDinero
+            return f"Se ha añadido la cantidad de {anadirDinero} a banca: total = {banca}"
+        else:
+            quitarDinero = float(input("Que canitad quieres quitar ?\n"))
+            banca -= quitarDinero
+            return f"Se ha sacado la cantidad de {quitarDinero} a banca: total = {banca}"
+            
+
 # AQUÍ INICIA EL JUEGO
 
 monopoly()
 
-#FALTA HACER QUE GANE 200 CADA VEZ QUE PASA POR LA SALIDA.
 #FALTAN LOS TRUCOS
 #FALTA LO DE PONER LOS PRECIOS EN MEDIO DE LA PANTALLA
 #FALTA LO DE QUE LA BANCA NUNCA BAJE DE 500000, AUNQUE ES PRÁCTICAMENTE IMPOSIBLE QUE ESO PASE DE TODAS FORMAS
+#^
 #Esto se puede con un if banca < 500000: banca += 1000000
