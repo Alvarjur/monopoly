@@ -1019,7 +1019,7 @@ def trucs():
             else:
                 actualizarHistorial("No se pueden añadir mas de cuatro casas")
         #Jugador amarillo
-        if selectJugador == "2":
+        if selectJugadorCasa == "2":
             calleCasa = input("A que calle quieres añadrile una casa\n")
             numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4]\n"))
             if 1 <= numeroAnadirCasas <= 4:
@@ -1033,7 +1033,7 @@ def trucs():
             else:
                 actualizarHistorial("No se pueden añadir mas de cuatro casas")
         #Jugador naranja
-        if selectJugador == "3":
+        if selectJugadorCasa == "3":
             calleCasa = input("A que calle quieres añadrile una casa\n")
             numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
             if 1 <= numeroAnadirCasas <= 4:
@@ -1047,7 +1047,7 @@ def trucs():
             else:
                 actualizarHistorial("No se pueden añadir mas de cuatro casas")
         #Jugador rojo
-        if selectJugador == "4":
+        if selectJugadorCasa == "4":
             calleCasa = input("A que calle quieres añadrile una casa\n")
             numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4]\n"))
             if 1 <= numeroAnadirCasas <= 4:
