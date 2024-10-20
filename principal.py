@@ -939,8 +939,12 @@ def monopoly():
 def trucs():
 
     text = input("Que truco quieres utilizar ? [1. Ir a X casilla, 2. Añadir X casas, 3. Añadir X hoteles, 4. Siguiente X, 5. Dineros X, YY, 6. Dineros Banca]")
+    
+    #Truco para mover al jugador a una casilla deseada
     if text == "1":
         selectJugador = input("A que jugador quieres desplazar ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
+        
+        #Jugador azul
         if selectJugador == "1":
             desplazarJugador = input("A que casilla deseas desplazarlo ? \n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
             for calle in calles :
@@ -953,7 +957,7 @@ def trucs():
                         actualizarHistorial(f"El jugador 'blau' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
-        # Aquí seria poner el mismo bloque de codigo para los demas jugadores (Esperar confirmación)
+        #Jugador amarillo       
         if selectJugador == "2":
             desplazarJugador = input("A que casilla deseas desplazarlo ? \n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
             for calle in calles :
@@ -966,6 +970,7 @@ def trucs():
                         actualizarHistorial(f"El jugador 'Groc' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
+        #Jugador naranja
         if selectJugador == "3":
             desplazarJugador = input("A que casilla deseas desplazarlo ? \n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
             for calle in calles :
@@ -978,6 +983,7 @@ def trucs():
                         actualizarHistorial(f"El jugador 'taronja' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
+        #Jugador rojo      
         elif selectJugador == "4":
             desplazarJugador = input("A que casilla deseas desplazarlo ? \n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
             for calle in calles :
@@ -990,8 +996,10 @@ def trucs():
                         actualizarHistorial(f"El jugador 'vermell' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
+    #TRUCO PARA AÑADIR CASAS A UN JUGADOR
     elif text == "2":
         selectJugadorCasa = input("A que jugador quieres anadir (1 - 4) casas ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
+        #Jugador Azul
         if selectJugadorCasa == "1":
             calleCasa = input("A que calle quieres añadrile una casa")
             numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
@@ -1005,6 +1013,7 @@ def trucs():
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
                 actualizarHistorial("No se pueden añadir mas de cuatro casas")
+        #Jugador amarillo
         if selectJugador == "2":
             calleCasa = input("A que calle quieres añadrile una casa")
             numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
@@ -1018,6 +1027,7 @@ def trucs():
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
                 actualizarHistorial("No se pueden añadir mas de cuatro casas")
+        #Jugador naranja
         if selectJugador == "3":
             calleCasa = input("A que calle quieres añadrile una casa")
             numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
@@ -1031,6 +1041,7 @@ def trucs():
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
                 actualizarHistorial("No se pueden añadir mas de cuatro casas")
+        #Jugador rojo
         if selectJugador == "4":
             calleCasa = input("A que calle quieres añadrile una casa")
             numeroAnadirCasas = int(input(" Cuantas casas quieres añadir ? [1 - 4] "))
@@ -1044,8 +1055,10 @@ def trucs():
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
                 actualizarHistorial("No se pueden añadir mas de cuatro casas")
+    #TRUCO PARA AÑADIR HOTELES A UN JUGADOR
     elif text == "3":
         selectJugadorHotel = input("Aque jugador quieres añadir Hoteles ?[1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n ")
+        #Jugador azul
         if selectJugadorHotel == "1":
             calleHotel = input("A que calle quieres añadirle un hotel ?\n")
             numeroAnadirHotel = input("Cuantos hoteles quieres anadir ? [1 o 2]")
@@ -1068,10 +1081,8 @@ def trucs():
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
                 actualizarHistorial("No se pueden añadir mas de 2 hoteles")
-        else:
-            actualizarHistorial(f"No existe el jugador")
-
-        if selectJugadorHotel == "2":
+        #Jugador amarillo
+        elif selectJugadorHotel == "2":
             calleHotel = input("A que calle quieres añadirle un hotel ?\n")
             numeroAnadirHotel = input("Cuantos hoteles quieres anadir ? [1 o 2]")
             if  1 <= numeroAnadirHotel <= 2:
@@ -1093,10 +1104,8 @@ def trucs():
                         actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
                 else:
                     actualizarHistorial("No se pueden añadir mas de 2 hoteles")
-        else:
-            actualizarHistorial(f"No existe el jugador")
-            
-        if selectJugadorHotel == "3":
+        #Jugador naranja
+        elif selectJugadorHotel == "3":
             calleHotel = input("A que calle quieres añadirle un hotel ?\n")
             numeroAnadirHotel = input("Cuantos hoteles quieres anadir ? [1 o 2]")
             if  1 <= numeroAnadirHotel <= 2:
@@ -1118,10 +1127,8 @@ def trucs():
                         actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
                 else:
                     actualizarHistorial("No se pueden añadir mas de 2 hoteles")
-        else:
-            actualizarHistorial(f"No existe el jugador")
-
-        if selectJugadorHotel == "4":
+        #Jugador rojo
+        elif selectJugadorHotel == "4":
             calleHotel = input("A que calle quieres añadirle un hotel ?\n")
             numeroAnadirHotel = input("Cuantos hoteles quieres anadir ? [1 o 2]")
             if  1 <= numeroAnadirHotel <= 2:
@@ -1144,47 +1151,60 @@ def trucs():
                 else:
                     actualizarHistorial("No se pueden añadir mas de 2 hoteles")
         else:
-            actualizarHistorial(f"No existe el jugador")
+            actualizarHistorial(f"No existe el jugador seleccionado")
+    #TRUCO PARA ADELANTAR TURNOS
     elif text == "4":
         return None
+    #TRUCO PARA AÑADIR DINERO
     elif text == "5":
         anadirQuitar = input("Quieres añadir o quitar dinero de un jugador? [1. Añadir, 2.Quitar\n]")
+        #Para añadir dinero 
         if anadirQuitar == "1":
             trucoJugador = input("A que jugador deseas añadir dinero ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
+            #Jugador azul
             if trucoJugador == "1":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["blau"]["Diners"] += cantidadAnadir
                 return f" Se han añadido {cantidadAnadir} al jugador 'blau', total: {jugadores["blau"]["Diners"]}"
+            #Jugador amarillo
             elif trucoJugador == "2":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["groc"]["Diners"] += cantidadAnadir
                 return f" Se han añadido {cantidadAnadir} al jugador 'groc', total: {jugadores["groc"]["Diners"]}"
+            #Jugador naranja
             elif trucoJugador == "3":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["taronja"]["Diners"] += cantidadAnadir
                 return f" Se han añadido {cantidadAnadir} al jugador 'taronja', total: {jugadores["taronja"]["Diners"]}"
+            #Jugador rojo
             elif trucoJugador == "4":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["vermell"]["Diners"] += cantidadAnadir
                 return f" Se han añadido {cantidadAnadir} al jugador 'vermell', total: {jugadores["vermell"]["Diners"]}"
+        #Quitar dinero
         if anadirQuitar == "2":
             trucoJugador = input("A que jugador deseas quitar dinero ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]")
+            #Jugador azul
             if trucoJugador == "1":
                 cantidadQuitar = float(input("Que cantidad quieres quitar ?\n"))
                 jugadores["blau"]["Diners"] -= cantidadQuitar
                 return f" Se han quitado {cantidadQuitar} al jugador 'blau', total: {jugadores["blau"]["Diners"]}"
+            #Jugador amarillo
             elif trucoJugador == "2":
                 cantidadQuitar = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["groc"]["Diners"] -= cantidadQuitar
                 return f" Se han quitado {cantidadQuitar} al jugador 'groc', total: {jugadores["groc"]["Diners"]}"
+            #Jugador naranja
             elif trucoJugador == "3":
                 cantidadQuitar = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["taronja"]["Diners"] -= cantidadQuitar
                 return f" Se han quitado {cantidadQuitar} al jugador 'taronja', total: {jugadores["taronja"]["Diners"]}"
+            #Jugador rojo
             elif trucoJugador == "4":
                 cantidadQuitar = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["vermell"]["Diners"] -= cantidadQuitar
                 return f" Se han quitado {cantidadQuitar} al jugador 'vermell', total: {jugadores["vermell"]["Diners"]}"
+    #TRUCO PARA AÑADIR DINERO A LA BANCA
     elif text == "6":
         dinersBanca = input("Quieres añadir o quitar dinero a la banca ?[1.Aañadir, 2.Quitar]")
         if dinersBanca == 1:
