@@ -936,12 +936,23 @@ def monopoly():
             input("Aceptar.")
             jugadores[player]["Torn"] = False
 
-def trucs(text):
+def trucs():
+
     text = input("Que truco quieres utilizar ? [1. Ir a X casilla, 2. Añadir X casas, 3. Añadir X hoteles, 4. Siguiente X, 5. Dineros X, YY, 6. Dineros Banca]")
     if text == "1":
         selectJugador = input("A que jugador quieres desplazar ? [1. Azul, 2.Amarillo , 3.Naranja, 4.Rojo]\n")
-        desplazarJugador = input("A que casilla deseas desplazarlo ? \n")
-        
+        if selectJugador == "1":
+            desplazarJugador = input("A que casilla deseas desplazarlo ? \n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
+            for calle in calles :
+                if "B" in calle["Ocupacion"]:
+                    calle["Ocupacion"].remove("B")
+            for calle in calles:
+                if calle["Nombre"] == desplazarJugador:
+                    if "B" not in calle["Ocupacion"]:
+                        calle["Ocupacion"].extend("B")
+                        actualizarHistorial(f"El jugador 'azul' se ha movido hasta la casilla {desplazarJugador}")
+                else:
+                    return f"La casilla que estas buscando no existe"
 
     elif text == "5":
         anadirQuitar = input("Quieres añadir o quitar dinero de un jugador? [1. Añadir, 2.Quitar\n]")
