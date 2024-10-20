@@ -113,7 +113,7 @@ def pagarCasillaDeJugador(jugador):
 
 def moverJugador(jugador):
 
-    callesEspeciales = ["Sort", "Sort2", "Anr pró", "Caixa", "Caixa2"]
+    callesEspeciales = ["Sort", "Sort2", "Anr pró", "Caixa", "Caixa2", "Presó", "Sortida", "Parking"]
     if jugador == "V":
         player = "vermell"
     elif jugador == "B":
@@ -183,8 +183,14 @@ def moverJugador(jugador):
             elif eleccion == "4":
                 anadirHotel(player, nuevaCalle["Nombre"])
             elif eleccion == "5":
-                pass
-            
+                if nuevaCalle["Nombre"] not in callesEspeciales:
+                    txt = f"    Alquiler casa: {nuevaCalle['LlCasa']}                 Alquiler hotel: {nuevaCalle['LlHotel']}"
+                    txt2 = f"    Terreno: {nuevaCalle['CmpTrrny']}       Casa: {nuevaCalle['CmpCasa']}       Hotel: {nuevaCalle['CmpHotel']}"
+                    actualizarHistorial(f"- Precios {nuevaCalle['Nombre']}:")
+                    actualizarHistorial(txt)
+                    actualizarHistorial(txt2)
+                else:
+                    actualizarHistorial("Nada que mostrar")
             elif eleccion == "6":
                 valorTotal = 0
                 for propiedad in jugadores[player]["Propiedades"]:
@@ -214,51 +220,59 @@ def moverJugador(jugador):
                 actualizarHistorial(f"  Ganarías al vender tus propiedades a un jugador: {valorTotal}")
 
             elif eleccion == "8":
-                valorTotal = 0
-                for propiedad in jugadores[player]["Propiedades"]:
-                    for calle in calles:
-                        if calle["Nombre"] == propiedad:
-                            for construccion in jugadores[player]["Propiedades"][propiedad].keys():
-                                if construccion == "Casas":
-                                    valorInd = calle["CmpCasa"] * jugadores[player]["Propiedades"][propiedad][construccion]
-                                if construccion == "Hoteles":
-                                    valorInd = calle["CmpHotel"] * jugadores[player]["Propiedades"][propiedad][construccion]
-                                valorTotal += valorInd
-                valorTotal = (valorTotal * 50) // 100
-                jugadores[player]["Diners"] += valorTotal
-                jugadores[player]["Propiedades"] = {}
-                actualizarHistorial(f"  {player.capitalize()} ha vendido sus propiedades al banco por {valorTotal}")
-                
+                if len(jugadores[player]["Propiedades"]) > 0:
+                    valorTotal = 0
+                    for propiedad in jugadores[player]["Propiedades"]:
+                        for calle in calles:
+                            if calle["Nombre"] == propiedad:
+                                for construccion in jugadores[player]["Propiedades"][propiedad].keys():
+                                    if construccion == "Casas":
+                                        valorInd = calle["CmpCasa"] * jugadores[player]["Propiedades"][propiedad][construccion]
+                                    if construccion == "Hoteles":
+                                        valorInd = calle["CmpHotel"] * jugadores[player]["Propiedades"][propiedad][construccion]
+                                    valorTotal += valorInd
+                    valorTotal = (valorTotal * 50) // 100
+                    if input(f"Estás segur@ que quieres vender tus propiedades por {valorTotal}? (s/n)").lower() == "s":
+                        jugadores[player]["Diners"] += valorTotal
+                        jugadores[player]["Propiedades"] = {}
+                        actualizarHistorial(f"  {player.capitalize()} ha vendido sus propiedades al banco por {valorTotal}")
+                else:
+                    actualizarHistorial(f"  No tienes propiedades para vender")
+                    
             elif eleccion == "9":
-                jugadoresNoTurno = []
-                for videojugador in jugadores:
-                    if jugadores[videojugador]["Torn"] == False:
-                        jugadoresNoTurno.append(videojugador)
-                valorTotal = 0
-                for propiedad in jugadores[player]["Propiedades"]:
-                    for calle in calles:
-                        if calle["Nombre"] == propiedad:
-                            for construccion in jugadores[player]["Propiedades"][propiedad].keys():
-                                if construccion == "Casas":
-                                    valorInd = calle["CmpCasa"] * jugadores[player]["Propiedades"][propiedad][construccion]
-                                if construccion == "Hoteles":
-                                    valorInd = calle["CmpHotel"] * jugadores[player]["Propiedades"][propiedad][construccion]
-                                valorTotal += valorInd
-                valorTotal = (valorTotal * 90) // 100
-                while True:
-                    print(f"A quién quieres venderle?: " + ", ".join(jugadoresNoTurno))
-                    comprador = input()
-                    comprador = comprador.lower()
+                if len(jugadores[player]["Propiedades"]) > 0:
+                    jugadoresNoTurno = []
+                    for videojugador in jugadores:
+                        if jugadores[videojugador]["Torn"] == False:
+                            jugadoresNoTurno.append(videojugador)
+                    valorTotal = 0
+                    for propiedad in jugadores[player]["Propiedades"]:
+                        for calle in calles:
+                            if calle["Nombre"] == propiedad:
+                                for construccion in jugadores[player]["Propiedades"][propiedad].keys():
+                                    if construccion == "Casas":
+                                        valorInd = calle["CmpCasa"] * jugadores[player]["Propiedades"][propiedad][construccion]
+                                    if construccion == "Hoteles":
+                                        valorInd = calle["CmpHotel"] * jugadores[player]["Propiedades"][propiedad][construccion]
+                                    valorTotal += valorInd
+                    valorTotal = (valorTotal * 90) // 100
+                    while True:
+                        print(f"A quién quieres venderle?: " + ", ".join(jugadoresNoTurno))
+                        comprador = input()
+                        comprador = comprador.lower()
+                        if comprador in jugadoresNoTurno:
+                            break
                     if comprador in jugadoresNoTurno:
-                        break
-                if comprador in jugadoresNoTurno:
-                    if jugadores[comprador]["Diners"] >= valorTotal:
-                            jugadores[comprador]["Diners"] -= valorTotal
-                            jugadores[player]["Diners"] += valorTotal
-                            propiedadesJugador = jugadores[player]["Propiedades"].items()
-                            jugadores[comprador]["Propiedades"].update(propiedadesJugador)
-                            jugadores[player]["Propiedades"] = {}
-                            actualizarHistorial(f"  {player.capitalize()} ha vendido sus propiedades a {comprador.capitalize()} por {valorTotal}")
+                        if jugadores[comprador]["Diners"] >= valorTotal:
+                            if input(f"Estás segur@ que quieres vender tus propiedades a {comprador.capitalize()} por {valorTotal}? (s/n)").lower() == "s":
+                                jugadores[comprador]["Diners"] -= valorTotal
+                                jugadores[player]["Diners"] += valorTotal
+                                propiedadesJugador = jugadores[player]["Propiedades"].items()
+                                jugadores[comprador]["Propiedades"].update(propiedadesJugador)
+                                jugadores[player]["Propiedades"] = {}
+                                actualizarHistorial(f"  '{player.capitalize()}' ha vendido sus propiedades a {comprador.capitalize()} por {valorTotal}")
+                else:
+                     actualizarHistorial(f"  No tienes propiedades para vender")
 
     else:
         if nuevaCalle["Nombre"] == "Sort2" or nuevaCalle["Nombre"] == "Sort":
@@ -955,4 +969,3 @@ monopoly()
 
 #FALTAN LOS TRUCOS
 #FALTA LO DE PONER LOS PRECIOS EN MEDIO DE LA PANTALLA
-#FALTA LO DE QUE LA BANCA NUNCA BAJE DE 500000, AUNQUE ES PRÁCTICAMENTE IMPOSIBLE QUE ESO PASE DE TODAS FORMAS
