@@ -1241,7 +1241,7 @@ def trucs():
                 return f" Se han quitado {cantidadQuitar} al jugador 'vermell', total: {jugadores['vermell']['Diners']}"
     #TRUCO PARA AÑADIR DINERO A LA BANCA
     elif text == "6":
-        dinersBanca = input("Quieres añadir o quitar dinero a la banca ?[1.Aañadir, 2.Quitar]\n")
+        dinersBanca = input("Quieres añadir o quitar dinero a la banca ?[1.Añadir, 2.Quitar]\n")
         if dinersBanca == "1":
             anadirDinero = float(input("Que canitad quieres añadir ?\n"))
             banca += anadirDinero
