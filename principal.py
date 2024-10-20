@@ -1196,7 +1196,7 @@ def trucs():
             if trucoJugador == "1":
                 cantidadAnadir = float(input("Que cantidad quieres añadir ?\n"))
                 jugadores["blau"]["Diners"] += cantidadAnadir
-                actualizarHistorial(f" Se han añadido {cantidadAnadir} al jugador 'blau', total: {jugadores["blau"]["Diners"]}")
+                actualizarHistorial(f" Se han añadido {cantidadAnadir} al jugador 'blau', total: {jugadores["blau"]["Diners"]}") #<----- Me da error unmatchet string "[" ["blau"]
                 #Se podria añadir un print(jugadores["jugador"]["Diners"], para comprobar que realmente se han añadido (?))
             #Jugador amarillo
             elif trucoJugador == "2":
