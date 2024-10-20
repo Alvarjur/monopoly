@@ -950,7 +950,7 @@ def trucs():
                 if calle["Nombre"] == desplazarJugador:
                     if "B" not in calle["Ocupacion"]: #Esto creo que es redundante porque antes lo estoy eliminando en el anterior for
                         calle["Ocupacion"].extend("B")
-                        actualizarHistorial(f"El jugador 'azul' se ha movido hasta la casilla {desplazarJugador}")
+                        actualizarHistorial(f"El jugador 'blau' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
         # Aquí seria poner el mismo bloque de codigo para los demas jugadores (Esperar confirmación)
@@ -987,7 +987,7 @@ def trucs():
                 if calle["Nombre"] == desplazarJugador:
                     if "V" not in calle["Ocupacion"]:
                         calle["Ocupacion"].extend("V")
-                        actualizarHistorial(f"El jugador 'azul' se ha movido hasta la casilla {desplazarJugador}")
+                        actualizarHistorial(f"El jugador 'vermell' se ha movido hasta la casilla {desplazarJugador}")
                 else:
                     return f"La casilla que estas buscando no existe"
 
