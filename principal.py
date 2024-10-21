@@ -9,6 +9,7 @@ def clearScreen():
 
 def trucs():
     global banca
+    global skipTurnoA
 
     text = input("Que truco quieres utilizar ? [1. Ir a X casilla, 2. Añadir X casas, 3. Añadir X hoteles, 4. Siguiente X, 5. Dineros X, YY, 6. Dineros Banca]\n")
     
@@ -43,6 +44,7 @@ def trucs():
                     if "B" not in calle["Ocupacion"]:
                         calle["Ocupacion"].extend("G")
                         actualizarHistorial(f"El jugador 'Groc' se ha movido hasta la casilla {desplazarJugador}")
+
         #Jugador naranja
         if selectJugador == "3":
             desplazarJugador = input("A que casilla deseas desplazarlo ?\n") #Aquí no pongo .lower() ni nada porque la idea es que se ponga el nombre exacto
@@ -238,34 +240,39 @@ def trucs():
 
     #TRUCO PARA ADELANTAR TURNOS
     elif text == "4":  #NO FUNCIONA
+        
         adelantarTurno = input("De que jugador quieres adelantar su turno ? [1. Blau 2. Groc 3. Taronja 4. Vermell]\n")
         #Jugador azul
         if adelantarTurno == "1":
-            jugadores["blau"]["Torn"] = True
-            jugadores["groc"]["Torn"] = False
-            jugadores["taronja"]["Torn"] = False
-            jugadores["vermell"]["Torn"] = False
-            actualizarHistorial(f"Es el turno del jugador 'blau' ")
+            #jugadores["blau"]["Torn"] = True
+            #jugadores["groc"]["Torn"] = False
+            #jugadores["taronja"]["Torn"] = False
+            #jugadores["vermell"]["Torn"] = False
+            #actualizarHistorial(f"Es el turno del jugador 'blau' ")
+            skipTurnoA = "blau"
         #Jugador amarillo
         elif adelantarTurno == "2":
-            jugadores["blau"]["Torn"] = False
-            jugadores["groc"]["Torn"] = True
-            jugadores["taronja"]["Torn"] = False
-            jugadores["vermell"]["Torn"] = False
-            actualizarHistorial(f"Es el turno del jugador 'groc' ")
-        #Jugador rojo
+            #jugadores["blau"]["Torn"] = False
+            #jugadores["groc"]["Torn"] = True
+            #jugadores["taronja"]["Torn"] = False
+            #jugadores["vermell"]["Torn"] = False
+            #actualizarHistorial(f"Es el turno del jugador 'groc' ")
+            skipTurnoA = "groc"
+        #Jugador taronja
         elif adelantarTurno == "3":
-            jugadores["blau"]["Torn"] = False
-            jugadores["groc"]["Torn"] = False
-            jugadores["taronja"]["Torn"] = True
-            jugadores["vermell"]["Torn"] = False
-            actualizarHistorial(f"Es el turno del jugador 'taronja' ")
+            #jugadores["blau"]["Torn"] = False
+            #jugadores["groc"]["Torn"] = False
+            #jugadores["taronja"]["Torn"] = True
+            #jugadores["vermell"]["Torn"] = False
+            #actualizarHistorial(f"Es el turno del jugador 'taronja' ")
+            skipTurnoA = "taronja"
         elif adelantarTurno == "4":
-            jugadores["blau"]["Torn"] = False
-            jugadores["groc"]["Torn"] = False
-            jugadores["taronja"]["Torn"] = False
-            jugadores["vermell"]["Torn"] = True
-            actualizarHistorial(f"Es el turno del jugador 'vermell' ")
+            #jugadores["blau"]["Torn"] = False
+            #jugadores["groc"]["Torn"] = False
+            #jugadores["taronja"]["Torn"] = False
+            #jugadores["vermell"]["Torn"] = True
+            #actualizarHistorial(f"Es el turno del jugador 'vermell' ")
+            skipTurnoA = "vermell"
         else:
             actualizarHistorial("No existe el jugador seleccionado")
 
@@ -759,7 +766,7 @@ def bancaRota(rendirse = False, videojugador=""):
             if videojugador in jugadores.keys(): #ESTO ES PARA QUE EN LA FUNCION DE PAGAR ALQUILER SE PUEDA LLAMAR A ESTA FUNCION AUNQUE EL DINERO NO SEA 0
                 jugador = videojugador
 
-            actualizarHistorial(f"'  {jugador.capitalize()}' está en bancarrota")
+            actualizarHistorial(f" + '{jugador.capitalize()}' está en bancarrota")
             imprimir_tablero(calles)
 
             while True:
@@ -829,7 +836,7 @@ def bancaRota(rendirse = False, videojugador=""):
                     jugadores[jugador]["Propiedades"] = {}
                     jugadoresEnBancarrota.append(jugador)
                     actualizarHistorial(f"  '{jugador.capitalize()}' se ha dado en bancarrota, no jugará más")
-                    return
+                    return True
             
 
 def actualizarHistorial(info): #Esta función es la que usaremos para recoger todos los mensajes, lo malo es que para cada uno de los eventos, se tiene que llamar dentro de las funciones 
@@ -1202,13 +1209,17 @@ def hayGanador():
     else:
         return ""
     
+
 def monopoly():
     global banca
+    global skipTurnoA
+    global jugadoresEnBancarrota
 
     orden = inicioPartida(jugadores)
     ganador = ""
 
     while ganador == "":
+
         for jugador in orden:
             if jugador == "V":
                 player = "vermell"
@@ -1218,7 +1229,26 @@ def monopoly():
                 player = "taronja"
             elif jugador == "G":
                 player = "groc"
+
+            
+            
+            if skipTurnoA != "":
+                if skipTurnoA == player:
+                    actualizarHistorial(f"- Saltando el turno a: '{player.capitalize()}'")
+                    actualizarHistorial("")
+                else:
+                    continue
+
+            
             jugadores[player]["Torn"] = True
+
+            if player not in jugadoresEnBancarrota:
+                if bancaRota(): 
+                    actualizarHistorial("")
+                    continue
+                
+            
+            
             clearScreen()
             actualizarHistorial(f"> Turno de '{player.capitalize()}':")
             imprimir_tablero(calles)
@@ -1310,6 +1340,8 @@ historial = [
 ]
 
 jugadoresEnBancarrota = []
+
+skipTurnoA= ""
 
 
 
