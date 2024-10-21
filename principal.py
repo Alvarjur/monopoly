@@ -323,7 +323,6 @@ def trucs():
             quitarDinero = int(input("Que canitad quieres quitar ?\n"))
             banca -= quitarDinero
             actualizarHistorial(f"Se ha sacado la cantidad de {quitarDinero} a banca: Total = {banca}")
-        #if banca < 500000: banca += 100000000000 (Por si al Albert le da por quitar 10 millones (?))
             
 
 def seguirEnPrision(jugador):
