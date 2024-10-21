@@ -651,6 +651,7 @@ def mostrarInformacion():
     return mostrarInformacionJugador
 
 def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una casa o para el momento de comprar la casilla.
+    global banca
     while True:
         clearScreen()
         imprimir_tablero(calles)
@@ -695,6 +696,7 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
                     jugadores[key]["Propiedades"][calle] = dic
                     actualizarHistorial(f"  '{jugador.capitalize()}' ha comprado el terreno '{calle}'")
                     jugadores[key]["Diners"] -= dicCalle["CmpTrrny"] #Resta el dinero de la casilla al dinero del jugador
+                    banca += dicCalle["CmpTrrny"]
                     imprimir_tablero(calles)
                     return None
                 else:
@@ -1344,8 +1346,6 @@ historial = [
 jugadoresEnBancarrota = []
 
 skipTurnoA= ""
-
-
 
 # AQUÍ INICIA EL JUEGO
 
