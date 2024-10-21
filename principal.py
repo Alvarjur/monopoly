@@ -766,11 +766,10 @@ def bancaRota(rendirse = False, videojugador=""):
             if videojugador in jugadores.keys(): #ESTO ES PARA QUE EN LA FUNCION DE PAGAR ALQUILER SE PUEDA LLAMAR A ESTA FUNCION AUNQUE EL DINERO NO SEA 0
                 jugador = videojugador
 
-            actualizarHistorial(f" + '{jugador.capitalize()}' está en bancarrota")
+            actualizarHistorial(f"+ '{jugador.capitalize()}' está en bancarrota")
             imprimir_tablero(calles)
 
             while True:
-                jugadoresEnBancarrota.append(jugador)
                 eleccion = ""
                 if rendirse == False:
                     eleccion = input("1. Vender al banco 2. Vender a otro jugador 3. Darse en bancarrota")
@@ -1202,6 +1201,7 @@ def cartaCaixa(jugador):
 
 def hayGanador():
     global jugadoresEnBancarrota
+
     if len(jugadoresEnBancarrota) == 3:
         for jugador in jugadores:
             if jugador not in jugadoresEnBancarrota:
@@ -1247,7 +1247,8 @@ def monopoly():
                     actualizarHistorial("")
                     continue
                 
-            
+            if player in jugadoresEnBancarrota:
+                continue
             
             clearScreen()
             actualizarHistorial(f"> Turno de '{player.capitalize()}':")
@@ -1265,7 +1266,8 @@ def monopoly():
                 actualizarHistorial(f"Banca vuelve a tener 1.000.000")
                 actualizarHistorial(f"")
 
-            ganador = hayGanador()
+        
+        ganador = hayGanador()
 
     actualizarHistorial(f"")
     actualizarHistorial(f"Ha ganado {ganador.capitalize()}!".center(40))
