@@ -239,40 +239,24 @@ def trucs():
             actualizarHistorial(f"No existe el jugador seleccionado")
 
     #TRUCO PARA ADELANTAR TURNOS
-    elif text == "4":  #NO FUNCIONA
+    elif text == "4":
         
         adelantarTurno = input("De que jugador quieres adelantar su turno ? [1. Blau 2. Groc 3. Taronja 4. Vermell]\n")
         #Jugador azul
         if adelantarTurno == "1":
-            #jugadores["blau"]["Torn"] = True
-            #jugadores["groc"]["Torn"] = False
-            #jugadores["taronja"]["Torn"] = False
-            #jugadores["vermell"]["Torn"] = False
-            #actualizarHistorial(f"Es el turno del jugador 'blau' ")
             skipTurnoA = "blau"
+
         #Jugador amarillo
         elif adelantarTurno == "2":
-            #jugadores["blau"]["Torn"] = False
-            #jugadores["groc"]["Torn"] = True
-            #jugadores["taronja"]["Torn"] = False
-            #jugadores["vermell"]["Torn"] = False
-            #actualizarHistorial(f"Es el turno del jugador 'groc' ")
             skipTurnoA = "groc"
+
         #Jugador taronja
         elif adelantarTurno == "3":
-            #jugadores["blau"]["Torn"] = False
-            #jugadores["groc"]["Torn"] = False
-            #jugadores["taronja"]["Torn"] = True
-            #jugadores["vermell"]["Torn"] = False
-            #actualizarHistorial(f"Es el turno del jugador 'taronja' ")
             skipTurnoA = "taronja"
+
         elif adelantarTurno == "4":
-            #jugadores["blau"]["Torn"] = False
-            #jugadores["groc"]["Torn"] = False
-            #jugadores["taronja"]["Torn"] = False
-            #jugadores["vermell"]["Torn"] = True
-            #actualizarHistorial(f"Es el turno del jugador 'vermell' ")
             skipTurnoA = "vermell"
+            
         else:
             actualizarHistorial("No existe el jugador seleccionado")
 
