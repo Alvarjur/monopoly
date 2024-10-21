@@ -256,7 +256,7 @@ def trucs():
 
         elif adelantarTurno == "4":
             skipTurnoA = "vermell"
-            
+
         else:
             actualizarHistorial("No existe el jugador seleccionado")
 
@@ -1197,7 +1197,6 @@ def hayGanador():
     else:
         return ""
     
-
 def monopoly():
     global banca
     global skipTurnoA
@@ -1254,7 +1253,6 @@ def monopoly():
                 actualizarHistorial(f"Banca vuelve a tener 1.000.000")
                 actualizarHistorial(f"")
 
-        
         ganador = hayGanador()
 
     actualizarHistorial(f"")
@@ -1286,7 +1284,7 @@ calles = [
     {"Nombre": "Caixa2", "Ocupacion": []},          #21
     {"Nombre": "S.Joan", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 350, "CmpHotel": 280},          #22
     {"Nombre": "Aragó", "Ocupacion": [], "LlCasa": 25, "LlHotel": 25, "CmpTrrny": 60, "CmpCasa": 375, "CmpHotel": 285}            #23
-]#Podriamos guardar la ocupacion en el diccionario Jugadores (?) y asignar el calle["Nombre"] a "Jugadores[jugador]["Posició"]"
+]
 
 jugadores = {
     "blau":{
@@ -1336,6 +1334,3 @@ skipTurnoA= ""
 # AQUÍ INICIA EL JUEGO
 
 monopoly()
-
-#FALTAN LOS TRUCOS
-#FALTA EL QUE SE ACABE EL JUEGO CUANDO SOLO QUEDA UNO QUE NO ESTÉ EN BANCARROTA #HECHO CREO
