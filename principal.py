@@ -408,7 +408,7 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
                 #print(jugadores[key]["Diners"])
                 #print(dicCalle["CmpTrrny"])
                 if jugadores[key]["Diners"] >= dicCalle["CmpTrrny"]:
-                    #print("wawa")
+
                     jugadores[key]["Propiedades"][calle] = dic
                     actualizarHistorial(f"  '{jugador.capitalize()}' ha comprado el terreno '{calle}'")
                     jugadores[key]["Diners"] -= dicCalle["CmpTrrny"] #Resta el dinero de la casilla al dinero del jugador
@@ -1012,8 +1012,8 @@ def trucs():
                 if calleCasa in jugadores["blau"]["Propiedades"]:
                     #Aqui inicio el diccionario para añadir Casas en propiedades
                     if "Casas" not in jugadores["blau"]["Propiedades"][calleCasa]:
-                        jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] = 0
-                    jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] += numeroAnadirCasas   
+                        jugadores["blau"]["Propiedades"][calleCasa]["Casas"] = 0
+                    jugadores["blau"]["Propiedades"][calleCasa]["Casas"] += numeroAnadirCasas   
                 else:
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
@@ -1026,8 +1026,8 @@ def trucs():
                 if calleCasa in jugadores["groc"]["Propiedades"]:
                     #Aqui inicio el diccionario para añadir Casas en propiedades
                     if "Casas" not in jugadores["groc"]["Propiedades"][calleCasa]:
-                        jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] = 0
-                    jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] += numeroAnadirCasas   
+                        jugadores["groc"]["Propiedades"][calleCasa]["Casas"] = 0
+                    jugadores["groc"]["Propiedades"][calleCasa]["Casas"] += numeroAnadirCasas   
                 else:
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
@@ -1040,8 +1040,8 @@ def trucs():
                 if calleCasa in jugadores["taronja"]["Propiedades"]:
                     #Aqui inicio el diccionario para añadir Casas en propiedades
                     if "Casas" not in jugadores["taronja"]["Propiedades"][calleCasa]:
-                        jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] = 0
-                    jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] += numeroAnadirCasas   
+                        jugadores["taronja"]["Propiedades"][calleCasa]["Casas"] = 0
+                    jugadores["taronja"]["Propiedades"][calleCasa]["Casas"] += numeroAnadirCasas   
                 else:
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
@@ -1054,8 +1054,8 @@ def trucs():
                 if calleCasa in jugadores["vermell"]["Propiedades"]:
                     #Aqui inicio el diccionario para añadir Casas en propiedades
                     if "Casas" not in jugadores["vermell"]["Propiedades"][calleCasa]:
-                        jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] = 0
-                    jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] += numeroAnadirCasas   
+                        jugadores["vermell"]["Propiedades"][calleCasa]["Casas"] = 0
+                    jugadores["vermell"]["Propiedades"][calleCasa]["Casas"] += numeroAnadirCasas   
                 else:
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
             else:
@@ -1070,17 +1070,17 @@ def trucs():
             if  1 <= numeroAnadirHotel <= 2:
                 if calleHotel in jugadores["blau"]["Propiedades"]:
                     if "Hoteles" not in jugadores["blau"]["Propiedades"][calleCasa]:
-                        jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] = 0
+                        jugadores["blau"]["Propiedades"][calleCasa]["Hoteles"] = 0
 
-                    if jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] == 2:
+                    if jugadores["blau"]["Propiedades"][calleCasa]["Hoteles"] == 2:
                         actualizarHistorial(f"No se pueden añadir mas hoteles")
-                    elif jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
-                        jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
-                        jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] -= 2 
+                    elif jugadores["blau"]["Propiedades"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["blau"]["Propiedades"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
+                        jugadores["blau"]["Propiedades"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["blau"]["Propiedades"][calleCasa]["Casas"] -= 2 
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'blau'")
-                    elif jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] == 0 and  jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
-                        jugadores["blau"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
-                        jugadores["blau"]["Propiedaes"][calleCasa]["Casas"] -= 4
+                    elif jugadores["blau"]["Propiedades"][calleCasa]["Hoteles"] == 0 and  jugadores["blau"]["Propiedades"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                        jugadores["blau"]["Propiedades"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["blau"]["Propiedades"][calleCasa]["Casas"] -= 4
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'blau'")
                 else:
                     actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
@@ -1093,17 +1093,17 @@ def trucs():
             if  1 <= numeroAnadirHotel <= 2:
                 if calleHotel in jugadores["groc"]["Propiedades"]:
                     if "Hoteles" not in jugadores["groc"]["Propiedades"][calleCasa]:
-                        jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] = 0
+                        jugadores["groc"]["Propiedades"][calleCasa]["Hoteles"] = 0
 
-                    if jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] == 2:
+                    if jugadores["groc"]["Propiedades"][calleCasa]["Hoteles"] == 2:
                         actualizarHistorial(f"No se pueden añadir mas hoteles")
-                    elif jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
-                        jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
-                        jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] -= 2 
+                    elif jugadores["groc"]["Propiedades"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["groc"]["Propiedades"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
+                        jugadores["groc"]["Propiedades"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["groc"]["Propiedades"][calleCasa]["Casas"] -= 2 
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'groc'")
-                    elif jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] == 0 and  jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
-                        jugadores["groc"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
-                        jugadores["groc"]["Propiedaes"][calleCasa]["Casas"] -= 4
+                    elif jugadores["groc"]["Propiedades"][calleCasa]["Hoteles"] == 0 and  jugadores["groc"]["Propiedades"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                        jugadores["groc"]["Propiedades"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["groc"]["Propiedades"][calleCasa]["Casas"] -= 4
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'groc'")
                     else:
                         actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
@@ -1116,17 +1116,17 @@ def trucs():
             if  1 <= numeroAnadirHotel <= 2:
                 if calleHotel in jugadores["taronja"]["Propiedades"]:
                     if "Hoteles" not in jugadores["taronja"]["Propiedades"][calleCasa]:
-                        jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] = 0
+                        jugadores["taronja"]["Propiedades"][calleCasa]["Hoteles"] = 0
 
-                    if jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] == 2:
+                    if jugadores["taronja"]["Propiedades"][calleCasa]["Hoteles"] == 2:
                         actualizarHistorial(f"No se pueden añadir mas hoteles")
-                    elif jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
-                        jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
-                        jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] -= 2 
+                    elif jugadores["taronja"]["Propiedades"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["taronja"]["Propiedades"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
+                        jugadores["taronja"]["Propiedades"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["taronja"]["Propiedades"][calleCasa]["Casas"] -= 2 
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'taronja'")
-                    elif jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] == 0 and  jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
-                        jugadores["taronja"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
-                        jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] -= 4
+                    elif jugadores["taronja"]["Propiedades"][calleCasa]["Hoteles"] == 0 and  jugadores["taronja"]["Propiedades"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                        jugadores["taronja"]["Propiedades"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["taronja"]["Propiedades"][calleCasa]["Casas"] -= 4
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'taronja'")
                     else:
                         actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
@@ -1139,17 +1139,17 @@ def trucs():
             if  1 <= numeroAnadirHotel <= 2:
                 if calleHotel in jugadores["vermell"]["Propiedades"]:
                     if "Hoteles" not in jugadores["vermell"]["Propiedades"][calleCasa]:
-                        jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] = 0
+                        jugadores["vermell"]["Propiedades"][calleCasa]["Hoteles"] = 0
 
-                    if jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] == 2:
+                    if jugadores["vermell"]["Propiedades"][calleCasa]["Hoteles"] == 2:
                         actualizarHistorial(f"No se pueden añadir mas hoteles")
-                    elif jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
-                        jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
-                        jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] -= 2 
+                    elif jugadores["vermell"]["Propiedades"][calleCasa]["Hoteles"] < 2 and  2 <= jugadores["vermell"]["Propiedades"][calleCasa]["Casas"] < 4  and numeroAnadirHotel == 1:
+                        jugadores["vermell"]["Propiedades"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["vermell"]["Propiedades"][calleCasa]["Casas"] -= 2 
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'vermell'")
-                    elif jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] == 0 and  jugadores["taronja"]["Propiedaes"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
-                        jugadores["vermell"]["Propiedaes"][calleCasa]["Hoteles"] += numeroAnadirHotel
-                        jugadores["vermell"]["Propiedaes"][calleCasa]["Casas"] -= 4
+                    elif jugadores["vermell"]["Propiedades"][calleCasa]["Hoteles"] == 0 and  jugadores["taronja"]["Propiedades"][calleCasa]["Casas"] == 4  and numeroAnadirHotel == 2:
+                        jugadores["vermell"]["Propiedades"][calleCasa]["Hoteles"] += numeroAnadirHotel
+                        jugadores["vermell"]["Propiedades"][calleCasa]["Casas"] -= 4
                         actualizarHistorial(f"Se han añadido {numeroAnadirHotel} a {calleHotel}, propiedad del jugador 'vermell'")
                     else:
                         actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
