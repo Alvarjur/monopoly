@@ -170,7 +170,7 @@ def trucs():
             if  1 <= numeroAnadirHotel <= 2:
                 if calleHotel in jugadores["groc"]["Propiedades"]:
                     if "Hoteles" not in jugadores["groc"]["Propiedades"][calleHotel]:
-                        jugadores["groc"]["Propiedaes"][calleHotel]["Hoteles"] = 0
+                        jugadores["groc"]["Propiedades"][calleHotel]["Hoteles"] = 0
 
                     
                     elif jugadores["groc"]["Propiedades"][calleHotel]["Hoteles"] == 2:
