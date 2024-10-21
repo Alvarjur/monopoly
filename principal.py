@@ -1117,8 +1117,6 @@ def cartaSort(jugador):
             totalCasas = 0
             totalHoteles = 0
             for propiedad in jugadores[jugador]["Propiedades"]:
-                print(propiedad)
-                input()
                 totalCasas += jugadores[jugador]["Propiedades"][propiedad]["Casas"]
                 totalHoteles += jugadores[jugador]["Propiedades"][propiedad]["Hoteles"]
             totalAPagar = (25 * totalCasas) + (100 * totalHoteles)
