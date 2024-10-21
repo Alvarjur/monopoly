@@ -693,6 +693,7 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
             return None
 
 def anadirHotel(jugador, calle):
+    global banca
     clearScreen()
     imprimir_tablero(calles)
     if calle != "Parking" and calle != "Sort" and calle != "Anr pró" and calle != "Caixa" and calle != "Caixa2" and calle != "Sort2" and calle != "Presó":
