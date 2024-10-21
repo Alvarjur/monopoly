@@ -232,7 +232,7 @@ def trucs():
                             jugadores["vermell"]["Propiedades"][calleHotel]["Hoteles"] += numeroAnadirHotel
                             actualizarHistorial(f"+{numeroAnadirHotel} hoteles en '{calleHotel}' de 'Vermell'")
                 else:
-                    actualizarHistorial(f"No puedes añadir una casa porque no es de tu propiedad !")
+                    actualizarHistorial(f"No puedes añadir un hotel que no es de tu propiedad !")
             else:
                     actualizarHistorial("No se pueden añadir mas de 2 hoteles")
         else:
