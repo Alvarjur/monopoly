@@ -682,6 +682,7 @@ def anadirCasa(jugador, calle): #Esta función se puede usar para añadir una ca
                 elif jugadores[key]["Diners"] >= dicCalle["CmpCasa"]: #Si tiene dinero suficiente para comprar una casa.
                     jugadores[key]["Propiedades"][calle]["Casas"] += 1
                     jugadores[key]["Diners"] -= dicCalle["CmpCasa"] #Resta el dinero de la casa al dinero del jugador
+                    banca += dicCalle["CmpCasa"]
 
                     actualizarHistorial(f"  '{jugador.capitalize()}' compra una casa en '{calle}'")
                     return None
@@ -741,6 +742,7 @@ def anadirHotel(jugador, calle):
                         jugadores[key]["Propiedades"][calle]["Casas"] -= 2
                         jugadores[key]["Propiedades"][calle]["Hoteles"] += 1
                         jugadores[key]["Diners"] -= dicCalle["CmpHotel"]
+                        banca += dicCalle["CmpHotel"]
                         actualizarHistorial(f"  '{jugador.capitalize()}' compra un hotel en {calle}")
                     else:
                         actualizarHistorial(f"  Error: Un hotel cuesta {dicCalle['CmpHotel']} y tienes {jugadores[key]['Diners']}")
