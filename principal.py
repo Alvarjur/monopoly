@@ -851,7 +851,7 @@ def bancaRota(rendirse = False, videojugador=""): #Rendirse por defecto esta en 
             while True:
                 eleccion = ""
                 if rendirse == False:
-                    eleccion = input("1. Vender al banco 2. Vender a otro jugador 3. Darse en bancarrota")
+                    eleccion = input("1. Vender al banco 2. Vender a otro jugador 3. Darse en bancarrota\n")
                 ValorAlVender = 0
                 #Vender al banco
                 if eleccion == "1":
@@ -922,7 +922,7 @@ def bancaRota(rendirse = False, videojugador=""): #Rendirse por defecto esta en 
                     else:
                         print(f"'{comprador.capitalize()}' no tiene dinero")
                         actualizarHistorial(f"  '{comprador.capitalize()}' no tiene suficiente dinero")
-                        
+
                         if jugadores[jugador]["Diners"] < 0:
                             jugadores[jugador]["Propiedades"] = {}
                             jugadoresEnBancarrota.append(jugador)
