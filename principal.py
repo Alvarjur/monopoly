@@ -872,6 +872,11 @@ def bancaRota(rendirse = False, videojugador=""): #Rendirse por defecto esta en 
                     #print(jugadores[jugador]["Diners"])
                     jugadores[jugador]["Diners"] += ValorAlVender #Se suma el dinero al jugador por vender sus propiedades a la banca
                     actualizarHistorial(f"  {jugador.capitalize()} ha vendido sus propiedades a la banca por {ValorAlVender}")
+                    #Si despues de la venta sigues teniendo menos que 0 se te elimina de igual forma
+                    if jugadores[jugador]["Diners"] < 0:
+                            jugadores[jugador]["Propiedades"] = {}
+                            jugadoresEnBancarrota.append(jugador)
+                            actualizarHistorial(f"  '{jugador.capitalize()}' se ha dado en bancarrota, no jugará más")
                     break
                 #Vender a otro jugador
                 elif eleccion == "2":
@@ -908,14 +913,20 @@ def bancaRota(rendirse = False, videojugador=""): #Rendirse por defecto esta en 
                         jugadores[jugador]["Propiedades"] = {}
 
                         actualizarHistorial(f"  '{jugador.capitalize()}' ha vendido sus propiedades a '{comprador.capitalize()}' por '{ValorAlVender}'")
+
+                        if jugadores[jugador]["Diners"] < 0:
+                            jugadores[jugador]["Propiedades"] = {}
+                            jugadoresEnBancarrota.append(jugador)
+                            actualizarHistorial(f"  '{jugador.capitalize()}' se ha dado en bancarrota, no jugará más")
                         break
                     else:
                         print(f"'{comprador.capitalize()}' no tiene dinero")
                         actualizarHistorial(f"  '{comprador.capitalize()}' no tiene suficiente dinero")
-                    """if jugadores[jugador]["Diners"] < 0:
+                        
+                        if jugadores[jugador]["Diners"] < 0:
                             jugadores[jugador]["Propiedades"] = {}
-                            jugadoresEnBnacarrota.append(jugador)
-                            actualizarHistorial(f"  '{jugador.capitalize()}' se ha dado en bancarrota, no jugará más")"""
+                            jugadoresEnBancarrota.append(jugador)
+                            actualizarHistorial(f"  '{jugador.capitalize()}' se ha dado en bancarrota, no jugará más")
                 elif eleccion == "3" or rendirse == True:
                     jugadores[jugador]["Propiedades"] = {}
                     jugadoresEnBancarrota.append(jugador)

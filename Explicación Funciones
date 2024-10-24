@@ -96,3 +96,5 @@ def monopoly():
     - Se comprueba que skipTurnoA no este vacio.
     - Se recorre el listado de jugadores de ORDEN, i se actualiza el valor ["Torn"] = True del primer jugador.
     Se van llamando las diferentes funciones para ir haciendo comprobaciones. Cuando el listado de bancaRrota esta lleno, se llaman a hayGanador() i printemoas el nombre del ganador
+
+#Faltan las funciones para imprimirTablero
