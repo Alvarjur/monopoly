@@ -1426,4 +1426,4 @@ skipTurnoA= ""
 # AQUÍ INICIA EL JUEGO
 
 monopoly()
->>>>>>> jordi
+
