@@ -1329,6 +1329,7 @@ def monopoly():
                 if skipTurnoA == player:
                     actualizarHistorial(f"- Saltando el turno a: '{player.capitalize()}'")
                     actualizarHistorial("")
+                    skipTurnoA = ""
                 else:
                     continue
 
