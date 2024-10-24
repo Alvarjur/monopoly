@@ -912,7 +912,10 @@ def bancaRota(rendirse = False, videojugador=""): #Rendirse por defecto esta en 
                     else:
                         print(f"'{comprador.capitalize()}' no tiene dinero")
                         actualizarHistorial(f"  '{comprador.capitalize()}' no tiene suficiente dinero")
-                        
+                    """if jugadores[jugador]["Diners"] < 0:
+                            jugadores[jugador]["Propiedades"] = {}
+                            jugadoresEnBnacarrota.append(jugador)
+                            actualizarHistorial(f"  '{jugador.capitalize()}' se ha dado en bancarrota, no jugará más")"""
                 elif eleccion == "3" or rendirse == True:
                     jugadores[jugador]["Propiedades"] = {}
                     jugadoresEnBancarrota.append(jugador)

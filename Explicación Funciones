@@ -1,0 +1,98 @@
+Diccionario de funciones:
+
+- def trucs ()
+  Esta función utiliza un input como entrada, dependiendo del input selecciona un truco u otro
+  1. Mover a al casilla deseada
+     - Se le pregunta que casilla desea ser desplazado, se recorre la lista de calles: si la calle["Nombre] coincide con el input, se añade mediante extend a la casilla deseada i se elimina de su casilla actual. Si es una calle de evento se activa el evento.
+  2. Añadir casas a un jugador
+     - Se vuelve a preguntar a que jugador quieres añadirle una casa. Solo se dejará añadir casas a las propiedades del jugador i no dejará añadir mas de 4 casas. Para añadirla, se pregunta el numero de casas que quieres añadir (debe ser entre 1 i 4), si el input se encuentra dentro de las propiedades del jugador, se crea la entrada del diccionaro "Casas" en la clave "Propiedades" del diccionaro Jugadores, i se suma el input seleccionado.
+  3. Añadir Hoteles
+    - Lo mismo que añadir casas pero añadiendo mas condiciones. Si ya tienes 2 hoteles o si tienes 1 hotel i decides añadir 2 hoteles, no te dejará añadir más. En este caso solo tenemos como condición el numero de hoteles, ya que entendemos que se trata de trucos.
+  4. Adelantar Turnos
+    - Se utiliza una variable: skipTurnoA = "", el nombre del jugador que este dentro de esta variable, es al jugador al que se le concederá su turno
+  5. Añadir o quitar Dinero a un jugador
+    - Se pregunta el jugador, añadir o quitar i la cantidad. Se resta o suma la cantidad que desees al valor ["Diners] del diccionario jugadores
+  6. Añadir o quitar dinero a la banca
+    - Lo mismo que para jugadores pero en este caso para la banca
+
+def seguirEnPrision(jugador)
+  Se comprueba el numero de los dados. Si el jugador ya se encuentra en prisión (se controla mediante "EstanEnPrision" == True or False). Si el numer de los dados son los mismos, se actualiza el valor del diccionari o False i el jugador sale de prisión.
+  El segundo condicional, se comprueba que los turnos en prision sean menor que tres, si lo són, se suma 1 a la entrada en dicho diccionario. 
+
+def pagarABanca (jugador, dinero, motivo="")
+  Se comprueba primero que el jugador tiene el suficiente dinero para pagar a la banca, si no lo tiene se llama a función bancaRota, indicando el jugador en bancarrota.
+
+defbuscarIndexCasilla(jugador)
+  Esta función retorna el indice del jugador dentro de la calle["Ocupación], i el diccionario de la calle
+
+defpagarCasillaDeJugador(jugador)
+  Se recorre la lista completa de calles i se inician las diferenes condiciones a usar. 
+  - Si la calle["Nombre"], no esta en sus propiedades, se recorre un bucle entre jugadores para encontrar quien es el propietario i se realizan los apgos meidante valorAPagar. Previamente se comprueba que el jugador tenga el suficente dinero, sino se llama a bancarrota
+
+def moverJugador(jugador)
+  Primero se comprueba que el jugador no este en prisión, si es verdad se llama a seguirEnPrision (para los dados, turnos...)
+  Después se recorre el listado de diccionarios de calles, si el jugador esta en calle["Ocupacion"]
+  - Se crea una variable que almacenará el indice de la calle, si el indice de la calle + dados superan 24, se restaran 24.
+    Se elimina al jugador de la ocupación actual, i se añade a la nueva posición usando .extend(). Luego se almacena el indice de la nueva posición en nuevaCalle.
+     Después se comprueba si ha pasado por salida o no, usando la variable creada previamente, que sea menor que 12, i el indice encontrado de calles que sea superior o igual a 12, si se cumple se añaden 200€ a jugador["Diners"]
+     Se comprueba que el jugador este en bancarrota o no.
+     Si la calle destino no esta dentro de las casillas especiales:
+         - Se pregunta las opciones al jugador
+         - Si se pasa el turno, se actualiza ["Torn"] = False
+         - Si seleeciona 2, se llama anadirCasa, previamente se comprueba si es de tu propiedad o no
+         - Si la selección es 3, se añade la la el nombre de la calle a propiedades de jugador
+         - Si es 4, lo mismo pero para hoteles
+         - Si es 5, se muestra el precio de la calle en la que se esta, junto con sus alquileres de casa, hotel...
+         - Si la seleccion es 6, recorremos las propiedaes del jugador, se comprueba el precio que se ganaria por cada una de sus casas i hoteles, accediendo a las claves correspondientes, i se calculan en valorTotal que seria el 50% de las propiedades
+         - Si es 7, lo mismo que el 6, pero se ganaria el 90%
+         - Si es 8, se comprueba que se tengan propiedades, i s realiza el mismo procedimiento que en la selección 6, pero esta vez se venden, i se quitan de el valor ["Propiedades"], i el valor de ["Diners"] se actualiza en base a la venta
+         - Si la seleccion es 9, se comprueban las propiedades de los jugadores, i se crea una lista vacia de los jugadoes que NO son su turno, en esta lista se añadiran los jugadoers culla entrada ["Torn"] == False. Recorremos el diccionario ["Propiedades"]["Construcciones"] y se calcula el valor total de la venta de propiedaeds del jugador i se muestra mediante valorTotal. Después se inicia un bucle while infinito, mientras no se seleccione un jugador valido, una vez elegido el jugador, se comprueba que el comprador este en la lista de jugadoresNoTurno, y se realiza el intercambio, actualizando ["Diners"] i ["Propiedades"] de ambos jugadores.
+         Si la casilla es de evento, se activan los eventos correspondientes.
+
+def mostrarInformacion():
+    Mediante una lista previamente vacia, recorremos jugadores, i se añaden a la lista strings que se mostraran en el lateral derecho del tablero
+
+def anadirCasa(Jugador,calle):
+    Se inicia un bucle, donde se compruebaran que no estemos en ninguna casilla evento, i se creará un diccionario de "Casas" i "Hoteles". Luego recorremos las calles de calles i se crea una entrada en el diccionario con el nombre de la calle. Después recorremos nuevamente la lista de jugadores, i nos aseguramos que el jugador que esta comprando la propiedad, tenga esa propiedad en ["Propiedades"].
+    Si el jugador es poseedor de esa propiedad se inician condicionales:
+        - Si el jugador ya tiene 4 casas, se mostrará por pantalla que no puede tener mas de 4 casas
+        - Si no, i tiene el dinero suficiente, se añade una casa a ["Propiedades"]["Calle"]["Casas"] i se actualiza el valor de ["Diners"]
+    Si el jugador no es poseedor de esa propiedad, i se tiene el suficiente dinero, se crea el diccionario incnial en ["Propiedades"] con el nombre de la calle, i se actualizan los valores ["Diners"] del jugador i el valor de banca
+
+def anadirHotel(jugador,calle):
+   Similar a anadirCasa, se acen las mismas comprobacione sinciales, en este caso los condicionales seran:
+   - Si las casas son superiores a 2, i tienes el dinero suficiente para comprar el hotel, se suma 1 al valor "Hoteles", i -2 al valor "Casas" i se actualiza el valor ["Diners"] del jugador i banca
+
+def bancaRota(rendirse = Flase, videojugador="")
+    Por defecto esta función tiene el parametro rendirse = False
+    Comprobamos que ["Diners"] del jugador no sea inferior a 0, el jugador no se encuentre dentro del listao de jugadoresEnBancarrota  i sea el turno del jugador.
+    Se inicial un bucle while True. Dentro de este bucle se crea una variable Str con valor "", i se preguntan 3 opciones:
+    1. Si seleccionas 1, por cada entrada en ["Propiedades"] del jugador, se venden las propiedaes al banco usando ValorAlVender (50%). Se vacia el diccionario ["Propiedades"] i se actualiza banca con la suma de la venta, i el valor de jugadores["Diners"]
+    2. Si la seleccion es 2, similar al vender al banco, pero esta vez se actualizan los campos ["Propiedades"] i ["Diners"] del comprador i del vendedor (90%)
+    3. Si la seleccion es 3, se vacian las propiedades del jugador, si añade el jugador a la lista de jugadoresEnBancarrota
+
+def actualizarHistorial(info)
+    Esta función recibe strings de todos los eventos del juego i los añade a una variable list = historial. Comprueba que len(historial) no sea mayor que 14 i va añadiendo strings, si es superior a 14 elimina el último elemento de la lista historial
+
+def inicioPartida(players)
+    Previamente se barajan los jugadores mediante random.shuffle i se crea una lista con las iniciales de cada uno de los jugadores i se añaden a calles[12]["Ocupación"] que es la casilla de salida
+
+def directoPrision(jugador)
+    En esta casilla se guarda la información de event de prision. Si caes en prisión vas directo a la casilla 18 mediante .extend. En esta casilla se crean varios condicionales:
+    - Si tienes la carta "Sortir de la presó" en ["CartasEspecials"], .remove la carta, se actualiza ["EstaEnPrisión"] = False
+    - Si no la tienes vas a la carcel ["EstaEnPrisión"] = True, i cuando sea tu turno se actualizan +1 le entrada ["TurnosEnPrision"]
+
+def cartaSort(jugador)
+    Esta función maneja el evento suerte, mediante una lista de str que alamcena todas las posibles acciones
+
+def cartaCaixa(jugador)
+    Lo mismo que cartaSort, pero manejando el evento de la caja
+
+def hayGanador():
+    Se comprueba que el listado jugadoresEnBancarrota == 3, si esto sucedede, se retorna el valor que no esta en la lista
+
+def monopoly():
+    Función que inicia el juego, en esta se inicia un varaible str vacia: ganador = "", i se llama a inicioPartida para inicial el juego. En el bucle principal:
+    - Se comprueba que skipTurnoA no este vacio.
+    - Se recorre el listado de jugadores de ORDEN, i se actualiza el valor ["Torn"] = True del primer jugador.
+    Se van llamando las diferentes funciones para ir haciendo comprobaciones. Cuando el listado de bancaRrota esta lleno, se llaman a hayGanador() i printemoas el nombre del ganador
